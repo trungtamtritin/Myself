@@ -1,1 +1,1490 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kids Fun Vocabulary - Bé Vui Học Từ Vựng</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: 'Nunito', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+        }
 
+        h1, h2, .font-display {
+            font-family: 'Fredoka', 'Nunito', sans-serif;
+        }
+
+        /* Pastel Sky & Soft Clouds Background */
+        body {
+            background: linear-gradient(180deg, #D8F3FF 0%, #EFF9FF 45%, #FFFDF5 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Decorative Floating Clouds */
+        .cloud {
+            position: fixed;
+            background: rgba(255, 255, 255, 0.85);
+            border-radius: 9999px;
+            pointer-events: none;
+            z-index: 0;
+            box-shadow: 0 8px 20px rgba(148, 210, 238, 0.25);
+        }
+        .cloud::before, .cloud::after {
+            content: '';
+            position: absolute;
+            background: inherit;
+            border-radius: 50%;
+        }
+        .cloud-1 { width: 130px; height: 44px; top: 6%; left: 5%; animation: driftSlow 28s linear infinite; }
+        .cloud-1::before { width: 56px; height: 56px; top: -26px; left: 18px; }
+        .cloud-1::after { width: 42px; height: 42px; top: -18px; left: 64px; }
+
+        .cloud-2 { width: 160px; height: 50px; top: 14%; right: 6%; animation: driftSlow 36s linear infinite reverse; }
+        .cloud-2::before { width: 68px; height: 68px; top: -32px; left: 24px; }
+        .cloud-2::after { width: 50px; height: 50px; top: -20px; left: 82px; }
+
+        @keyframes driftSlow {
+            0%, 100% { transform: translateX(0px); }
+            50% { transform: translateX(25px); }
+        }
+
+        /* 3D Tactile Kid-Friendly Buttons */
+        .btn-3d {
+            transition: all 0.14s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .btn-3d:active:not(:disabled) {
+            transform: translateY(4px);
+            box-shadow: 0 0px 0 transparent !important;
+        }
+
+        /* Mascot Animations */
+        @keyframes miloIdle {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-6px) rotate(2deg); }
+        }
+        .milo-idle {
+            animation: miloIdle 2.8s ease-in-out infinite;
+        }
+
+        @keyframes miloEarWiggle {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(-10deg); }
+            75% { transform: rotate(8deg); }
+        }
+        .milo-ear-left {
+            transform-origin: 36px 36px;
+            animation: miloEarWiggle 2.2s ease-in-out infinite;
+        }
+        .milo-ear-right {
+            transform-origin: 84px 36px;
+            animation: miloEarWiggle 2.2s ease-in-out infinite reverse;
+        }
+
+        @keyframes miloTailWag {
+            0%, 100% { transform: rotate(-12deg); }
+            50% { transform: rotate(18deg); }
+        }
+        .milo-tail {
+            transform-origin: 34px 96px;
+            animation: miloTailWag 0.75s ease-in-out infinite;
+        }
+
+        @keyframes miloJump {
+            0%, 100% { transform: translateY(0) scale(1); }
+            35% { transform: translateY(-18px) scale(1.06); }
+            65% { transform: translateY(-6px) scale(0.98); }
+        }
+        .milo-happy {
+            animation: miloJump 0.55s ease-in-out 2;
+        }
+
+        @keyframes shakeWrong {
+            0%, 100% { transform: translateX(0); }
+            20% { transform: translateX(-10px) rotate(-1deg); }
+            40% { transform: translateX(10px) rotate(1deg); }
+            60% { transform: translateX(-7px); }
+            80% { transform: translateX(7px); }
+        }
+        .animate-shake {
+            animation: shakeWrong 0.45s ease-in-out;
+        }
+
+        @keyframes popIn {
+            0% { opacity: 0; transform: scale(0.8) translateY(10px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        .animate-pop {
+            animation: popIn 0.32s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        @keyframes confettiFly {
+            0% { opacity: 1; transform: translate(0, 0) scale(0.6) rotate(0deg); }
+            100% { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(1.4) rotate(240deg); }
+        }
+        .confetti-particle {
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            font-size: 1.8rem;
+            animation: confettiFly 0.95s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes floatPoints {
+            0% { opacity: 1; transform: translateY(0) scale(0.85); }
+            100% { opacity: 0; transform: translateY(-48px) scale(1.25); }
+        }
+        .points-float {
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            font-weight: 900;
+            color: #16A34A;
+            text-shadow: 0 2px 4px rgba(255,255,255,0.95);
+            animation: floatPoints 0.9s ease-out forwards;
+        }
+    </style>
+</head>
+<body class="text-slate-800 flex flex-col">
+
+    <!-- Decorative Clouds -->
+    <div class="cloud cloud-1"></div>
+    <div class="cloud cloud-2"></div>
+
+    <!-- ===================================================================== -->
+    <!-- SCREEN 1: CONCISE & BRIGHT HOME SCREEN                                -->
+    <!-- ===================================================================== -->
+    <section id="homeScreen" class="relative z-10 flex-1 flex flex-col items-center justify-center px-4 py-6 max-w-4xl mx-auto w-full">
+        
+        <!-- Header Banner with Milo the Cute Shiba Inu Puppy Explorer -->
+        <div class="bg-white/95 backdrop-blur-md rounded-[24px] border-4 border-[#38BDF8] p-5 shadow-[0_10px_25px_rgba(56,189,248,0.18)] w-full mb-5 flex flex-col sm:flex-row items-center gap-4">
+            <!-- SVG Mascot: Milo the Cute Shiba Inu Puppy Explorer -->
+            <div class="w-24 h-24 md:w-28 md:h-28 flex-shrink-0 milo-idle bg-amber-50 rounded-full p-1.5 border-4 border-[#FBBF24] shadow-inner">
+                <svg viewBox="0 0 120 120" class="w-full h-full overflow-visible">
+                    <!-- Curly Wagging Shiba Tail -->
+                    <path class="milo-tail" d="M36 96 C14 92, 12 70, 28 72 C36 73, 35 84, 27 83" stroke="#F59E0B" stroke-width="9" fill="none" stroke-linecap="round"/>
+                    <!-- Puppy Body -->
+                    <ellipse cx="60" cy="96" rx="25" ry="20" fill="#F59E0B"/>
+                    <ellipse cx="60" cy="98" rx="15" ry="15" fill="#FFFBEB"/>
+                    <!-- Explorer Bandana / Scarf -->
+                    <path d="M37 86 Q60 100 83 86 L77 107 L60 99 L43 107 Z" fill="#0EA5E9"/>
+                    <circle cx="60" cy="95" r="3.5" fill="#FBBF24"/>
+                    <!-- Front Paws -->
+                    <ellipse cx="46" cy="111" rx="7" ry="5" fill="#FFFBEB" stroke="#F59E0B" stroke-width="2"/>
+                    <ellipse cx="74" cy="111" rx="7" ry="5" fill="#FFFBEB" stroke="#F59E0B" stroke-width="2"/>
+                    <!-- Pointy Shiba Ears -->
+                    <g class="milo-ear-left">
+                        <path d="M26 44 L24 14 L48 30 Z" fill="#F59E0B" stroke="#D97706" stroke-width="2" stroke-linejoin="round"/>
+                        <path d="M29 39 L28 21 L43 31 Z" fill="#FDE68A"/>
+                    </g>
+                    <g class="milo-ear-right">
+                        <path d="M94 44 L96 14 L72 30 Z" fill="#F59E0B" stroke="#D97706" stroke-width="2" stroke-linejoin="round"/>
+                        <path d="M91 39 L92 21 L77 31 Z" fill="#FDE68A"/>
+                    </g>
+                    <!-- Shiba Head -->
+                    <ellipse cx="60" cy="57" rx="35" ry="30" fill="#F59E0B"/>
+                    <!-- Cream Uragiro Cheeks & Muzzle -->
+                    <path d="M26 60 Q38 48 60 56 Q82 48 94 60 Q92 85 60 86 Q28 85 26 60 Z" fill="#FFFBEB"/>
+                    <!-- Cute Eyebrow Dots -->
+                    <ellipse cx="45" cy="43" rx="4" ry="2.5" fill="#FFFBEB"/>
+                    <ellipse cx="75" cy="43" rx="4" ry="2.5" fill="#FFFBEB"/>
+                    <!-- Sparkling Puppy Eyes -->
+                    <circle cx="45" cy="54" r="4.8" fill="#1E293B"/>
+                    <circle cx="75" cy="54" r="4.8" fill="#1E293B"/>
+                    <circle cx="46.5" cy="52.5" r="1.8" fill="#FFFFFF"/>
+                    <circle cx="76.5" cy="52.5" r="1.8" fill="#FFFFFF"/>
+                    <!-- Rosy Cheeks -->
+                    <ellipse cx="33" cy="64" rx="5.5" ry="3" fill="#FF8FA3" opacity="0.7"/>
+                    <ellipse cx="87" cy="64" rx="5.5" ry="3" fill="#FF8FA3" opacity="0.7"/>
+                    <!-- Puppy Nose & Happy Tongue Smile -->
+                    <ellipse cx="60" cy="62" rx="4.8" ry="3.4" fill="#1E293B"/>
+                    <path d="M51 68 Q60 76 69 68" stroke="#1E293B" stroke-width="2.8" fill="none" stroke-linecap="round"/>
+                    <path d="M56 71 Q60 79 64 71 Z" fill="#FB7185"/>
+                </svg>
+            </div>
+
+            <div class="text-center sm:text-left flex-1">
+                <div class="inline-flex flex-wrap items-center justify-center sm:justify-start gap-1.5 bg-amber-100 text-amber-800 px-3 py-1 rounded-full text-xs font-extrabold mb-1.5">
+                    <span>🐶 Hi! I'm Milo the Puppy Explorer!</span>
+                    <span class="text-amber-600 font-bold">• Xin chào! Tớ là Cún Con Milo!</span>
+                </div>
+                <h1 class="text-3xl md:text-4xl font-bold text-[#0284C7] tracking-tight leading-none">
+                    Kids Fun Vocabulary
+                </h1>
+                <p class="text-sm md:text-base font-extrabold text-rose-500 mt-0.5">
+                    Bé Vui Học Từ Vựng Tiếng Anh (173 Words)
+                </p>
+                <p class="text-xs md:text-sm font-bold text-slate-500 mt-1.5">
+                    Choose a Game Mode & Topic, then tap Start Adventure!
+                    <span class="block text-[11px] font-semibold text-slate-400">Chọn Chế độ chơi và Chủ đề, sau đó bấm Bắt đầu hành trình nhé!</span>
+                </p>
+            </div>
+        </div>
+
+        <!-- Step 1: Select 1 of 3 Game Modes -->
+        <div class="bg-white/95 rounded-[24px] border-4 border-[#FBBF24] p-4 md:p-5 shadow-md w-full mb-4">
+            <div class="flex items-baseline justify-between mb-3">
+                <h2 class="text-lg md:text-xl font-bold text-amber-700 flex items-center gap-2">
+                    <span class="w-7 h-7 rounded-full bg-[#FBBF24] text-white flex items-center justify-center text-sm font-black">1</span>
+                    <span>Choose Game Mode</span>
+                    <span class="text-xs font-bold text-slate-400">/ Chọn chế độ chơi</span>
+                </h2>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                <!-- Mode 1 -->
+                <button onclick="selectMode(1)" id="modeBtn1"
+                    class="btn-3d p-3.5 rounded-[20px] border-4 border-[#10B981] bg-[#ECFDF5] text-left shadow-[0_4px_0_#10B981]">
+                    <div class="flex items-center justify-between mb-1">
+                        <span class="text-2xl">🎯</span>
+                        <span class="text-[11px] font-black bg-[#10B981] text-white px-2.5 py-0.5 rounded-full">Mode 1</span>
+                    </div>
+                    <div class="font-black text-base md:text-lg text-slate-800 leading-tight">Choose the Word</div>
+                    <div class="text-xs font-bold text-emerald-700">Chọn từ Tiếng Anh</div>
+                    <div class="text-[11px] font-semibold text-slate-500 mt-1">See picture, listen & pick the right word</div>
+                </button>
+
+                <!-- Mode 2 -->
+                <button onclick="selectMode(2)" id="modeBtn2"
+                    class="btn-3d p-3.5 rounded-[20px] border-4 border-slate-200 bg-white text-left shadow-[0_4px_0_#CBD5E1]">
+                    <div class="flex items-center justify-between mb-1">
+                        <span class="text-2xl">✏️</span>
+                        <span class="text-[11px] font-black bg-amber-500 text-white px-2.5 py-0.5 rounded-full">Mode 2</span>
+                    </div>
+                    <div class="font-black text-base md:text-lg text-slate-800 leading-tight">Fill in the Blank</div>
+                    <div class="text-xs font-bold text-amber-600">Điền từ còn thiếu (Ẩn nghĩa Việt)</div>
+                    <div class="text-[11px] font-semibold text-slate-500 mt-1">Listen & fill missing letters (No Vietnamese hint)</div>
+                </button>
+
+                <!-- Mode 3 -->
+                <button onclick="selectMode(3)" id="modeBtn3"
+                    class="btn-3d p-3.5 rounded-[20px] border-4 border-slate-200 bg-white text-left shadow-[0_4px_0_#CBD5E1]">
+                    <div class="flex items-center justify-between mb-1">
+                        <span class="text-2xl">🧩</span>
+                        <span class="text-[11px] font-black bg-purple-500 text-white px-2.5 py-0.5 rounded-full">Mode 3</span>
+                    </div>
+                    <div class="font-black text-base md:text-lg text-slate-800 leading-tight">Unscramble Letters</div>
+                    <div class="text-xs font-bold text-purple-600">Sắp xếp chữ cái</div>
+                    <div class="text-[11px] font-semibold text-slate-500 mt-1">Tap scrambled letters in order to spell</div>
+                </button>
+            </div>
+        </div>
+
+        <!-- Step 2: Select Topic (8 Categories + All 239 Words) -->
+        <div class="bg-white/95 rounded-[24px] border-4 border-[#4ECDC4] p-4 md:p-5 shadow-md w-full mb-5">
+            <div class="flex items-baseline justify-between mb-3">
+                <h2 class="text-lg md:text-xl font-bold text-teal-700 flex items-center gap-2">
+                    <span class="w-7 h-7 rounded-full bg-[#4ECDC4] text-white flex items-center justify-center text-sm font-black">2</span>
+                    <span>Choose a Topic</span>
+                    <span class="text-xs font-bold text-slate-400">/ Chọn chủ đề từ vựng</span>
+                </h2>
+            </div>
+
+            <div id="topicGrid" class="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
+                <!-- Populated dynamically by JS -->
+            </div>
+        </div>
+
+        <!-- Start Button -->
+        <button onclick="openIntroDialogue()"
+            class="btn-3d w-full sm:w-auto px-10 py-3.5 rounded-[24px] bg-gradient-to-r from-[#FF6B6B] to-[#FF8E53] text-white shadow-[0_6px_0_#C92A2A] flex flex-col items-center justify-center">
+            <span class="text-xl md:text-2xl font-black flex items-center gap-2">
+                <span>🚀</span>
+                <span>Start Adventure!</span>
+            </span>
+            <span class="text-xs font-bold text-amber-100">Bắt đầu hành trình nào!</span>
+        </button>
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- CONVERSATIONAL STEP 1: GREETING & RULES MODAL                         -->
+    <!-- ===================================================================== -->
+    <div id="introModal" class="fixed inset-0 bg-slate-900/55 backdrop-blur-sm hidden items-center justify-center z-50 p-4">
+        <div class="bg-white max-w-md w-full rounded-[24px] border-4 border-[#38BDF8] p-6 text-center shadow-2xl animate-pop">
+            <div class="text-6xl mb-2 animate-bounce">🐶✨</div>
+            <div class="inline-block bg-sky-100 text-sky-800 font-black text-xs px-3 py-1 rounded-full uppercase mb-2">
+                Milo's Guide • Hướng dẫn luật chơi
+            </div>
+            <h2 id="introTopicTitle" class="text-2xl font-bold text-slate-800 mb-1">Topic Title</h2>
+            <p id="introTopicSub" class="text-xs font-bold text-teal-600 mb-3">Tên chủ đề</p>
+
+            <div class="bg-[#F0F9FF] border-2 border-sky-200 rounded-2xl p-4 mb-5 text-left">
+                <p id="introRuleEn" class="text-slate-800 font-extrabold text-sm md:text-base leading-snug mb-1.5">
+                    Rule in English
+                </p>
+                <p id="introRuleVi" class="text-slate-500 font-semibold text-xs leading-relaxed">
+                    Luật chơi bằng Tiếng Việt
+                </p>
+            </div>
+
+            <div class="flex gap-3">
+                <button onclick="closeIntroDialogue()"
+                    class="btn-3d px-4 py-3 rounded-2xl bg-slate-200 text-slate-700 font-black text-sm shadow-[0_4px_0_#94A3B8] flex flex-col items-center justify-center">
+                    <span>⬅️ Back</span>
+                    <span class="text-[10px] font-bold text-slate-500">Quay lại</span>
+                </button>
+                <button onclick="startGame()"
+                    class="btn-3d flex-1 py-3 rounded-2xl bg-[#10B981] text-white font-black text-lg shadow-[0_5px_0_#047857] flex flex-col items-center justify-center">
+                    <span>Let's Start! 🎮</span>
+                    <span class="text-[11px] font-bold text-emerald-100">Bắt đầu nào!</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===================================================================== -->
+    <!-- SCREEN 2: INTERACTIVE GAMEPLAY SCREEN                                 -->
+    <!-- ===================================================================== -->
+    <section id="gameScreen" class="relative z-10 hidden flex-1 flex flex-col max-w-4xl mx-auto w-full px-4 py-3 md:py-4">
+        
+        <!-- Top Header: Home Button, Topic/Mode, Progress Bar, Correct & Score -->
+        <header class="bg-white/95 rounded-[24px] border-4 border-[#38BDF8] p-3.5 shadow-md mb-3.5">
+            <div class="flex flex-wrap items-center justify-between gap-2 mb-2.5">
+                <!-- Prominent Home Button -->
+                <button onclick="goHome()"
+                    class="btn-3d px-3.5 py-2 rounded-2xl bg-[#FF6B6B] hover:bg-[#FA5252] text-white shadow-[0_3px_0_#C92A2A] flex items-center gap-1.5">
+                    <span class="text-lg">🏠</span>
+                    <div class="text-left leading-none">
+                        <div class="text-xs md:text-sm font-black">Home</div>
+                        <div class="text-[10px] font-bold text-rose-100">Trang chính</div>
+                    </div>
+                </button>
+
+                <!-- Current Topic & Mode -->
+                <div class="text-center flex-1 min-w-[140px]">
+                    <div id="headerTopicText" class="text-xs md:text-sm font-black text-sky-700">Topic</div>
+                    <div id="headerModeText" class="text-[11px] font-bold text-slate-500">Mode</div>
+                </div>
+
+                <!-- Correct Counter & Score -->
+                <div class="flex items-center gap-2">
+                    <div class="bg-emerald-50 border-2 border-emerald-400 px-2.5 py-1 rounded-2xl text-center">
+                        <div class="text-xs md:text-sm font-black text-emerald-700">✅ <span id="correctCountEl">0</span>/<span id="totalCountEl">0</span></div>
+                        <div class="text-[9px] font-bold text-emerald-600">Correct • Đúng</div>
+                    </div>
+                    <div class="bg-amber-50 border-2 border-amber-400 px-2.5 py-1 rounded-2xl text-center">
+                        <div class="text-xs md:text-sm font-black text-amber-700">⭐ <span id="scoreEl">0</span></div>
+                        <div class="text-[9px] font-bold text-amber-600">Points • Điểm</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Game Progress Bar -->
+            <div class="flex items-center gap-2.5">
+                <span class="text-xs font-black text-slate-600 whitespace-nowrap">
+                    Q <span id="qNumEl">1</span>/<span id="qTotalEl">10</span>
+                </span>
+                <div class="w-full h-3.5 bg-sky-100 rounded-full overflow-hidden border border-sky-200 p-0.5">
+                    <div id="progressBarEl" class="h-full bg-gradient-to-r from-[#10B981] to-[#38BDF8] rounded-full transition-all duration-300" style="width: 10%"></div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Conversational Mascot Bar (Milo the Puppy) -->
+        <div class="bg-white/95 border-2 border-[#FBBF24] rounded-[20px] px-4 py-2.5 mb-3.5 shadow-sm flex items-center gap-3">
+            <div id="miloMiniAvatar" class="text-3xl md:text-4xl flex-shrink-0 transition-transform">🐶</div>
+            <div class="flex-1 min-w-0">
+                <div id="dialogueEn" class="font-black text-sm md:text-base text-slate-800 leading-snug">
+                    Listen carefully and choose the right English word!
+                </div>
+                <div id="dialogueVi" class="font-semibold text-xs text-slate-500 leading-snug">
+                    Bé hãy nghe kỹ và chọn từ Tiếng Anh đúng nhé!
+                </div>
+            </div>
+        </div>
+
+        <!-- Central Question Card -->
+        <main id="questionCard" class="bg-white rounded-[24px] border-4 border-[#FBBF24] p-5 md:p-6 shadow-lg flex-1 flex flex-col justify-between mb-3.5">
+            
+            <!-- Visual Illustration + Audio Controls + Conditional Vietnamese Meaning -->
+            <div class="flex flex-col items-center text-center">
+                <!-- Visual Card (Supports Color Swatches, Ordinals, Calendar Badges & Large Emojis) -->
+                <div id="visualBox" class="w-28 h-28 md:w-36 md:h-36 rounded-[24px] bg-gradient-to-b from-sky-50 to-amber-50 border-4 border-amber-200 flex items-center justify-center shadow-inner mb-3 animate-pop overflow-hidden">
+                    <span class="text-6xl md:text-7xl">🍎</span>
+                </div>
+
+                <!-- Pronunciation Audio Buttons + IPA Badge -->
+                <div class="flex flex-wrap items-center justify-center gap-2 mb-2">
+                    <button onclick="speakCurrent(0.95)"
+                        class="btn-3d px-4 py-2 rounded-2xl bg-[#0284C7] hover:bg-[#0369A1] text-white shadow-[0_4px_0_#075985] flex items-center gap-2">
+                        <span class="text-xl">🔊</span>
+                        <div class="text-left leading-tight">
+                            <div class="text-sm md:text-base font-black">Listen</div>
+                            <div class="text-[10px] font-bold text-sky-100">Nghe phát âm</div>
+                        </div>
+                    </button>
+
+                    <button onclick="speakCurrent(0.62)"
+                        class="btn-3d px-3.5 py-2 rounded-2xl bg-indigo-100 hover:bg-indigo-200 text-indigo-800 shadow-[0_4px_0_#A5B4FC] flex items-center gap-1.5">
+                        <span class="text-lg">🐢</span>
+                        <div class="text-left leading-tight">
+                            <div class="text-xs md:text-sm font-black">Slow</div>
+                            <div class="text-[10px] font-bold text-indigo-600">Đọc chậm</div>
+                        </div>
+                    </button>
+
+                    <div id="ipaBadge" class="px-3 py-1.5 rounded-2xl bg-slate-100 border border-slate-200 font-mono text-sm md:text-base font-bold text-slate-600">
+                        /ˈæp.əl/
+                    </div>
+                </div>
+
+                <!-- Vietnamese Meaning Box (SHOWN in Mode 1 & 3, STRICTLY HIDDEN in Mode 2) -->
+                <div id="viMeaningContainer" class="mt-1 px-5 py-2 rounded-2xl bg-rose-50 border-2 border-rose-200">
+                    <div class="text-[10px] font-extrabold text-rose-400 uppercase tracking-wider">Vietnamese Meaning • Nghĩa Tiếng Việt</div>
+                    <div id="viMeaningText" class="text-lg md:text-xl font-black text-rose-600">Quả táo</div>
+                </div>
+            </div>
+
+            <!-- Interactive Play Zone -->
+            <div id="playZone" class="my-4">
+                <!-- Mode 1 / Mode 2 / Mode 3 rendered here -->
+            </div>
+
+            <!-- Instant Feedback Banner (Shows Correct Answer when Wrong or Skipped) -->
+            <div id="feedbackBox" class="hidden rounded-2xl p-3.5 text-center border-4 animate-pop">
+                <div id="feedbackEn" class="text-base md:text-lg font-black"></div>
+                <div id="feedbackVi" class="text-xs md:text-sm font-bold mt-0.5"></div>
+                <div id="answerRevealBox" class="mt-2 pt-2 border-t border-black/10 text-sm md:text-base font-extrabold"></div>
+            </div>
+        </main>
+
+        <!-- Bottom Navigation Controls: Previous / Skip / Next -->
+        <footer class="grid grid-cols-3 gap-2.5 md:gap-3">
+            <button onclick="prevQuestion()" id="btnPrev"
+                class="btn-3d py-2.5 px-3 rounded-[20px] bg-white border-4 border-slate-300 text-slate-700 shadow-[0_4px_0_#CBD5E1] flex flex-col items-center justify-center disabled:opacity-40">
+                <span class="text-sm md:text-base font-black">⬅️ Previous</span>
+                <span class="text-[10px] md:text-xs font-bold text-slate-400">Câu trước</span>
+            </button>
+
+            <button onclick="skipQuestion()" id="btnSkip"
+                class="btn-3d py-2.5 px-3 rounded-[20px] bg-[#FBBF24] border-4 border-[#F59E0B] text-amber-950 shadow-[0_4px_0_#D97706] flex flex-col items-center justify-center">
+                <span class="text-sm md:text-base font-black">⏭️ Skip</span>
+                <span class="text-[10px] md:text-xs font-bold text-amber-800">Bỏ qua</span>
+            </button>
+
+            <button onclick="nextQuestion()" id="btnNext"
+                class="btn-3d py-2.5 px-3 rounded-[20px] bg-[#10B981] border-4 border-[#059669] text-white shadow-[0_4px_0_#047857] flex flex-col items-center justify-center">
+                <span class="text-sm md:text-base font-black">Next ➡️</span>
+                <span class="text-[10px] md:text-xs font-bold text-emerald-100">Câu sau</span>
+            </button>
+        </footer>
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- SCREEN 3: CELEBRATION & SUMMARY SCREEN                                -->
+    <!-- ===================================================================== -->
+    <section id="summaryScreen" class="relative z-10 hidden flex-1 flex flex-col items-center justify-center px-4 py-8 max-w-xl mx-auto w-full text-center">
+        <div class="bg-white rounded-[24px] border-4 border-[#FBBF24] p-7 md:p-8 shadow-2xl w-full animate-pop">
+            <div class="text-7xl mb-2 animate-bounce">🏆🐶</div>
+            <h2 class="text-3xl font-bold text-[#0284C7]">Congratulations!</h2>
+            <div class="text-base font-extrabold text-rose-500 mb-2">Chúc mừng bé đã hoàn thành xuất sắc!</div>
+            <p id="summarySubText" class="text-slate-600 font-bold text-sm mb-4">
+                Milo is super proud of your great effort today!
+                <span class="block text-xs font-semibold text-slate-400">Cún Con Milo rất tự hào về sự cố gắng của bé hôm nay!</span>
+            </p>
+
+            <!-- Star Rating -->
+            <div id="starRatingDisplay" class="text-5xl mb-5 tracking-widest">⭐⭐⭐</div>
+
+            <!-- Score Cards -->
+            <div class="grid grid-cols-2 gap-3.5 mb-6">
+                <div class="bg-emerald-50 border-2 border-emerald-300 rounded-2xl p-3.5">
+                    <div class="text-xs font-black text-emerald-700 uppercase">Correct Answers</div>
+                    <div class="text-[10px] font-bold text-emerald-600">Số câu trả lời đúng</div>
+                    <div class="text-3xl font-black text-emerald-700 mt-1">
+                        <span id="finalCorrectEl">0</span>/<span id="finalTotalEl">0</span>
+                    </div>
+                </div>
+                <div class="bg-amber-50 border-2 border-amber-300 rounded-2xl p-3.5">
+                    <div class="text-xs font-black text-amber-700 uppercase">Total Score</div>
+                    <div class="text-[10px] font-bold text-amber-600">Tổng điểm đạt được</div>
+                    <div class="text-3xl font-black text-amber-700 mt-1">
+                        <span id="finalScoreEl">0</span> ⭐
+                    </div>
+                </div>
+            </div>
+
+            <!-- Replay & Home Buttons -->
+            <div class="flex flex-col sm:flex-row gap-3">
+                <button onclick="startGame()"
+                    class="btn-3d flex-1 py-3 px-5 rounded-2xl bg-[#10B981] text-white shadow-[0_5px_0_#047857] flex flex-col items-center justify-center">
+                    <span class="text-lg font-black">🔄 Play Again</span>
+                    <span class="text-xs font-bold text-emerald-100">Chơi lại chủ đề này</span>
+                </button>
+                <button onclick="goHome()"
+                    class="btn-3d flex-1 py-3 px-5 rounded-2xl bg-[#0284C7] text-white shadow-[0_5px_0_#075985] flex flex-col items-center justify-center">
+                    <span class="text-lg font-black">🏠 Back to Home</span>
+                    <span class="text-xs font-bold text-sky-100">Về trang chính</span>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // =========================================================================
+        // 1. 8 TOPICS + ALL 173 EXACT VOCABULARY WORDS WITH IPA, MEANING & VISUALS
+        // =========================================================================
+        const TOPICS = [
+            { id: "all", en: "All 173 Words", vi: "Tất cả 173 từ", icon: "🌈" },
+            { id: "greetings", en: "1. Greetings & Pronouns", vi: "Chào hỏi & Đại từ", icon: "👋" },
+            { id: "numbers", en: "2. Numbers & Age", vi: "Số đếm & Độ tuổi", icon: "🔢" },
+            { id: "months", en: "3. Birthday & Months", vi: "Sinh nhật & 12 Tháng", icon: "🎂" },
+            { id: "school", en: "4. School & Appearance", vi: "Trường học & Ngoại hình", icon: "🏫" },
+            { id: "colors", en: "5. Colors & Hobbies", vi: "Màu sắc & Sở thích", icon: "🎨" },
+            { id: "food", en: "6. Food, Drinks & Fruits", vi: "Đồ ăn, Thức uống & Trái cây", icon: "🍓" },
+            { id: "pets", en: "7. Pets & Activities", vi: "Thú cưng & Hoạt động", icon: "🐶" },
+            { id: "jobs", en: "8. Jobs & Dreams", vi: "Nghề nghiệp & Ước mơ", icon: "🩺" }
+        ];
+
+        // Exact 173 words from the prompt list
+        const VOCABULARY_173 = [
+            // --- TOPIC 1: GREETINGS & PRONOUNS (20 words) ---
+            { en: "hello", vi: "Xin chào", ipa: "/həˈləʊ/", emoji: "👋", topic: "greetings" },
+            { en: "everyone", vi: "Mọi người", ipa: "/ˈev.ri.wʌn/", emoji: "👨‍👩‍👧‍👦", topic: "greetings" },
+            { en: "I", vi: "Tôi / Mình", ipa: "/aɪ/", emoji: "🙋", topic: "greetings" },
+            { en: "am", vi: "Là (đi với I)", ipa: "/æm/", emoji: "✨", topic: "greetings" },
+            { en: "is", vi: "Là (số ít)", ipa: "/ɪz/", emoji: "🔹", topic: "greetings" },
+            { en: "introduce", vi: "Giới thiệu", ipa: "/ˌɪn.trəˈdʒuːs/", emoji: "🎤", topic: "greetings" },
+            { en: "myself", vi: "Bản thân mình", ipa: "/maɪˈself/", emoji: "😊", topic: "greetings" },
+            { en: "my", vi: "Của tôi / Của mình", ipa: "/maɪ/", emoji: "💖", topic: "greetings" },
+            { en: "your", vi: "Của bạn", ipa: "/jɔːr/", emoji: "👉", topic: "greetings" },
+            { en: "name", vi: "Tên gọi", ipa: "/neɪm/", emoji: "📛", topic: "greetings" },
+            { en: "full", vi: "Đầy đủ (họ và tên)", ipa: "/fʊl/", emoji: "📋", topic: "greetings" },
+            { en: "what", vi: "Cái gì / Gì", ipa: "/wɒt/", emoji: "❓", topic: "greetings" },
+            { en: "when", vi: "Khi nào", ipa: "/wen/", emoji: "⏰", topic: "greetings" },
+            { en: "how", vi: "Như thế nào / Bao nhiêu", ipa: "/haʊ/", emoji: "🤔", topic: "greetings" },
+            { en: "you", vi: "Bạn / Các bạn", ipa: "/juː/", emoji: "🫵", topic: "greetings" },
+            { en: "are", vi: "Là / Thì (số nhiều)", ipa: "/ɑːr/", emoji: "🔸", topic: "greetings" },
+            { en: "and", vi: "Và", ipa: "/ænd/", emoji: "➕", topic: "greetings" },
+            { en: "on", vi: "Vào (ngày) / Ở trên", ipa: "/ɒn/", emoji: "📅", topic: "greetings" },
+            { en: "of", vi: "Của", ipa: "/ɒv/", emoji: "🔗", topic: "greetings" },
+            { en: "from", vi: "Đến từ", ipa: "/frɒm/", emoji: "🗺️", topic: "greetings" },
+
+            // --- TOPIC 2: NUMBERS & AGE (16 words) ---
+            { en: "zero", vi: "Số 0", ipa: "/ˈzɪə.rəʊ/", badge: "0", topic: "numbers" },
+            { en: "one", vi: "Số 1", ipa: "/wʌn/", badge: "1", topic: "numbers" },
+            { en: "two", vi: "Số 2", ipa: "/tuː/", badge: "2", topic: "numbers" },
+            { en: "three", vi: "Số 3", ipa: "/θriː/", badge: "3", topic: "numbers" },
+            { en: "four", vi: "Số 4", ipa: "/fɔːr/", badge: "4", topic: "numbers" },
+            { en: "five", vi: "Số 5", ipa: "/faɪv/", badge: "5", topic: "numbers" },
+            { en: "six", vi: "Số 6", ipa: "/sɪks/", badge: "6", topic: "numbers" },
+            { en: "seven", vi: "Số 7", ipa: "/ˈsev.ən/", badge: "7", topic: "numbers" },
+            { en: "eight", vi: "Số 8", ipa: "/eɪt/", badge: "8", topic: "numbers" },
+            { en: "nine", vi: "Số 9", ipa: "/naɪn/", badge: "9", topic: "numbers" },
+            { en: "ten", vi: "Số 10", ipa: "/ten/", badge: "10", topic: "numbers" },
+            { en: "eleven", vi: "Số 11", ipa: "/ɪˈlev.ən/", badge: "11", topic: "numbers" },
+            { en: "twelve", vi: "Số 12", ipa: "/twelv/", badge: "12", topic: "numbers" },
+            { en: "year", vi: "Năm", ipa: "/jɪər/", emoji: "🗓️", topic: "numbers" },
+            { en: "old", vi: "Tuổi / Già", ipa: "/əʊld/", emoji: "🎈", topic: "numbers" },
+            { en: "age", vi: "Độ tuổi", ipa: "/eɪdʒ/", emoji: "🕯️", topic: "numbers" },
+
+            // --- TOPIC 3: BIRTHDAY & MONTHS (15 words) ---
+            { en: "birthday", vi: "Ngày sinh nhật", ipa: "/ˈbɜːθ.deɪ/", emoji: "🎂", topic: "months" },
+            { en: "month", vi: "Tháng", ipa: "/mʌnθ/", emoji: "🌙", topic: "months" },
+            { en: "January", vi: "Tháng 1 (Tháng Giêng)", ipa: "/ˈdʒæn.ju.ər.i/", monthTag: "JAN • 01", topic: "months" },
+            { en: "February", vi: "Tháng 2", ipa: "/ˈfeb.ru.ər.i/", monthTag: "FEB • 02", topic: "months" },
+            { en: "March", vi: "Tháng 3", ipa: "/mɑːtʃ/", monthTag: "MAR • 03", topic: "months" },
+            { en: "April", vi: "Tháng 4", ipa: "/ˈeɪ.prəl/", monthTag: "APR • 04", topic: "months" },
+            { en: "May", vi: "Tháng 5", ipa: "/meɪ/", monthTag: "MAY • 05", topic: "months" },
+            { en: "June", vi: "Tháng 6", ipa: "/dʒuːn/", monthTag: "JUN • 06", topic: "months" },
+            { en: "July", vi: "Tháng 7", ipa: "/dʒuˈlaɪ/", monthTag: "JUL • 07", topic: "months" },
+            { en: "August", vi: "Tháng 8", ipa: "/ˈɔː.ɡəst/", monthTag: "AUG • 08", topic: "months" },
+            { en: "September", vi: "Tháng 9", ipa: "/sepˈtem.bər/", monthTag: "SEP • 09", topic: "months" },
+            { en: "October", vi: "Tháng 10", ipa: "/ɒkˈtəʊ.bər/", monthTag: "OCT • 10", topic: "months" },
+            { en: "November", vi: "Tháng 11", ipa: "/nəʊˈvem.bər/", monthTag: "NOV • 11", topic: "months" },
+            { en: "December", vi: "Tháng 12", ipa: "/dɪˈsem.bər/", monthTag: "DEC • 12", topic: "months" },
+
+            // --- TOPIC 4: SCHOOL & APPEARANCE (23 words) ---
+            { en: "student", vi: "Học sinh / Sinh viên", ipa: "/ˈstjuː.dənt/", emoji: "🎒", topic: "school" },
+            { en: "Kindergarten school", vi: "Trường mẫu giáo / Mầm non", ipa: "/ˈkɪn.dəˌɡɑː.tən skuːl/", emoji: "🧸", topic: "school" },
+            { en: "Primary school", vi: "Trường tiểu học", ipa: "/ˈpraɪ.mər.i skuːl/", emoji: "🏫", topic: "school" },
+            { en: "Secondary school", vi: "Trường trung học cơ sở", ipa: "/ˈsek.ən.dri skuːl/", emoji: "📚", topic: "school" },
+            { en: "High school", vi: "Trường trung học phổ thông", ipa: "/ˈhaɪ ˌskuːl/", emoji: "🎓", topic: "school" },
+            { en: "grade", vi: "Khối lớp", ipa: "/ɡreɪd/", emoji: "🏅", topic: "school" },
+            { en: "live", vi: "Sống / Sinh sống", ipa: "/lɪv/", emoji: "🏡", topic: "school" },
+            { en: "which", vi: "Nào / Cái nào", ipa: "/wɪtʃ/", emoji: "🔎", topic: "school" },
+            { en: "class", vi: "Lớp học", ipa: "/klɑːs/", emoji: "🧑‍🏫", topic: "school" },
+            { en: "come", vi: "Đến / Tới", ipa: "/kʌm/", emoji: "🚶", topic: "school" },
+            { en: "go", vi: "Đi", ipa: "/ɡəʊ/", emoji: "🏃", topic: "school" },
+            { en: "study", vi: "Học tập", ipa: "/ˈstʌd.i/", emoji: "📖", topic: "school" },
+            { en: "tall", vi: "Cao", ipa: "/tɔːl/", emoji: "🦒", topic: "school" },
+            { en: "thin", vi: "Gầy / Mảnh khảnh", ipa: "/θɪn/", emoji: "🎋", topic: "school" },
+            { en: "big", vi: "To lớn", ipa: "/bɪɡ/", emoji: "🐘", topic: "school" },
+            { en: "eyes", vi: "Đôi mắt", ipa: "/aɪz/", emoji: "👀", topic: "school" },
+            { en: "long", vi: "Dài", ipa: "/lɒŋ/", emoji: "📏", topic: "school" },
+            { en: "short", vi: "Ngắn / Thấp", ipa: "/ʃɔːt/", emoji: "✂️", topic: "school" },
+            { en: "hair", vi: "Mái tóc", ipa: "/heər/", emoji: "💇", topic: "school" },
+            { en: "have", vi: "Có", ipa: "/hæv/", emoji: "🤲", topic: "school" },
+            { en: "weigh", vi: "Cân nặng", ipa: "/weɪ/", emoji: "⚖️", topic: "school" },
+            { en: "kilogram", vi: "Ki-lô-gam (kg)", ipa: "/ˈkɪl.ə.ɡræm/", emoji: "🏋️", topic: "school" },
+            { en: "kilo", vi: "Cân / Ký (kg)", ipa: "/ˈkiː.ləʊ/", emoji: "⚖️", topic: "school" },
+
+            // --- TOPIC 5: COLORS & HOBBIES (21 words) ---
+            { en: "favorite", vi: "Yêu thích nhất", ipa: "/ˈfeɪ.vər.ɪt/", emoji: "🌟", topic: "colors" },
+            { en: "color", vi: "Màu sắc", ipa: "/ˈkʌl.ər/", emoji: "🎨", topic: "colors" },
+            { en: "yellow", vi: "Màu vàng", ipa: "/ˈjel.əʊ/", swatch: "#FACC15", topic: "colors" },
+            { en: "blue", vi: "Màu xanh dương", ipa: "/bluː/", swatch: "#3B82F6", topic: "colors" },
+            { en: "red", vi: "Màu đỏ", ipa: "/red/", swatch: "#EF4444", topic: "colors" },
+            { en: "green", vi: "Màu xanh lá cây", ipa: "/ɡriːn/", swatch: "#22C55E", topic: "colors" },
+            { en: "purple", vi: "Màu tím", ipa: "/ˈpɜː.pəl/", swatch: "#A855F7", topic: "colors" },
+            { en: "orange", vi: "Màu cam / Quả cam", ipa: "/ˈɒr.ɪndʒ/", swatch: "#F97316", topic: "colors" },
+            { en: "brown", vi: "Màu nâu", ipa: "/braʊn/", swatch: "#92400E", topic: "colors" },
+            { en: "pink", vi: "Màu hồng", ipa: "/pɪŋk/", swatch: "#F472B6", topic: "colors" },
+            { en: "black", vi: "Màu đen", ipa: "/blæk/", swatch: "#1E293B", topic: "colors" },
+            { en: "white", vi: "Màu trắng", ipa: "/waɪt/", swatch: "#FFFFFF", topic: "colors" },
+            { en: "gray", vi: "Màu xám", ipa: "/ɡreɪ/", swatch: "#94A3B8", topic: "colors" },
+            { en: "like", vi: "Thích", ipa: "/laɪk/", emoji: "❤️", topic: "colors" },
+            { en: "read", vi: "Đọc", ipa: "/riːd/", emoji: "📖", topic: "colors" },
+            { en: "book", vi: "Quyển sách", ipa: "/bʊk/", emoji: "📚", topic: "colors" },
+            { en: "listen", vi: "Lắng nghe", ipa: "/ˈlɪs.ən/", emoji: "👂", topic: "colors" },
+            { en: "music", vi: "Âm nhạc", ipa: "/ˈmjuː.zɪk/", emoji: "🎵", topic: "colors" },
+            { en: "hobby", vi: "Sở thích", ipa: "/ˈhɒb.i/", emoji: "🎨", topic: "colors" },
+            { en: "can", vi: "Có thể (làm được)", ipa: "/kæn/", emoji: "💪", topic: "colors" },
+            { en: "swim", vi: "Bơi lội", ipa: "/swɪm/", emoji: "🏊", topic: "colors" },
+
+            // --- TOPIC 6: FOOD, DRINKS & FRUITS (37 words) ---
+            { en: "food", vi: "Thức ăn / Đồ ăn", ipa: "/fuːd/", emoji: "🍱", topic: "food" },
+            { en: "chicken", vi: "Thịt gà / Con gà", ipa: "/ˈtʃɪk.ɪn/", emoji: "🍗", topic: "food" },
+            { en: "pork", vi: "Thịt lợn (thịt heo)", ipa: "/pɔːk/", emoji: "🥓", topic: "food" },
+            { en: "beef", vi: "Thịt bò", ipa: "/biːf/", emoji: "🥩", topic: "food" },
+            { en: "duck", vi: "Thịt vịt / Con vịt", ipa: "/dʌk/", emoji: "🦆", topic: "food" },
+            { en: "egg", vi: "Quả trứng", ipa: "/eɡ/", emoji: "🥚", topic: "food" },
+            { en: "seafood", vi: "Hải sản", ipa: "/ˈsiː.fuːd/", emoji: "🦞", topic: "food" },
+            { en: "rice", vi: "Cơm / Gạo", ipa: "/raɪs/", emoji: "🍚", topic: "food" },
+            { en: "vegetable", vi: "Rau củ", ipa: "/ˈvedʒ.tə.bəl/", emoji: "🥦", topic: "food" },
+            { en: "corn", vi: "Bắp ngô", ipa: "/kɔːn/", emoji: "🌽", topic: "food" },
+            { en: "dumpling", vi: "Bánh bao / Sủi cảo", ipa: "/ˈdʌm.plɪŋ/", emoji: "🥟", topic: "food" },
+            { en: "bread", vi: "Bánh mì", ipa: "/bred/", emoji: "🍞", topic: "food" },
+            { en: "sticky rice", vi: "Xôi / Gạo nếp", ipa: "/ˌstɪk.i ˈraɪs/", emoji: "🍙", topic: "food" },
+            { en: "fish", vi: "Con cá / Món cá", ipa: "/fɪʃ/", emoji: "🐟", topic: "food" },
+            { en: "shrimp", vi: "Con tôm", ipa: "/ʃrɪmp/", emoji: "🦐", topic: "food" },
+            { en: "squid", vi: "Con mực", ipa: "/skwɪd/", emoji: "🦑", topic: "food" },
+            { en: "meat", vi: "Thịt", ipa: "/miːt/", emoji: "🍖", topic: "food" },
+            { en: "carrot", vi: "Củ cà rốt", ipa: "/ˈkær.ət/", emoji: "🥕", topic: "food" },
+            { en: "potato", vi: "Củ khoai tây", ipa: "/pəˈteɪ.təʊ/", emoji: "🥔", topic: "food" },
+            { en: "tomato", vi: "Quả cà chua", ipa: "/təˈmɑː.təʊ/", emoji: "🍅", topic: "food" },
+            { en: "cucumber", vi: "Quả dưa chuột", ipa: "/ˈkjuː.kʌm.bər/", emoji: "🥒", topic: "food" },
+            { en: "onion", vi: "Củ hành tây", ipa: "/ˈʌn.jən/", emoji: "🧅", topic: "food" },
+            { en: "garlic", vi: "Củ tỏi", ipa: "/ˈɡɑː.lɪk/", emoji: "🧄", topic: "food" },
+            { en: "mushroom", vi: "Cây nấm", ipa: "/ˈmʌʃ.ruːm/", emoji: "🍄", topic: "food" },
+            { en: "drink", vi: "Đồ uống / Uống", ipa: "/drɪŋk/", emoji: "🥤", topic: "food" },
+            { en: "coke", vi: "Nước ngọt Coca", ipa: "/kəʊk/", emoji: "🥫", topic: "food" },
+            { en: "orange juice", vi: "Nước cam ép", ipa: "/ˈɒr.ɪndʒ ˌdʒuːs/", emoji: "🍹", topic: "food" },
+            { en: "strawberry juice", vi: "Nước dâu tây ép", ipa: "/ˈstrɔː.bər.i ˌdʒuːs/", emoji: "🧃", topic: "food" },
+            { en: "coconut", vi: "Quả dừa / Nước dừa", ipa: "/ˈkəʊ.kə.nʌt/", emoji: "🥥", topic: "food" },
+            { en: "milk", vi: "Sữa tươi", ipa: "/mɪlk/", emoji: "🥛", topic: "food" },
+            { en: "yoghurt", vi: "Sữa chua", ipa: "/ˈjɒɡ.ət/", emoji: "🍨", topic: "food" },
+            { en: "eat", vi: "Ăn", ipa: "/iːt/", emoji: "😋", topic: "food" },
+            { en: "banana", vi: "Quả chuối", ipa: "/bəˈnɑː.nə/", emoji: "🍌", topic: "food" },
+            { en: "mango", vi: "Quả xoài", ipa: "/ˈmæŋ.ɡəʊ/", emoji: "🥭", topic: "food" },
+            { en: "grape", vi: "Quả nho", ipa: "/ɡreɪp/", emoji: "🍇", topic: "food" },
+            { en: "strawberry", vi: "Quả dâu tây", ipa: "/ˈstrɔː.bər.i/", emoji: "🍓", topic: "food" },
+            { en: "apple", vi: "Quả táo", ipa: "/ˈæp.əl/", emoji: "🍎", topic: "food" },
+
+            // --- TOPIC 7: PETS & ACTIVITIES (13 words) ---
+            { en: "pet", vi: "Thú cưng", ipa: "/pet/", emoji: "🐾", topic: "pets" },
+            { en: "puppy", vi: "Chó con", ipa: "/ˈpʌp.i/", emoji: "🐕", topic: "pets" },
+            { en: "dog", vi: "Con chó", ipa: "/dɒɡ/", emoji: "🐶", topic: "pets" },
+            { en: "cat", vi: "Con mèo", ipa: "/kæt/", emoji: "🐱", topic: "pets" },
+            { en: "hamster", vi: "Chuột đồng Hamster", ipa: "/ˈhæm.stər/", emoji: "🐹", topic: "pets" },
+            { en: "draw", vi: "Vẽ tranh", ipa: "/drɔː/", emoji: "🖍️", topic: "pets" },
+            { en: "sing", vi: "Ca hát", ipa: "/sɪŋ/", emoji: "🎤", topic: "pets" },
+            { en: "dance", vi: "Nhảy múa", ipa: "/dɑːns/", emoji: "💃", topic: "pets" },
+            { en: "play chess", vi: "Chơi cờ vua", ipa: "/pleɪ tʃes/", emoji: "♟️", topic: "pets" },
+            { en: "play football", vi: "Chơi bóng đá", ipa: "/pleɪ ˈfʊt.bɔːl/", emoji: "⚽", topic: "pets" },
+            { en: "play badminton", vi: "Chơi cầu lông", ipa: "/pleɪ ˈbæd.mɪn.tən/", emoji: "🏸", topic: "pets" },
+            { en: "jump rope", vi: "Nhảy dây", ipa: "/dʒʌmp rəʊp/", emoji: "➰", topic: "pets" },
+            { en: "ride a bicycle", vi: "Đạp xe đạp", ipa: "/raɪd ə ˈbaɪ.sɪ.kəl/", emoji: "🚲", topic: "pets" },
+
+            // --- TOPIC 8: JOBS & DREAMS (14 words) ---
+            { en: "job", vi: "Công việc / Nghề nghiệp", ipa: "/dʒɒb/", emoji: "💼", topic: "jobs" },
+            { en: "grow up", vi: "Lớn lên / Trưởng thành", ipa: "/ɡrəʊ ʌp/", emoji: "🌱", topic: "jobs" },
+            { en: "pilot", vi: "Phi công", ipa: "/ˈpaɪ.lət/", emoji: "👨‍✈️", topic: "jobs" },
+            { en: "teacher", vi: "Giáo viên", ipa: "/ˈtiː.tʃər/", emoji: "👩‍🏫", topic: "jobs" },
+            { en: "doctor", vi: "Bác sĩ", ipa: "/ˈdɒk.tər/", emoji: "🩺", topic: "jobs" },
+            { en: "nurse", vi: "Y tá", ipa: "/nɜːs/", emoji: "👩‍⚕️", topic: "jobs" },
+            { en: "police officer", vi: "Cảnh sát", ipa: "/pəˈliːs ˌɒf.ɪ.sər/", emoji: "👮", topic: "jobs" },
+            { en: "singer", vi: "Ca sĩ", ipa: "/ˈsɪŋ.ər/", emoji: "🎤", topic: "jobs" },
+            { en: "parents", vi: "Bố mẹ / Cha mẹ", ipa: "/ˈpeə.rənts/", emoji: "👨‍👩‍👧", topic: "jobs" },
+            { en: "always", vi: "Luôn luôn", ipa: "/ˈɔːl.weɪz/", emoji: "♾️", topic: "jobs" },
+            { en: "try", vi: "Cố gắng / Nỗ lực", ipa: "/traɪ/", emoji: "🔥", topic: "jobs" },
+            { en: "make", vi: "Làm / Biến thành", ipa: "/meɪk/", emoji: "🪄", topic: "jobs" },
+            { en: "dream", vi: "Ước mơ / Giấc mơ", ipa: "/driːm/", emoji: "🌠", topic: "jobs" },
+            { en: "true", vi: "Sự thật / Thành hiện thực", ipa: "/truː/", emoji: "✅", topic: "jobs" }
+        ];
+
+        // =========================================================================
+        // 2. GAME STATE & WEB AUDIO SYNTHESIZER ("TING!" & "OPPS!")
+        // =========================================================================
+        let selectedTopic = "all";
+        let selectedMode = 1;
+        let questionPool = [];
+        let currentIndex = 0;
+        let score = 0;
+        let correctCount = 0;
+        let answeredStatus = {};
+        let autoAdvanceTimer = null;
+        let audioCtx = null;
+
+        let mode2State = null;
+        let mode3State = null;
+
+        function ensureAudioCtx() {
+            if (!audioCtx) {
+                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                audioCtx = new AudioContext();
+            }
+            if (audioCtx.state === "suspended") {
+                audioCtx.resume();
+            }
+            return audioCtx;
+        }
+
+        // Cheerful "Ting!" Bell Sound
+        function playTingSound() {
+            try {
+                const ctx = ensureAudioCtx();
+                const now = ctx.currentTime;
+                const osc1 = ctx.createOscillator();
+                const osc2 = ctx.createOscillator();
+                const gain = ctx.createGain();
+
+                osc1.type = "sine";
+                osc2.type = "triangle";
+                osc1.frequency.setValueAtTime(987.77, now); // B5
+                osc1.frequency.setValueAtTime(1318.51, now + 0.08); // E6
+                osc2.frequency.setValueAtTime(1975.53, now + 0.08); // B6
+
+                gain.gain.setValueAtTime(0.24, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.55);
+
+                osc1.connect(gain);
+                osc2.connect(gain);
+                gain.connect(ctx.destination);
+
+                osc1.start(now);
+                osc2.start(now + 0.08);
+                osc1.stop(now + 0.55);
+                osc2.stop(now + 0.55);
+            } catch (e) {}
+        }
+
+        // Gentle Playful "Opps!" Sound
+        function playOppsSound() {
+            try {
+                const ctx = ensureAudioCtx();
+                const now = ctx.currentTime;
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+
+                osc.type = "triangle";
+                osc.frequency.setValueAtTime(280, now);
+                osc.frequency.linearRampToValueAtTime(165, now + 0.34);
+
+                gain.gain.setValueAtTime(0.22, now);
+                gain.gain.exponentialRampToValueAtTime(0.001, now + 0.36);
+
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+
+                osc.start(now);
+                osc.stop(now + 0.36);
+            } catch (e) {}
+        }
+
+        // Native English Pronunciation via Web Speech API (en-US)
+        function speakEnglish(text, rate = 0.92) {
+            if (!("speechSynthesis" in window)) return;
+            window.speechSynthesis.cancel();
+            const utter = new SpeechSynthesisUtterance(text);
+            utter.lang = "en-US";
+            utter.rate = rate;
+            utter.pitch = 1.08;
+
+            const voices = window.speechSynthesis.getVoices();
+            const preferred = voices.find(v =>
+                v.lang.includes("en-US") &&
+                (v.name.includes("Samantha") || v.name.includes("Google US English") || v.name.includes("Female") || v.name.includes("Zira"))
+            ) || voices.find(v => v.lang.startsWith("en"));
+
+            if (preferred) utter.voice = preferred;
+            window.speechSynthesis.speak(utter);
+        }
+
+        function speakCurrent(rate = 0.92) {
+            const item = questionPool[currentIndex];
+            if (item) speakEnglish(item.en, rate);
+        }
+
+        // =========================================================================
+        // 3. HOME SCREEN & CONVERSATIONAL INTRO DIALOGUE
+        // =========================================================================
+        function renderTopics() {
+            const grid = document.getElementById("topicGrid");
+            grid.innerHTML = "";
+
+            TOPICS.forEach(t => {
+                const count = t.id === "all"
+                    ? VOCABULARY_173.length
+                    : VOCABULARY_173.filter(w => w.topic === t.id).length;
+
+                const isSelected = selectedTopic === t.id;
+                const btn = document.createElement("button");
+                btn.onclick = () => {
+                    selectedTopic = t.id;
+                    renderTopics();
+                };
+
+                btn.className = `btn-3d p-3 rounded-[18px] border-4 text-left flex flex-col justify-between transition-all ${
+                    isSelected
+                    ? "border-[#FF6B6B] bg-[#FFF1F2] shadow-[0_4px_0_#FF6B6B] scale-[1.02]"
+                    : "border-slate-200 bg-white hover:border-sky-300 shadow-[0_3px_0_#E2E8F0]"
+                }`;
+
+                btn.innerHTML = `
+                    <div class="flex items-center justify-between w-full mb-1">
+                        <span class="text-2xl">${t.icon}</span>
+                        <span class="text-[11px] font-black px-2 py-0.5 rounded-full ${isSelected ? "bg-[#FF6B6B] text-white" : "bg-slate-100 text-slate-600"}">
+                            ${count} words
+                        </span>
+                    </div>
+                    <div class="font-black text-xs md:text-sm text-slate-800 leading-tight">${t.en}</div>
+                    <div class="font-semibold text-[11px] text-slate-500 leading-tight mt-0.5">${t.vi}</div>
+                `;
+                grid.appendChild(btn);
+            });
+        }
+
+        function selectMode(modeNum) {
+            selectedMode = modeNum;
+            const activeStyles = {
+                1: "btn-3d p-3.5 rounded-[20px] border-4 border-[#10B981] bg-[#ECFDF5] text-left shadow-[0_4px_0_#10B981]",
+                2: "btn-3d p-3.5 rounded-[20px] border-4 border-[#F59E0B] bg-[#FFFBEB] text-left shadow-[0_4px_0_#F59E0B]",
+                3: "btn-3d p-3.5 rounded-[20px] border-4 border-[#8B5CF6] bg-[#F5F3FF] text-left shadow-[0_4px_0_#8B5CF6]"
+            };
+            const inactiveStyle = "btn-3d p-3.5 rounded-[20px] border-4 border-slate-200 bg-white text-left shadow-[0_4px_0_#CBD5E1]";
+
+            [1, 2, 3].forEach(num => {
+                document.getElementById(`modeBtn${num}`).className = (num === modeNum) ? activeStyles[num] : inactiveStyle;
+            });
+        }
+
+        function openIntroDialogue() {
+            ensureAudioCtx();
+            const topicObj = TOPICS.find(t => t.id === selectedTopic);
+
+            const rulesEn = {
+                1: "Look at the picture, listen to Milo's voice, and tap the matching English word among 4 choices!",
+                2: "Listen to the word and look at the picture. Vietnamese meaning is hidden in this mode—pick the missing letters and tap Check Answer!",
+                3: "Tap the scrambled letter tiles in the right order to spell the English word shown in the picture!"
+            };
+            const rulesVi = {
+                1: "Bé hãy nhìn hình minh họa, nghe giọng đọc của Milo và chọn 1 trong 4 đáp án Tiếng Anh đúng nhé!",
+                2: "Nghe phát âm và nhìn hình ảnh. Nghĩa Tiếng Việt sẽ được ẩn ở chế độ này—bé hãy chọn chữ cái còn thiếu và bấm Kiểm tra nhé!",
+                3: "Bấm lần lượt vào các thẻ chữ cái bị xáo trộn để ghép thành từ Tiếng Anh hoàn chỉnh nhé!"
+            };
+
+            document.getElementById("introTopicTitle").innerText = `${topicObj.icon} ${topicObj.en}`;
+            document.getElementById("introTopicSub").innerText = topicObj.vi;
+            document.getElementById("introRuleEn").innerText = rulesEn[selectedMode];
+            document.getElementById("introRuleVi").innerText = rulesVi[selectedMode];
+
+            const modal = document.getElementById("introModal");
+            modal.classList.remove("hidden");
+            modal.classList.add("flex");
+        }
+
+        function closeIntroDialogue() {
+            const modal = document.getElementById("introModal");
+            modal.classList.add("hidden");
+            modal.classList.remove("flex");
+        }
+
+        // =========================================================================
+        // 4. START GAME & NAVIGATION FLOW
+        // =========================================================================
+        function shuffle(arr) {
+            const copy = [...arr];
+            for (let i = copy.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [copy[i], copy[j]] = [copy[j], copy[i]];
+            }
+            return copy;
+        }
+
+        function startGame() {
+            closeIntroDialogue();
+            const filtered = selectedTopic === "all"
+                ? VOCABULARY_173
+                : VOCABULARY_173.filter(w => w.topic === selectedTopic);
+
+            questionPool = shuffle(filtered);
+            currentIndex = 0;
+            score = 0;
+            correctCount = 0;
+            answeredStatus = {};
+
+            const topicObj = TOPICS.find(t => t.id === selectedTopic);
+            const modeLabels = {
+                1: "🎯 Choose the Word • Chọn từ Tiếng Anh",
+                2: "✏️ Fill in the Blank • Điền từ còn thiếu",
+                3: "🧩 Unscramble Letters • Sắp xếp chữ cái"
+            };
+
+            document.getElementById("headerTopicText").innerText = `${topicObj.icon} ${topicObj.en} (${topicObj.vi})`;
+            document.getElementById("headerModeText").innerText = modeLabels[selectedMode];
+            document.getElementById("totalCountEl").innerText = questionPool.length;
+            document.getElementById("qTotalEl").innerText = questionPool.length;
+
+            document.getElementById("homeScreen").classList.add("hidden");
+            document.getElementById("summaryScreen").classList.add("hidden");
+            document.getElementById("gameScreen").classList.remove("hidden");
+
+            loadQuestion(0);
+        }
+
+        function goHome() {
+            if (autoAdvanceTimer) clearTimeout(autoAdvanceTimer);
+            window.speechSynthesis.cancel();
+            document.getElementById("gameScreen").classList.add("hidden");
+            document.getElementById("summaryScreen").classList.add("hidden");
+            document.getElementById("homeScreen").classList.remove("hidden");
+        }
+
+        function updateTopStats() {
+            document.getElementById("correctCountEl").innerText = correctCount;
+            document.getElementById("scoreEl").innerText = score;
+            document.getElementById("qNumEl").innerText = currentIndex + 1;
+            const pct = Math.round(((currentIndex + 1) / questionPool.length) * 100);
+            document.getElementById("progressBarEl").style.width = `${pct}%`;
+            document.getElementById("btnPrev").disabled = currentIndex === 0;
+        }
+
+        // Render rich visual card (Color swatch, Number badge, Month calendar, or Big Emoji)
+        function renderVisualIllustration(item) {
+            const box = document.getElementById("visualBox");
+            box.classList.remove("animate-pop");
+            void box.offsetWidth;
+            box.classList.add("animate-pop");
+
+            if (item.swatch) {
+                const borderStyle = item.swatch === "#FFFFFF" ? "border-4 border-slate-300" : "border-4 border-white shadow-md";
+                box.innerHTML = `
+                    <div class="w-20 h-20 md:w-24 md:h-24 rounded-full ${borderStyle}" style="background-color: ${item.swatch};"></div>
+                `;
+            } else if (item.badge) {
+                box.innerHTML = `
+                    <div class="px-3 py-1 rounded-2xl bg-gradient-to-br from-amber-400 to-orange-500 text-white font-display font-bold text-3xl md:text-4xl shadow-md">
+                        ${item.badge}
+                    </div>
+                `;
+            } else if (item.monthTag) {
+                const [abbr, num] = item.monthTag.split(" • ");
+                box.innerHTML = `
+                    <div class="w-22 h-24 md:w-26 md:h-28 rounded-2xl bg-white border-2 border-rose-300 shadow-md overflow-hidden flex flex-col">
+                        <div class="bg-rose-500 text-white text-xs md:text-sm font-black py-1 tracking-wider">${abbr}</div>
+                        <div class="flex-1 flex items-center justify-center text-3xl md:text-4xl font-black text-slate-800">${num}</div>
+                    </div>
+                `;
+            } else {
+                box.innerHTML = `<span class="text-6xl md:text-7xl">${item.emoji || "🌟"}</span>`;
+            }
+        }
+
+        function loadQuestion(index) {
+            if (autoAdvanceTimer) clearTimeout(autoAdvanceTimer);
+            currentIndex = index;
+            updateTopStats();
+
+            const item = questionPool[currentIndex];
+            const card = document.getElementById("questionCard");
+            card.classList.remove("animate-shake");
+
+            renderVisualIllustration(item);
+            document.getElementById("ipaBadge").innerText = item.ipa;
+
+            // Mode 2 STRICTLY hides Vietnamese meaning on the question card
+            const viContainer = document.getElementById("viMeaningContainer");
+            if (selectedMode === 2) {
+                viContainer.classList.add("hidden");
+            } else {
+                viContainer.classList.remove("hidden");
+                document.getElementById("viMeaningText").innerText = item.vi;
+            }
+
+            // Reset feedback & Milo dialogue
+            document.getElementById("feedbackBox").classList.add("hidden");
+            const miniAvatar = document.getElementById("miloMiniAvatar");
+            miniAvatar.innerText = "🐶";
+            miniAvatar.classList.remove("milo-happy");
+
+            const dialoguePrompts = {
+                1: { en: "Listen and tap the matching English word!", vi: "Bé hãy nghe phát âm và chọn từ Tiếng Anh đúng nhé!" },
+                2: { en: "Listen carefully, pick the missing letter(s), and tap Check Answer!", vi: "Nghe kỹ âm thanh, chọn chữ cái còn thiếu và bấm Kiểm tra nhé!" },
+                3: { en: "Tap the letter tiles in order to spell the word!", vi: "Bấm lần lượt vào các thẻ chữ cái để xếp thành từ đúng nào!" }
+            };
+            document.getElementById("dialogueEn").innerText = dialoguePrompts[selectedMode].en;
+            document.getElementById("dialogueVi").innerText = dialoguePrompts[selectedMode].vi;
+
+            if (selectedMode === 1) renderMode1(item);
+            else if (selectedMode === 2) renderMode2(item);
+            else if (selectedMode === 3) renderMode3(item);
+
+            setTimeout(() => speakEnglish(item.en), 240);
+        }
+
+        // =========================================================================
+        // 5. THREE INTERACTIVE GAME MODES
+        // =========================================================================
+
+        // --- MODE 1: CHOOSE THE WORD ---
+        function renderMode1(correctItem) {
+            const zone = document.getElementById("playZone");
+            const distractors = shuffle(
+                VOCABULARY_173.filter(w => w.en.toLowerCase() !== correctItem.en.toLowerCase())
+            ).slice(0, 3);
+            const choices = shuffle([correctItem, ...distractors]);
+
+            zone.innerHTML = `
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    ${choices.map(choice => `
+                        <button onclick="handleMode1Pick(this, '${choice.en.replace(/'/g, "\\'")}')"
+                            class="m1-btn btn-3d py-3.5 px-5 rounded-[20px] border-4 border-sky-200 bg-sky-50/80 hover:bg-sky-100 hover:border-sky-400 text-slate-800 font-black text-xl md:text-2xl shadow-[0_4px_0_#BAE6FD] transition-all">
+                            ${choice.en}
+                        </button>
+                    `).join("")}
+                </div>
+            `;
+        }
+
+        function handleMode1Pick(btn, pickedWord) {
+            const item = questionPool[currentIndex];
+            if (pickedWord.toLowerCase() === item.en.toLowerCase()) {
+                document.querySelectorAll(".m1-btn").forEach(b => b.disabled = true);
+                btn.className = "m1-btn btn-3d py-3.5 px-5 rounded-[20px] border-4 border-emerald-500 bg-emerald-400 text-white font-black text-xl md:text-2xl shadow-[0_4px_0_#059669] scale-[1.03]";
+                onCorrectResponse(btn);
+            } else {
+                btn.className = "m1-btn btn-3d py-3.5 px-5 rounded-[20px] border-4 border-rose-500 bg-rose-100 text-rose-700 font-black text-xl md:text-2xl shadow-[0_4px_0_#F43F5E]";
+                onWrongResponse();
+            }
+        }
+
+        // --- MODE 2: FILL IN THE BLANK (1-2 MISSING LETTERS, NO VIETNAMESE HINT) ---
+        function renderMode2(item) {
+            const word = item.en;
+            const letterIndices = [];
+            for (let i = 0; i < word.length; i++) {
+                if (/[a-zA-Z]/.test(word[i])) letterIndices.push(i);
+            }
+
+            // Hide 1 letter for short words (<=5 letters), or 2 letters for longer words
+            const numToHide = letterIndices.length >= 6 ? 2 : 1;
+            const hiddenIndices = shuffle(letterIndices).slice(0, numToHide).sort((a, b) => a - b);
+
+            const alphabet = "abcdefghijklmnopqrstuvwxyz";
+            const optionPool = new Set(hiddenIndices.map(idx => word[idx]));
+            while (optionPool.size < Math.max(4, numToHide + 3)) {
+                const rand = alphabet[Math.floor(Math.random() * alphabet.length)];
+                const formatted = (word[hiddenIndices[0]] === word[hiddenIndices[0]].toUpperCase() && word[hiddenIndices[0]] !== word[hiddenIndices[0]].toLowerCase())
+                    ? rand.toUpperCase()
+                    : rand;
+                optionPool.add(formatted);
+            }
+
+            mode2State = {
+                word,
+                hiddenIndices,
+                filledMap: {}, // idx -> char
+                charChoices: shuffle(Array.from(optionPool))
+            };
+
+            updateMode2UI();
+        }
+
+        function updateMode2UI() {
+            const zone = document.getElementById("playZone");
+            const { word, hiddenIndices, filledMap, charChoices } = mode2State;
+
+            const slotsHtml = word.split("").map((ch, idx) => {
+                if (ch === " ") return `<span class="w-4 inline-block"></span>`;
+                if (hiddenIndices.includes(idx)) {
+                    const filledChar = filledMap[idx];
+                    if (filledChar) {
+                        return `
+                            <button onclick="clearMode2Slot(${idx})"
+                                class="inline-flex items-center justify-center w-10 h-12 md:w-12 md:h-14 mx-0.5 rounded-2xl border-4 border-amber-400 bg-amber-400 text-white font-black text-2xl md:text-3xl shadow-sm">
+                                ${filledChar}
+                            </button>
+                        `;
+                    }
+                    return `<span class="inline-flex items-center justify-center w-10 h-12 md:w-12 md:h-14 mx-0.5 rounded-2xl border-4 border-dashed border-amber-400 bg-amber-50 text-amber-500 font-black text-2xl md:text-3xl">_</span>`;
+                }
+                return `<span class="inline-flex items-center justify-center w-9 h-11 md:w-11 md:h-13 mx-0.5 rounded-2xl border-2 border-slate-200 bg-slate-50 text-slate-800 font-black text-2xl md:text-3xl">${ch}</span>`;
+            }).join("");
+
+            zone.innerHTML = `
+                <div id="mode2WordRow" class="flex flex-wrap items-center justify-center gap-y-2 mb-5">
+                    ${slotsHtml}
+                </div>
+                <div class="text-center text-xs font-extrabold text-slate-400 mb-2">
+                    Tap the missing letter(s) • Chọn chữ cái còn thiếu:
+                </div>
+                <div class="flex flex-wrap items-center justify-center gap-2.5 mb-4">
+                    ${charChoices.map(ch => `
+                        <button onclick="pickMode2Letter('${ch}')"
+                            class="btn-3d w-12 h-12 md:w-14 md:h-14 rounded-2xl border-4 border-amber-300 bg-amber-50 hover:bg-amber-100 text-slate-800 font-black text-2xl md:text-3xl shadow-[0_4px_0_#FCD34D]">
+                            ${ch}
+                        </button>
+                    `).join("")}
+                </div>
+                <div class="flex items-center justify-center gap-3">
+                    <button onclick="clearAllMode2Slots()"
+                        class="btn-3d px-4 py-2.5 rounded-2xl bg-slate-100 hover:bg-slate-200 text-slate-600 font-black text-xs md:text-sm shadow-[0_3px_0_#CBD5E1]">
+                        🔄 Reset • Xóa lại
+                    </button>
+                    <button onclick="checkMode2Answer()"
+                        class="btn-3d px-6 py-2.5 rounded-2xl bg-[#10B981] hover:bg-[#059669] text-white font-black text-sm md:text-base shadow-[0_4px_0_#047857]">
+                        ✅ Check Answer • Kiểm tra
+                    </button>
+                </div>
+            `;
+        }
+
+        function clearMode2Slot(idx) {
+            delete mode2State.filledMap[idx];
+            updateMode2UI();
+        }
+
+        function clearAllMode2Slots() {
+            mode2State.filledMap = {};
+            updateMode2UI();
+        }
+
+        function pickMode2Letter(ch) {
+            const { hiddenIndices, filledMap } = mode2State;
+            const nextEmptyIdx = hiddenIndices.find(idx => !filledMap[idx]);
+            if (nextEmptyIdx === undefined) return;
+
+            filledMap[nextEmptyIdx] = ch;
+            updateMode2UI();
+
+            // Automatically check once all blank slots are filled
+            const allFilled = hiddenIndices.every(idx => Boolean(filledMap[idx]));
+            if (allFilled) {
+                checkMode2Answer();
+            }
+        }
+
+        function checkMode2Answer() {
+            const { word, hiddenIndices, filledMap } = mode2State;
+            const rowEl = document.getElementById("mode2WordRow");
+            const allFilled = hiddenIndices.every(idx => Boolean(filledMap[idx]));
+            if (!allFilled) {
+                onWrongResponse();
+                return;
+            }
+            const isAllMatch = hiddenIndices.every(idx => filledMap[idx] === word[idx]);
+            if (isAllMatch) {
+                onCorrectResponse(rowEl);
+            } else {
+                onWrongResponse();
+                setTimeout(() => {
+                    if (mode2State) {
+                        mode2State.filledMap = {};
+                        updateMode2UI();
+                    }
+                }, 750);
+            }
+        }
+
+        // --- MODE 3: UNSCRAMBLE LETTERS ---
+        function renderMode3(item) {
+            const word = item.en;
+            const tiles = [];
+            for (let i = 0; i < word.length; i++) {
+                if (word[i] !== " ") {
+                    tiles.push({ id: i, char: word[i] });
+                }
+            }
+
+            let scrambled = shuffle(tiles);
+            if (tiles.length > 1 && scrambled.map(t => t.char).join("") === tiles.map(t => t.char).join("")) {
+                scrambled.reverse();
+            }
+
+            mode3State = {
+                word,
+                tiles: scrambled,
+                pickedIds: []
+            };
+            updateMode3UI();
+        }
+
+        function updateMode3UI() {
+            const zone = document.getElementById("playZone");
+            const { word, tiles, pickedIds } = mode3State;
+            let cursor = 0;
+
+            const targetSlots = word.split("").map(ch => {
+                if (ch === " ") return `<span class="w-4 inline-block"></span>`;
+                const tileId = pickedIds[cursor++];
+                if (tileId !== undefined) {
+                    const tile = tiles.find(t => t.id === tileId);
+                    return `
+                        <button onclick="unpickMode3(${tileId})"
+                            class="btn-3d w-10 h-12 md:w-12 md:h-14 mx-0.5 rounded-2xl border-4 border-purple-400 bg-purple-500 text-white font-black text-xl md:text-2xl shadow-[0_3px_0_#7E22CE]">
+                            ${tile.char}
+                        </button>
+                    `;
+                }
+                return `<span class="inline-flex items-center justify-center w-10 h-12 md:w-12 md:h-14 mx-0.5 rounded-2xl border-2 border-dashed border-purple-300 bg-purple-50/50 text-purple-300 font-black text-xl">_</span>`;
+            }).join("");
+
+            const tilePool = tiles.map(t => {
+                const used = pickedIds.includes(t.id);
+                return `
+                    <button onclick="pickMode3(${t.id})" ${used ? "disabled" : ""}
+                        class="btn-3d w-11 h-12 md:w-13 md:h-14 rounded-2xl border-4 font-black text-xl md:text-2xl transition-all ${
+                            used
+                            ? "border-slate-200 bg-slate-100 text-slate-300 opacity-40"
+                            : "border-sky-300 bg-sky-50 hover:bg-sky-100 text-slate-800 shadow-[0_4px_0_#7DD3FC]"
+                        }">
+                        ${t.char}
+                    </button>
+                `;
+            }).join("");
+
+            zone.innerHTML = `
+                <div id="mode3TargetRow" class="flex flex-wrap items-center justify-center gap-y-2 mb-4 min-h-[3.5rem]">
+                    ${targetSlots}
+                </div>
+                <div class="flex flex-wrap items-center justify-center gap-2 mb-3">
+                    ${tilePool}
+                </div>
+                <div class="text-center">
+                    <button onclick="clearMode3()" class="text-xs font-black text-slate-500 hover:text-rose-600 bg-slate-100 px-3.5 py-1.5 rounded-full">
+                        🔄 Clear & Reset • Xếp lại
+                    </button>
+                </div>
+            `;
+        }
+
+        function pickMode3(tileId) {
+            if (mode3State.pickedIds.includes(tileId)) return;
+            mode3State.pickedIds.push(tileId);
+            updateMode3UI();
+
+            if (mode3State.pickedIds.length === mode3State.tiles.length) {
+                const built = mode3State.pickedIds.map(id => mode3State.tiles.find(t => t.id === id).char).join("");
+                const targetNoSpace = mode3State.word.replace(/\s+/g, "");
+                const targetRow = document.getElementById("mode3TargetRow");
+
+                if (built === targetNoSpace) {
+                    onCorrectResponse(targetRow);
+                } else {
+                    onWrongResponse();
+                }
+            }
+        }
+
+        function unpickMode3(tileId) {
+            mode3State.pickedIds = mode3State.pickedIds.filter(id => id !== tileId);
+            updateMode3UI();
+        }
+
+        function clearMode3() {
+            mode3State.pickedIds = [];
+            updateMode3UI();
+        }
+
+        // =========================================================================
+        // 6. INSTANT FEEDBACK ("TING!" / "OPPS!"), CELEBRATION & AUTO-ADVANCE
+        // =========================================================================
+        function triggerCelebrationFX(anchorEl) {
+            const rect = anchorEl ? anchorEl.getBoundingClientRect() : { left: window.innerWidth / 2, top: window.innerHeight / 2, width: 0 };
+            const cx = rect.left + rect.width / 2;
+            const cy = rect.top;
+
+            // Floating +10 Points
+            const pts = document.createElement("div");
+            pts.className = "points-float text-2xl";
+            pts.innerText = "+10 ⭐";
+            pts.style.left = `${cx - 28}px`;
+            pts.style.top = `${cy - 12}px`;
+            document.body.appendChild(pts);
+            setTimeout(() => pts.remove(), 900);
+
+            // Confetti & Stars Burst
+            const icons = ["🎉", "⭐", "🌟", "✨", "🎈", "🥳"];
+            for (let i = 0; i < 8; i++) {
+                const p = document.createElement("div");
+                p.className = "confetti-particle";
+                p.innerText = icons[i % icons.length];
+                p.style.left = `${cx}px`;
+                p.style.top = `${cy}px`;
+                const angle = (Math.PI * 2 * i) / 8;
+                const dist = 55 + Math.random() * 55;
+                p.style.setProperty("--dx", `${Math.cos(angle) * dist}px`);
+                p.style.setProperty("--dy", `${Math.sin(angle) * dist - 35}px`);
+                document.body.appendChild(p);
+                setTimeout(() => p.remove(), 950);
+            }
+        }
+
+        function onCorrectResponse(anchorEl) {
+            playTingSound();
+            const item = questionPool[currentIndex];
+            speakEnglish(item.en);
+
+            if (!answeredStatus[currentIndex]) {
+                answeredStatus[currentIndex] = true;
+                correctCount++;
+                score += 10;
+                updateTopStats();
+                triggerCelebrationFX(anchorEl);
+            }
+
+            const praises = [
+                { en: "Awesome! You got it! 🎉", vi: "Tuyệt vời! Bé trả lời chính xác rồi!" },
+                { en: "Superstar! Great job! 🌟", vi: "Siêu sao nhí! Bé giỏi quá đi mất!" },
+                { en: "Hooray! That's right! 👏", vi: "Hoan hô! Đúng rồi bé ơi!" },
+                { en: "Fantastic! Keep going! 🏆", vi: "Xuất sắc! Tiếp tục phát huy nhé!" }
+            ];
+            const pick = praises[Math.floor(Math.random() * praises.length)];
+
+            const miniAvatar = document.getElementById("miloMiniAvatar");
+            miniAvatar.innerText = "🥳";
+            miniAvatar.classList.add("milo-happy");
+
+            document.getElementById("dialogueEn").innerText = pick.en;
+            document.getElementById("dialogueVi").innerText = pick.vi;
+
+            const fb = document.getElementById("feedbackBox");
+            fb.className = "rounded-2xl p-3.5 text-center border-4 border-emerald-400 bg-emerald-50 text-emerald-800 animate-pop";
+            document.getElementById("feedbackEn").innerText = `✅ ${pick.en}`;
+            document.getElementById("feedbackVi").innerText = pick.vi;
+            document.getElementById("answerRevealBox").innerHTML = `
+                <span class="text-emerald-700 text-lg">${item.en}</span>
+                <span class="text-slate-500 font-mono text-xs">(${item.ipa})</span> =
+                <span class="text-rose-600">${item.vi}</span>
+            `;
+
+            // Automatically advance to the next question after 1.6 seconds
+            if (autoAdvanceTimer) clearTimeout(autoAdvanceTimer);
+            autoAdvanceTimer = setTimeout(() => {
+                nextQuestion();
+            }, 1600);
+        }
+
+        function onWrongResponse() {
+            playOppsSound();
+            const item = questionPool[currentIndex];
+
+            const card = document.getElementById("questionCard");
+            card.classList.remove("animate-shake");
+            void card.offsetWidth;
+            card.classList.add("animate-shake");
+
+            document.getElementById("miloMiniAvatar").innerText = "🐶";
+            document.getElementById("dialogueEn").innerText = "Oops! Not quite—check the answer below or try again!";
+            document.getElementById("dialogueVi").innerText = "Ôi nhầm một chút rồi! Bé xem đáp án đúng bên dưới hoặc thử lại nhé!";
+
+            // Always display the correct answer when wrong
+            const fb = document.getElementById("feedbackBox");
+            fb.className = "rounded-2xl p-3.5 text-center border-4 border-rose-300 bg-rose-50 text-rose-800 animate-pop";
+            document.getElementById("feedbackEn").innerText = "Oops! Try again, you can do it! 💪";
+            document.getElementById("feedbackVi").innerText = "Chưa đúng rồi, bé thử lại nhé!";
+            document.getElementById("answerRevealBox").innerHTML = `
+                💡 Correct Answer • Đáp án đúng:
+                <span class="text-emerald-700 underline text-lg ml-1">${item.en}</span>
+                <span class="text-slate-500 font-mono text-xs">(${item.ipa})</span> —
+                <span class="text-rose-600">${item.vi}</span>
+            `;
+        }
+
+        function skipQuestion() {
+            if (autoAdvanceTimer) clearTimeout(autoAdvanceTimer);
+            const item = questionPool[currentIndex];
+            speakEnglish(item.en);
+
+            document.getElementById("miloMiniAvatar").innerText = "🐶";
+            document.getElementById("dialogueEn").innerText = "No worries! Here is the answer—tap Next when ready!";
+            document.getElementById("dialogueVi").innerText = "Không sao đâu bé! Cùng xem đáp án để nhớ từ này rồi bấm Câu sau nhé!";
+
+            // Always show the correct answer when skipped
+            const fb = document.getElementById("feedbackBox");
+            fb.className = "rounded-2xl p-3.5 text-center border-4 border-amber-300 bg-amber-50 text-amber-900 animate-pop";
+            document.getElementById("feedbackEn").innerText = "⏭️ Question Skipped!";
+            document.getElementById("feedbackVi").innerText = "Đã bỏ qua câu hỏi này";
+            document.getElementById("answerRevealBox").innerHTML = `
+                💡 Correct Answer • Đáp án đúng:
+                <span class="text-emerald-700 underline text-lg ml-1">${item.en}</span>
+                <span class="text-slate-500 font-mono text-xs">(${item.ipa})</span> —
+                <span class="text-rose-600">${item.vi}</span>
+            `;
+        }
+
+        function prevQuestion() {
+            if (currentIndex > 0) loadQuestion(currentIndex - 1);
+        }
+
+        function nextQuestion() {
+            if (currentIndex + 1 < questionPool.length) {
+                loadQuestion(currentIndex + 1);
+            } else {
+                showCelebrationSummary();
+            }
+        }
+
+        // =========================================================================
+        // 7. SUMMARY & CELEBRATION SCREEN
+        // =========================================================================
+        function showCelebrationSummary() {
+            if (autoAdvanceTimer) clearTimeout(autoAdvanceTimer);
+            playTingSound();
+
+            document.getElementById("gameScreen").classList.add("hidden");
+            document.getElementById("summaryScreen").classList.remove("hidden");
+
+            const total = questionPool.length;
+            const ratio = total > 0 ? correctCount / total : 0;
+
+            let stars = "⭐";
+            let subEn = "Nice try! Practice a little more and you'll master every word!";
+            let subVi = "Cố gắng lên bé nhé! Luyện thêm chút nữa là bé thuộc hết ngay!";
+
+            if (ratio >= 0.8) {
+                stars = "⭐⭐⭐";
+                subEn = "Unbelievable! You are an English Vocabulary Champion!";
+                subVi = "Xuất sắc tuyệt vời! Bé đúng là nhà vô địch từ vựng Tiếng Anh!";
+            } else if (ratio >= 0.5) {
+                stars = "⭐⭐";
+                subEn = "Great job! You remembered so many English words today!";
+                subVi = "Giỏi lắm bé ơi! Hôm nay bé đã nhớ được rất nhiều từ vựng rồi!";
+            }
+
+            document.getElementById("starRatingDisplay").innerText = stars;
+            document.getElementById("summarySubText").innerHTML = `
+                ${subEn}
+                <span class="block text-xs font-semibold text-slate-400 mt-0.5">${subVi}</span>
+            `;
+            document.getElementById("finalCorrectEl").innerText = correctCount;
+            document.getElementById("finalTotalEl").innerText = total;
+            document.getElementById("finalScoreEl").innerText = score;
+        }
+
+        // Initialize Voices & App
+        if ("speechSynthesis" in window) {
+            window.speechSynthesis.onvoiceschanged = () => window.speechSynthesis.getVoices();
+        }
+        window.onload = () => {
+            renderTopics();
+            selectMode(1);
+        };
+    </script>
+</body>
+</html>
