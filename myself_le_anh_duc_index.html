@@ -1,0 +1,1354 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bé Vui Học Tiếng Anh - Q&A cùng bạn Đức 🎒</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(135deg, #fef08a 0%, #fbcfe8 35%, #bae6fd 70%, #bbf7d0 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Bong bóng trang trí nền cho bé */
+        .bubble-bg {
+            position: fixed;
+            border-radius: 9999px;
+            z-index: 0;
+            opacity: 0.45;
+            pointer-events: none;
+            animation: floatBubble 7s ease-in-out infinite;
+        }
+        @keyframes floatBubble {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-18px) rotate(8deg); }
+        }
+
+        /* Hiệu ứng sóng âm khi đang thu âm */
+        @keyframes pulse-ring {
+            0% {
+                transform: scale(0.95);
+                box-shadow: 0 0 0 0 rgba(244, 63, 94, 0.75);
+            }
+            70% {
+                transform: scale(1.06);
+                box-shadow: 0 0 0 22px rgba(244, 63, 94, 0);
+            }
+            100% {
+                transform: scale(0.95);
+                box-shadow: 0 0 0 0 rgba(244, 63, 94, 0);
+            }
+        }
+
+        .recording-pulse {
+            animation: pulse-ring 1.4s infinite;
+        }
+
+        /* Hiệu ứng sóng âm thanh nhảy múa */
+        @keyframes wave {
+            0%, 100% { height: 10px; }
+            50% { height: 32px; }
+        }
+
+        .sound-bar {
+            width: 6px;
+            background-color: #f43f5e;
+            border-radius: 9999px;
+            animation: wave 0.7s ease-in-out infinite;
+        }
+        .sound-bar:nth-child(2) { animation-delay: 0.1s; background-color: #fb923c; }
+        .sound-bar:nth-child(3) { animation-delay: 0.2s; background-color: #facc15; }
+        .sound-bar:nth-child(4) { animation-delay: 0.3s; background-color: #4ade80; }
+        .sound-bar:nth-child(5) { animation-delay: 0.4s; background-color: #38bdf8; }
+
+        /* Hiệu ứng chuyển thẻ mượt mà */
+        .fade-in {
+            animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(14px) scale(0.98); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        /* Nút bấm 3D kiểu kẹo ngọt cho trẻ em */
+        .btn-3d {
+            transition: all 0.15s ease;
+            border-bottom-width: 5px;
+        }
+        .btn-3d:active:not(:disabled) {
+            transform: translateY(3px);
+            border-bottom-width: 2px;
+        }
+    </style>
+</head>
+<body class="text-slate-800 flex flex-col items-center justify-center p-3 sm:p-6 relative">
+
+    <!-- Họa tiết trang trí nền dễ thương -->
+    <div class="bubble-bg w-24 h-24 bg-pink-300 top-6 left-6"></div>
+    <div class="bubble-bg w-32 h-32 bg-sky-300 bottom-10 right-8" style="animation-delay: 1.5s;"></div>
+    <div class="bubble-bg w-20 h-20 bg-amber-300 top-1/3 right-6" style="animation-delay: 3s;"></div>
+    <div class="bubble-bg w-16 h-16 bg-emerald-300 bottom-1/4 left-8" style="animation-delay: 2s;"></div>
+
+    <!-- Container chính -->
+    <div class="relative z-10 w-full max-w-3xl bg-white/95 backdrop-blur-md rounded-[2.2rem] shadow-2xl border-4 border-amber-300 overflow-hidden">
+        
+        <!-- Header luôn hiển thị -->
+        <header class="bg-gradient-to-r from-orange-400 via-pink-500 to-purple-500 text-white p-4 sm:p-5 flex flex-wrap items-center justify-between gap-3">
+            <div class="flex items-center gap-3">
+                <div class="w-12 h-12 bg-white rounded-2xl flex items-center justify-center text-3xl shadow-md transform -rotate-6">
+                    🦁
+                </div>
+                <div>
+                    <h1 class="text-lg sm:text-2xl font-black tracking-tight drop-shadow-xs">Bé Vui Học Tiếng Anh</h1>
+                    <p class="text-xs sm:text-sm text-amber-100 font-bold">Bộ 23 Câu Hỏi – Đáp Mẫu (Bạn Lê Anh Đức - Lớp 1A1)</p>
+                </div>
+            </div>
+
+            <!-- Nút về trang chủ khi đang chơi -->
+            <button id="btn-home" onclick="confirmReturnHome()" class="hidden px-4 py-2 bg-white text-pink-600 hover:bg-amber-50 rounded-2xl text-sm font-black shadow-sm transition flex items-center gap-1.5">
+                <i class="fa-solid fa-house"></i> <span>Trang chủ</span>
+            </button>
+        </header>
+
+        <!-- ==================== MÀN HÌNH 1: BẮT ĐẦU (START SCREEN) ==================== -->
+        <main id="screen-start" class="p-5 sm:p-8 fade-in">
+            <div class="text-center mb-6">
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-amber-100 border-2 border-amber-300 text-amber-800 font-black text-xs sm:text-sm mb-3">
+                    <span>🌈</span> <span>Dành cho các bé Mầm Non & Tiểu Học</span> <span>🎒</span>
+                </div>
+                <h2 class="text-2xl sm:text-3xl font-black text-slate-800 mb-2">Cùng luyện nghe & nói tiếng Anh nào!</h2>
+                <p class="text-slate-600 text-sm sm:text-base max-w-xl mx-auto font-semibold">
+                    Bé có thể nghe câu hỏi rồi trả lời theo mẫu, hoặc tập đóng vai người hỏi và máy sẽ trả lời giúp bé nhé!
+                </p>
+            </div>
+
+            <!-- Cảnh báo trình duyệt nếu không hỗ trợ SpeechRecognition -->
+            <div id="browser-warning" class="hidden mb-5 p-4 bg-amber-50 border-2 border-amber-300 rounded-2xl text-amber-800 text-sm">
+                <p class="font-extrabold"><i class="fa-solid fa-triangle-exclamation mr-1"></i> Mách nhỏ cho ba mẹ:</p>
+                <p>Trình duyệt này chưa bật Micro tự động (nên dùng <b>Google Chrome</b> hoặc <b>Edge</b>). Bé vẫn có thể bấm nghe phát âm và dùng ô gõ chữ bên dưới để chơi nhé!</p>
+            </div>
+
+            <!-- Cài đặt trò chơi -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-7">
+                <!-- Chọn chế độ chơi -->
+                <div class="bg-sky-50/80 p-5 rounded-3xl border-2 border-sky-200">
+                    <label class="block text-sm font-black text-sky-800 uppercase tracking-wider mb-3">
+                        🎈 1. Bé muốn chơi kiểu nào?
+                    </label>
+                    <div class="space-y-2.5">
+                        <!-- Chế độ 1: Máy hỏi - Bé trả lời theo mẫu -->
+                        <label class="flex items-start gap-3 p-3 rounded-2xl border-2 cursor-pointer transition bg-white border-pink-500 shadow-sm" id="label-mode-answer">
+                            <input type="radio" name="gameMode" value="answer" checked class="mt-1 accent-pink-500 w-4 h-4" onchange="updateModeUI()">
+                            <div>
+                                <div class="font-black text-slate-800 text-sm sm:text-base">🎤 Máy hỏi – Bé trả lời mẫu</div>
+                                <div class="text-xs text-slate-600 font-semibold mt-0.5">Máy đọc câu hỏi, bé nghe và nói lại câu trả lời chuẩn theo mẫu có sẵn.</div>
+                            </div>
+                        </label>
+
+                        <!-- Chế độ 2: Bé hỏi - Máy trả lời -->
+                        <label class="flex items-start gap-3 p-3 rounded-2xl border-2 cursor-pointer transition bg-white border-slate-200 hover:border-pink-300" id="label-mode-ask">
+                            <input type="radio" name="gameMode" value="ask" class="mt-1 accent-pink-500 w-4 h-4" onchange="updateModeUI()">
+                            <div>
+                                <div class="font-black text-slate-800 text-sm sm:text-base">🗣️ Bé tập hỏi – Máy trả lời</div>
+                                <div class="text-xs text-slate-600 font-semibold mt-0.5">Bé bấm mic để đọc câu hỏi tiếng Anh, máy sẽ khen ngợi và đọc câu trả lời!</div>
+                            </div>
+                        </label>
+
+                        <!-- Chế độ 3: Luyện đọc cả cặp Hỏi & Đáp -->
+                        <label class="flex items-start gap-3 p-3 rounded-2xl border-2 cursor-pointer transition bg-white border-slate-200 hover:border-pink-300" id="label-mode-both">
+                            <input type="radio" name="gameMode" value="both" class="mt-1 accent-pink-500 w-4 h-4" onchange="updateModeUI()">
+                            <div>
+                                <div class="font-black text-slate-800 text-sm sm:text-base">🌟 Luyện nói cả Câu Hỏi & Đáp</div>
+                                <div class="text-xs text-slate-600 font-semibold mt-0.5">Nghe cả đoạn hội thoại ngắn, sau đó bé đọc lại câu trả lời thật hay.</div>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Chọn số lượng câu & Tùy chọn -->
+                <div class="bg-amber-50/80 p-5 rounded-3xl border-2 border-amber-200 flex flex-col justify-between">
+                    <div>
+                        <label class="block text-sm font-black text-amber-800 uppercase tracking-wider mb-3">
+                            🍎 2. Số lượng câu hỏi
+                        </label>
+                        <div class="grid grid-cols-3 gap-2 mb-4">
+                            <button type="button" onclick="selectCount(5)" id="count-5" class="count-btn py-2.5 px-2 rounded-2xl font-black text-sm border-2 border-slate-200 bg-white text-slate-600 hover:border-emerald-400 transition">
+                                5 Câu<br><span class="text-[11px] font-bold">Khởi động</span>
+                            </button>
+                            <button type="button" onclick="selectCount(10)" id="count-10" class="count-btn py-2.5 px-2 rounded-2xl font-black text-sm border-2 border-emerald-500 bg-emerald-100 text-emerald-800 transition">
+                                10 Câu<br><span class="text-[11px] font-bold">Vừa sức</span>
+                            </button>
+                            <button type="button" onclick="selectCount(23)" id="count-23" class="count-btn py-2.5 px-2 rounded-2xl font-black text-sm border-2 border-slate-200 bg-white text-slate-600 hover:border-emerald-400 transition">
+                                23 Câu<br><span class="text-[11px] font-bold">Trọn bộ</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="space-y-3 pt-3 border-t-2 border-amber-200/70">
+                        <label class="flex items-center justify-between cursor-pointer">
+                            <span class="text-sm font-extrabold text-slate-700">Thứ tự câu hỏi:</span>
+                            <select id="order-select" class="bg-white border-2 border-amber-300 rounded-xl px-2.5 py-1 text-sm font-extrabold text-slate-700 focus:outline-none">
+                                <option value="sequential">Từ câu 1 → 23 📋</option>
+                                <option value="random">Xáo trộn ngẫu nhiên 🎲</option>
+                            </select>
+                        </label>
+                        <label class="flex items-center justify-between cursor-pointer">
+                            <span class="text-sm font-extrabold text-slate-700">Luôn hiện mẫu câu gợi ý:</span>
+                            <input type="checkbox" id="show-text-default" checked class="w-5 h-5 accent-pink-500 rounded-lg">
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Nút Bắt đầu -->
+            <button onclick="startGame()" class="w-full py-4 bg-gradient-to-r from-emerald-400 via-green-500 to-teal-500 hover:from-emerald-500 hover:to-teal-600 text-white font-black text-xl sm:text-2xl rounded-3xl shadow-xl shadow-emerald-200 btn-3d border-emerald-700 flex items-center justify-center gap-3">
+                <span>🚀</span> <span>BẮT ĐẦU CHƠI THÔI NÀO!</span>
+            </button>
+        </main>
+
+        <!-- ==================== MÀN HÌNH 2: CHƠI GAME (GAMEPLAY SCREEN) ==================== -->
+        <main id="screen-game" class="hidden p-4 sm:p-7 fade-in">
+            
+            <!-- Thanh thông tin: Tiến độ & Điểm số -->
+            <div class="flex flex-wrap items-center justify-between gap-3 mb-3">
+                <div class="flex items-center gap-2">
+                    <span id="badge-mode" class="px-3.5 py-1 rounded-full text-xs sm:text-sm font-black bg-pink-100 text-pink-700 border border-pink-300">
+                        🎤 Bé Trả Lời
+                    </span>
+                    <span class="text-sm sm:text-base font-black text-slate-700 bg-slate-100 px-3 py-1 rounded-full">
+                        Câu <span id="current-q-num" class="text-pink-600 text-lg">1</span> / <span id="total-q-num">10</span>
+                    </span>
+                </div>
+
+                <div class="flex items-center gap-2">
+                    <div class="bg-orange-100 border-2 border-orange-300 px-3 py-1 rounded-full flex items-center gap-1 shadow-xs" title="Chuỗi đúng liên tiếp">
+                        <span class="text-base">🔥</span>
+                        <span id="streak-display" class="text-sm sm:text-base font-black text-orange-700">0</span>
+                    </div>
+                    <div class="bg-amber-100 border-2 border-amber-300 px-3.5 py-1 rounded-full flex items-center gap-1.5 shadow-xs">
+                        <span class="text-lg">🌟</span>
+                        <span class="text-xs font-extrabold text-amber-800 uppercase">Sao:</span>
+                        <span id="score-display" class="text-base sm:text-lg font-black text-amber-700">0</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Thanh Progress Bar -->
+            <div class="w-full h-4 bg-slate-100 rounded-full overflow-hidden mb-5 p-0.5 border-2 border-slate-200">
+                <div id="progress-bar" class="h-full bg-gradient-to-r from-amber-400 via-pink-500 to-purple-500 rounded-full transition-all duration-500" style="width: 10%;"></div>
+            </div>
+
+            <!-- Thanh công cụ tốc độ đọc & Ẩn/Hiện chữ -->
+            <div class="flex flex-wrap items-center justify-between gap-2 mb-4 bg-slate-50 px-3.5 py-2 rounded-2xl border-2 border-slate-100">
+                <div class="flex items-center gap-1.5 text-xs font-extrabold">
+                    <span class="text-slate-500">Giọng đọc:</span>
+                    <button onclick="setSpeechRate(0.7)" id="rate-slow" class="px-2.5 py-1 rounded-xl text-slate-600 hover:bg-white transition">🐢 Chậm</button>
+                    <button onclick="setSpeechRate(0.95)" id="rate-normal" class="px-2.5 py-1 rounded-xl bg-sky-500 text-white shadow-xs transition">🐇 Vừa</button>
+                </div>
+
+                <div class="flex items-center gap-2">
+                    <button onclick="toggleAutoPlay()" id="btn-autoplay" class="px-2.5 py-1 rounded-xl border-2 text-xs font-extrabold transition bg-emerald-50 border-emerald-300 text-emerald-700">
+                        🔊 Tự đọc: BẬT
+                    </button>
+                    <button onclick="toggleQuestionText()" id="btn-toggle-text" class="px-2.5 py-1 rounded-xl bg-white border-2 border-slate-200 hover:bg-slate-100 text-slate-700 text-xs font-extrabold transition">
+                        👁️ Ẩn chữ
+                    </button>
+                </div>
+            </div>
+
+            <!-- Khung Hội Thoại Hoạt Hình (Nhân vật Thầy Giáo & Bạn Đức) -->
+            <div class="space-y-4 mb-6">
+                
+                <!-- Bong bóng 1: CÂU HỎI (Question) -->
+                <div class="bg-sky-50 border-2 border-sky-200 rounded-3xl p-4 sm:p-5 flex items-start gap-3 sm:gap-4 shadow-xs">
+                    <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-sky-400 text-white flex items-center justify-center text-2xl sm:text-3xl shrink-0 shadow-sm">
+                        🦉
+                    </div>
+                    <div class="flex-1">
+                        <div class="flex flex-wrap items-center justify-between gap-2 mb-1">
+                            <span class="text-xs font-black uppercase tracking-wider text-sky-700 bg-sky-200/70 px-2.5 py-0.5 rounded-lg">
+                                Câu hỏi (Question)
+                            </span>
+                            <button onclick="speakQuestionOnly()" id="btn-play-q" class="px-3.5 py-1.5 bg-sky-500 hover:bg-sky-600 text-white font-extrabold text-xs sm:text-sm rounded-xl shadow-sm btn-3d border-sky-700 flex items-center gap-1.5">
+                                <i class="fa-solid fa-volume-high"></i> Nghe câu hỏi
+                            </button>
+                        </div>
+
+                        <div id="q-text-area">
+                            <p id="question-en" class="text-xl sm:text-2xl font-black text-slate-800 leading-snug">
+                                What is your name?
+                            </p>
+                            <p id="question-vi" class="text-xs sm:text-sm font-bold text-sky-700 mt-0.5">
+                                (Tên của con là gì?)
+                            </p>
+                        </div>
+                        <div id="q-hidden-area" class="hidden py-2 text-sm font-extrabold text-sky-700 italic">
+                            🎧 Đang ẩn chữ để bé luyện nghe câu hỏi...
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bong bóng 2: CÂU TRẢ LỜI MẪU (Sample Answer) -->
+                <div class="bg-amber-50 border-2 border-amber-200 rounded-3xl p-4 sm:p-5 flex items-start gap-3 sm:gap-4 shadow-xs">
+                    <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-amber-400 text-white flex items-center justify-center text-2xl sm:text-3xl shrink-0 shadow-sm">
+                        👦
+                    </div>
+                    <div class="flex-1">
+                        <div class="flex flex-wrap items-center justify-between gap-2 mb-1">
+                            <span class="text-xs font-black uppercase tracking-wider text-amber-800 bg-amber-200/70 px-2.5 py-0.5 rounded-lg">
+                                Câu trả lời mẫu (Answer)
+                            </span>
+                            <button onclick="speakAnswerOnly()" id="btn-play-a" class="px-3.5 py-1.5 bg-amber-500 hover:bg-amber-600 text-white font-extrabold text-xs sm:text-sm rounded-xl shadow-sm btn-3d border-amber-700 flex items-center gap-1.5">
+                                <i class="fa-solid fa-volume-high"></i> Nghe trả lời mẫu
+                            </button>
+                        </div>
+
+                        <div id="a-text-area">
+                            <p id="answer-en" class="text-xl sm:text-2xl font-black text-emerald-700 leading-snug">
+                                My name is Đức.
+                            </p>
+                            <p id="answer-vi" class="text-xs sm:text-sm font-bold text-amber-800 mt-0.5">
+                                (Tên của con là Đức.)
+                            </p>
+                        </div>
+                        <div id="a-hidden-area" class="hidden py-2 text-sm font-extrabold text-amber-700 italic">
+                            🙈 Đang ẩn câu trả lời mẫu để bé tự nhớ nhé!
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Khu vực Thu Âm & Nhập Câu Trả Lời -->
+            <div class="bg-pink-50/70 border-2 border-pink-200 rounded-3xl p-4 sm:p-5 flex flex-col items-center mb-5">
+                <p id="instruction-prompt" class="text-sm sm:text-base font-black text-pink-700 mb-3 text-center">
+                    🎤 Bấm nút Micro màu đỏ và nói câu trả lời mẫu nhé!
+                </p>
+
+                <!-- Nút Micro chính -->
+                <div class="relative flex flex-col items-center mb-3">
+                    <button id="btn-record" onclick="toggleRecording()" class="w-20 h-20 sm:w-24 sm:h-24 rounded-full bg-gradient-to-br from-rose-500 to-pink-600 hover:from-rose-600 hover:to-pink-700 text-white shadow-xl shadow-rose-200 flex flex-col items-center justify-center transition transform hover:scale-105 active:scale-95 focus:outline-none border-4 border-white">
+                        <i id="mic-icon" class="fa-solid fa-microphone text-2xl sm:text-3xl mb-1"></i>
+                        <span id="mic-label" class="text-xs font-black uppercase tracking-wider">Bấm Nói</span>
+                    </button>
+
+                    <!-- Sóng âm hiển thị khi đang nghe -->
+                    <div id="wave-indicator" class="hidden flex items-center justify-center gap-1.5 h-8 mt-3">
+                        <div class="sound-bar"></div>
+                        <div class="sound-bar"></div>
+                        <div class="sound-bar"></div>
+                        <div class="sound-bar"></div>
+                        <div class="sound-bar"></div>
+                        <span class="text-xs sm:text-sm font-black text-rose-600 ml-2">Đang nghe bé nói nè...</span>
+                    </div>
+                </div>
+
+                <!-- Hiển thị văn bản bé vừa nói -->
+                <div id="transcript-box" class="hidden w-full mb-3 p-3 rounded-2xl bg-white border-2 border-pink-200 text-center">
+                    <span class="text-xs font-extrabold text-slate-400 uppercase block mb-0.5">Bé vừa nói là:</span>
+                    <p id="user-transcript" class="text-base sm:text-lg font-black text-slate-800">"..."</p>
+                </div>
+
+                <!-- Ô nhập văn bản dự phòng (Fallback cho ba mẹ hỗ trợ) -->
+                <div class="w-full max-w-lg">
+                    <div class="flex items-center gap-2">
+                        <input type="text" id="fallback-input" placeholder="Hoặc gõ câu tiếng Anh vào đây nếu chưa bật mic..." 
+                            onkeydown="if(event.key === 'Enter') submitTextFallback()"
+                            class="flex-1 px-4 py-2.5 rounded-2xl border-2 border-pink-200 focus:border-pink-500 focus:outline-none text-sm font-bold text-slate-700 bg-white transition">
+                        <button onclick="submitTextFallback()" id="btn-submit-text" class="px-4 py-2.5 bg-pink-500 hover:bg-pink-600 text-white font-black text-sm rounded-2xl shadow-xs transition">
+                            Kiểm tra
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hộp Thông Báo Kết Quả (Đúng / Sai) -->
+            <div id="feedback-box" class="hidden rounded-3xl p-4 sm:p-5 mb-5 border-2 fade-in">
+                <div class="flex items-start gap-3.5">
+                    <div id="feedback-icon" class="w-12 h-12 rounded-2xl flex items-center justify-center text-2xl shrink-0">
+                        🌟
+                    </div>
+                    <div class="flex-1">
+                        <h4 id="feedback-title" class="text-lg sm:text-xl font-black mb-1">Hoan hô! Bé giỏi quá!</h4>
+                        <div id="feedback-detail" class="text-sm sm:text-base font-bold space-y-1.5"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Thanh Điều Hướng Dưới Cùng -->
+            <div class="flex items-center justify-between gap-3 pt-2">
+                <button onclick="skipQuestion()" id="btn-skip" class="px-4 py-2.5 rounded-2xl text-slate-500 hover:bg-slate-100 font-extrabold text-sm transition">
+                    Bỏ qua câu này <i class="fa-solid fa-forward-step ml-1"></i>
+                </button>
+
+                <button onclick="nextQuestion()" id="btn-next" class="hidden ml-auto px-7 py-3.5 bg-gradient-to-r from-emerald-400 to-teal-500 hover:from-emerald-500 hover:to-teal-600 text-white font-black text-base sm:text-lg rounded-2xl shadow-lg shadow-emerald-200 btn-3d border-emerald-700 flex items-center gap-2">
+                    <span>Câu tiếp theo</span> <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </div>
+        </main>
+
+        <!-- ==================== MÀN HÌNH 3: TỔNG KẾT (SUMMARY SCREEN) ==================== -->
+        <main id="screen-summary" class="hidden p-6 sm:p-8 text-center fade-in">
+            <div id="trophy-badge" class="w-24 h-24 mx-auto mb-4 rounded-3xl bg-gradient-to-br from-amber-300 to-yellow-500 flex items-center justify-center text-5xl shadow-lg shadow-amber-200 border-4 border-white">
+                🏆
+            </div>
+
+            <h2 id="summary-title" class="text-2xl sm:text-3xl font-black text-slate-800 mb-1">Hoan Hô Bé Giỏi Quá!</h2>
+            <p id="summary-subtitle" class="text-slate-600 font-bold text-sm sm:text-base mb-6">Bé đã hoàn thành bài luyện nghe và nói tiếng Anh rồi nè!</p>
+
+            <!-- Thống kê điểm số -->
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 max-w-2xl mx-auto mb-7">
+                <div class="bg-amber-50 border-2 border-amber-300 rounded-3xl p-3 sm:p-4">
+                    <div class="text-xs font-black text-amber-700 uppercase">Số Ngôi Sao</div>
+                    <div id="final-score" class="text-2xl sm:text-3xl font-black text-amber-600 mt-1">⭐ 100</div>
+                </div>
+                <div class="bg-emerald-50 border-2 border-emerald-300 rounded-3xl p-3 sm:p-4">
+                    <div class="text-xs font-black text-emerald-700 uppercase">Câu Đọc Đúng</div>
+                    <div id="final-correct" class="text-2xl sm:text-3xl font-black text-emerald-600 mt-1">8/10</div>
+                </div>
+                <div class="bg-sky-50 border-2 border-sky-300 rounded-3xl p-3 sm:p-4">
+                    <div class="text-xs font-black text-sky-700 uppercase">Độ Chính Xác</div>
+                    <div id="final-accuracy" class="text-2xl sm:text-3xl font-black text-sky-600 mt-1">80%</div>
+                </div>
+                <div class="bg-orange-50 border-2 border-orange-300 rounded-3xl p-3 sm:p-4">
+                    <div class="text-xs font-black text-orange-700 uppercase">Chuỗi Đúng</div>
+                    <div id="final-streak" class="text-2xl sm:text-3xl font-black text-orange-600 mt-1">🔥 5</div>
+                </div>
+            </div>
+
+            <!-- Danh sách các câu làm sai / bỏ qua để ôn tập -->
+            <div id="review-section" class="hidden text-left max-w-xl mx-auto mb-7">
+                <h3 class="text-sm font-black text-rose-600 uppercase tracking-wider mb-3 flex items-center gap-2">
+                    <span>📚</span> <span>Các câu bé cần luyện nói thêm cùng ba mẹ:</span>
+                </h3>
+                <div id="wrong-list" class="space-y-2.5 max-h-60 overflow-y-auto pr-1">
+                    <!-- Render động bằng JS -->
+                </div>
+            </div>
+
+            <!-- Nút Chơi Lại -->
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+                <button onclick="restartSameSettings()" class="w-full sm:w-auto px-8 py-4 bg-gradient-to-r from-emerald-400 to-teal-500 hover:from-emerald-500 hover:to-teal-600 text-white font-black text-lg rounded-3xl shadow-lg shadow-emerald-200 btn-3d border-emerald-700 flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-rotate-right"></i> Chơi lại lần nữa
+                </button>
+                <button onclick="goHome()" class="w-full sm:w-auto px-6 py-4 bg-amber-100 hover:bg-amber-200 text-amber-800 font-black text-base rounded-3xl transition flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-sliders"></i> Đổi cách chơi
+                </button>
+            </div>
+        </main>
+
+    </div>
+
+    <!-- Modal Hộp Thoại Xác Nhận -->
+    <div id="custom-modal" class="hidden fixed inset-0 bg-slate-900/50 backdrop-blur-xs z-50 flex items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl text-center border-4 border-amber-300 fade-in">
+            <div class="w-16 h-16 bg-amber-100 text-amber-500 rounded-3xl flex items-center justify-center text-3xl mx-auto mb-3">
+                🧸
+            </div>
+            <h3 class="text-xl font-black text-slate-800 mb-2">Bé muốn về Trang chủ à?</h3>
+            <p class="text-sm font-bold text-slate-600 mb-5">Điểm số của lượt chơi này sẽ bắt đầu lại từ đầu nhé!</p>
+            <div class="flex gap-3">
+                <button onclick="closeModal()" class="flex-1 py-3 rounded-2xl bg-emerald-500 hover:bg-emerald-600 font-black text-white text-sm transition">Chơi tiếp</button>
+                <button onclick="closeModal(); goHome();" class="flex-1 py-3 rounded-2xl bg-slate-100 hover:bg-slate-200 font-black text-slate-700 text-sm transition">Về Trang chủ</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // =========================================================================
+        // 1. BỘ 23 CẶP HỎI - ĐÁP CHUẨN CỦA BÉ LÊ ANH ĐỨC (MẦM NON & TIỂU HỌC)
+        // =========================================================================
+        const ALL_QUESTIONS = [
+            {
+                id: 1,
+                q_en: "What is your name?",
+                q_vi: "Tên của con là gì?",
+                a_en: "My name is Đức.",
+                a_speech: "My name is Duc.",
+                a_vi: "Tên của con là Đức."
+            },
+            {
+                id: 2,
+                q_en: "What is your full name?",
+                q_vi: "Họ và tên đầy đủ của con là gì?",
+                a_en: "My full name is Lê Anh Đức.",
+                a_speech: "My full name is Le Anh Duc.",
+                a_vi: "Họ và tên đầy đủ của con là Lê Anh Đức."
+            },
+            {
+                id: 3,
+                q_en: "Are you five years old?",
+                q_vi: "Con 5 tuổi phải không?",
+                a_en: "No, I’m not.",
+                a_speech: "No, I'm not.",
+                a_vi: "Không, con không phải 5 tuổi."
+            },
+            {
+                id: 4,
+                q_en: "How old are you?",
+                q_vi: "Con bao nhiêu tuổi?",
+                a_en: "I’m six years old.",
+                a_speech: "I'm six years old.",
+                a_vi: "Con 6 tuổi."
+            },
+            {
+                id: 5,
+                q_en: "When is your birthday?",
+                q_vi: "Sinh nhật của con là khi nào?",
+                a_en: "My birthday is on the seventh of August.",
+                a_speech: "My birthday is on the seventh of August.",
+                a_vi: "Sinh nhật của con vào ngày 7 tháng 8."
+            },
+            {
+                id: 6,
+                q_en: "What do you do?",
+                q_vi: "Con làm nghề gì / đang làm gì?",
+                a_en: "I’m a student.",
+                a_speech: "I'm a student.",
+                a_vi: "Con là một học sinh."
+            },
+            {
+                id: 7,
+                q_en: "Which school are you in?",
+                q_vi: "Con học ở trường nào?",
+                a_en: "I’m in Ngụy Như Kon Tum Primary school.",
+                a_speech: "I'm in Nguy Nhu Kon Tum Primary school.",
+                a_vi: "Con học ở trường Tiểu học Ngụy Như Kon Tum."
+            },
+            {
+                id: 8,
+                q_en: "Are you in grade three?",
+                q_vi: "Con học lớp 3 phải không?",
+                a_en: "No, I’m not.",
+                a_speech: "No, I'm not.",
+                a_vi: "Không, con không học lớp 3."
+            },
+            {
+                id: 9,
+                q_en: "What grade are you in?",
+                q_vi: "Con đang học khối lớp mấy?",
+                a_en: "I’m in grade one.",
+                a_speech: "I'm in grade one.",
+                a_vi: "Con học khối lớp 1."
+            },
+            {
+                id: 10,
+                q_en: "Which class are you in?",
+                q_vi: "Con học lớp nào?",
+                a_en: "I’m in class 1A1.",
+                a_speech: "I'm in class 1 A 1.",
+                a_vi: "Con học lớp 1A1."
+            },
+            {
+                id: 11,
+                q_en: "Where are you from?",
+                q_vi: "Con đến từ đâu?",
+                a_en: "I’m from Vietnam.",
+                a_speech: "I'm from Vietnam.",
+                a_vi: "Con đến từ Việt Nam."
+            },
+            {
+                id: 12,
+                q_en: "Where do you live?",
+                q_vi: "Con sống ở đâu?",
+                a_en: "I live in Quảng Ngãi.",
+                a_speech: "I live in Quang Ngai.",
+                a_vi: "Con sống ở Quảng Ngãi."
+            },
+            {
+                id: 13,
+                q_en: "What do you look like?",
+                q_vi: "Ngoại hình của con trông như thế nào?",
+                a_en: "I’m tall and thin. I have big eyes and short hair.",
+                a_speech: "I'm tall and thin. I have big eyes and short hair.",
+                a_vi: "Con cao và gầy. Con có đôi mắt to và mái tóc ngắn."
+            },
+            {
+                id: 14,
+                q_en: "What color do you like?",
+                q_vi: "Con thích màu gì?",
+                a_en: "I like red.",
+                a_speech: "I like red.",
+                a_vi: "Con thích màu đỏ."
+            },
+            {
+                id: 15,
+                q_en: "What are your hobbies?",
+                q_vi: "Sở thích của con là gì?",
+                a_en: "My hobbies are hanging out and watching TV.",
+                a_speech: "My hobbies are hanging out and watching TV.",
+                a_vi: "Sở thích của con là đi chơi và xem tivi."
+            },
+            {
+                id: 16,
+                q_en: "What is your favorite food?",
+                q_vi: "Món ăn yêu thích của con là gì?",
+                a_en: "My favorite food is fried chicken.",
+                a_speech: "My favorite food is fried chicken.",
+                a_vi: "Món ăn yêu thích của con là gà rán."
+            },
+            {
+                id: 17,
+                q_en: "Do you like fish?",
+                q_vi: "Con có thích ăn cá không?",
+                a_en: "No, I don’t.",
+                a_speech: "No, I don't.",
+                a_vi: "Không, con không thích."
+            },
+            {
+                id: 18,
+                q_en: "Do you like fruits?",
+                q_vi: "Con có thích ăn trái cây không?",
+                a_en: "Yes, I do.",
+                a_speech: "Yes, I do.",
+                a_vi: "Có, con rất thích."
+            },
+            {
+                id: 19,
+                q_en: "What fruit do you like to eat?",
+                q_vi: "Con thích ăn loại trái cây nào?",
+                a_en: "I like to eat watermelons and apples.",
+                a_speech: "I like to eat watermelons and apples.",
+                a_vi: "Con thích ăn dưa hấu và táo."
+            },
+            {
+                id: 20,
+                q_en: "What drink do you like?",
+                q_vi: "Con thích đồ uống gì?",
+                a_en: "I like milo.",
+                a_speech: "I like milo.",
+                a_vi: "Con thích uống sữa Milo."
+            },
+            {
+                id: 21,
+                q_en: "What can you do?",
+                q_vi: "Con có thể làm được gì?",
+                a_en: "I can sing and swim.",
+                a_speech: "I can sing and swim.",
+                a_vi: "Con có thể hát và bơi."
+            },
+            {
+                id: 22,
+                q_en: "Do you want to be a teacher in the future?",
+                q_vi: "Sau này con có muốn làm giáo viên không?",
+                a_en: "No, I don’t.",
+                a_speech: "No, I don't.",
+                a_vi: "Không, con không muốn."
+            },
+            {
+                id: 23,
+                q_en: "What do you want to be in the future?",
+                q_vi: "Sau này lớn lên con muốn làm nghề gì?",
+                a_en: "I want to be a soldier.",
+                a_speech: "I want to be a soldier.",
+                a_vi: "Con muốn trở thành một chú bộ đội."
+            }
+        ];
+
+        // =========================================================================
+        // 2. BIẾN TRẠNG THÁI TRÒ CHƠI (GAME STATE)
+        // =========================================================================
+        let gameState = {
+            mode: 'answer',           // 'answer' (Máy hỏi-Bé đáp), 'ask' (Bé hỏi-Máy đáp), 'both' (Nghe cả cặp-Bé đáp)
+            questionCount: 10,        // 5, 10, hoặc 23
+            order: 'sequential',      // 'sequential' hoặc 'random'
+            showText: true,           // Hiển thị chữ mẫu câu
+            autoPlay: true,           // Tự động đọc khi sang câu mới
+            speechRate: 0.95,         // Tốc độ đọc (0.7 chậm hoặc 0.95 vừa cho bé)
+            
+            questions: [],            // Danh sách câu hỏi của ván hiện tại
+            currentIndex: 0,          // Chỉ số câu hỏi hiện tại
+            score: 0,                 // Điểm số (Ngôi sao)
+            streak: 0,                // Chuỗi trả lời đúng liên tiếp
+            maxStreak: 0,             // Chuỗi đúng dài nhất
+            correctCount: 0,          // Số câu đọc đúng
+            answeredCurrent: false,   // Đã hoàn thành câu hiện tại chưa
+            wrongQuestions: [],       // Lưu các câu cần luyện thêm
+            isRecording: false        // Trạng thái micro
+        };
+
+        // =========================================================================
+        // 3. KHỞI TẠO WEB SPEECH API (TTS & STT) VÀ WEB AUDIO API
+        // =========================================================================
+        const synth = window.speechSynthesis;
+        let preferredVoice = null;
+
+        function loadVoices() {
+            const voices = synth.getVoices();
+            if (voices.length > 0) {
+                preferredVoice = 
+                    voices.find(v => v.name.includes('Google US English')) ||
+                    voices.find(v => v.lang === 'en-US' && v.name.includes('Natural')) ||
+                    voices.find(v => v.lang === 'en-US') ||
+                    voices.find(v => v.lang.startsWith('en'));
+            }
+        }
+        loadVoices();
+        if (speechSynthesis.onvoiceschanged !== undefined) {
+            speechSynthesis.onvoiceschanged = loadVoices;
+        }
+
+        const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+        let recognition = null;
+
+        if (SpeechRecognition) {
+            recognition = new SpeechRecognition();
+            recognition.lang = 'en-US';
+            recognition.interimResults = false;
+            recognition.maxAlternatives = 1;
+
+            recognition.onstart = () => {
+                gameState.isRecording = true;
+                updateMicUI(true);
+            };
+
+            recognition.onresult = (event) => {
+                const transcript = event.results[0][0].transcript;
+                handleUserResponse(transcript);
+            };
+
+            recognition.onerror = (event) => {
+                gameState.isRecording = false;
+                updateMicUI(false);
+                
+                let errorMsg = "Chưa nghe rõ giọng của bé, bé bấm mic và nói to lại nhé!";
+                if (event.error === 'not-allowed') {
+                    errorMsg = "Trình duyệt chưa mở quyền Micro. Ba mẹ hãy cấp quyền Micro hoặc gõ chữ vào ô bên dưới nhé!";
+                } else if (event.error === 'no-speech') {
+                    errorMsg = "Chưa thấy bé nói gì cả. Bấm nút đỏ và nói ngay nhé!";
+                }
+                showTemporaryHint(errorMsg);
+            };
+
+            recognition.onend = () => {
+                gameState.isRecording = false;
+                updateMicUI(false);
+            };
+        } else {
+            document.getElementById('browser-warning').classList.remove('hidden');
+        }
+
+        function playSoundEffect(type) {
+            try {
+                const AudioCtx = window.AudioContext || window.webkitAudioContext;
+                const ctx = new AudioCtx();
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+
+                const now = ctx.currentTime;
+                if (type === 'correct') {
+                    // Giai điệu vui nhộn cho trẻ em (C5 -> E5 -> G5 -> C6)
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(523.25, now);
+                    osc.frequency.setValueAtTime(659.25, now + 0.09);
+                    osc.frequency.setValueAtTime(783.99, now + 0.18);
+                    osc.frequency.setValueAtTime(1046.50, now + 0.27);
+                    gain.gain.setValueAtTime(0.25, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.5);
+                    osc.start(now);
+                    osc.stop(now + 0.5);
+                } else {
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(280, now);
+                    osc.frequency.linearRampToValueAtTime(210, now + 0.28);
+                    gain.gain.setValueAtTime(0.2, now);
+                    gain.gain.exponentialRampToValueAtTime(0.01, now + 0.32);
+                    osc.start(now);
+                    osc.stop(now + 0.32);
+                }
+            } catch (e) {}
+        }
+
+        // =========================================================================
+        // 4. ĐIỀU KHIỂN MÀN HÌNH BẮT ĐẦU (START SCREEN)
+        // =========================================================================
+        function updateModeUI() {
+            const selected = document.querySelector('input[name="gameMode"]:checked').value;
+            gameState.mode = selected;
+
+            ['answer', 'ask', 'both'].forEach(modeKey => {
+                const lbl = document.getElementById(`label-mode-${modeKey}`);
+                if (modeKey === selected) {
+                    lbl.classList.add('border-pink-500', 'shadow-sm', 'bg-pink-50/40');
+                    lbl.classList.remove('border-slate-200', 'bg-white');
+                } else {
+                    lbl.classList.remove('border-pink-500', 'shadow-sm', 'bg-pink-50/40');
+                    lbl.classList.add('border-slate-200', 'bg-white');
+                }
+            });
+        }
+
+        function selectCount(num) {
+            gameState.questionCount = num;
+            document.querySelectorAll('.count-btn').forEach(btn => {
+                btn.classList.remove('border-emerald-500', 'bg-emerald-100', 'text-emerald-800');
+                btn.classList.add('border-slate-200', 'bg-white', 'text-slate-600');
+            });
+            const activeBtn = document.getElementById(`count-${num}`);
+            activeBtn.classList.remove('border-slate-200', 'bg-white', 'text-slate-600');
+            activeBtn.classList.add('border-emerald-500', 'bg-emerald-100', 'text-emerald-800');
+        }
+
+        function startGame() {
+            gameState.mode = document.querySelector('input[name="gameMode"]:checked').value;
+            gameState.order = document.getElementById('order-select').value;
+            gameState.showText = document.getElementById('show-text-default').checked;
+
+            let pool = [...ALL_QUESTIONS];
+            if (gameState.order === 'random') {
+                for (let i = pool.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [pool[i], pool[j]] = [pool[j], pool[i]];
+                }
+            }
+            gameState.questions = pool.slice(0, gameState.questionCount);
+
+            gameState.currentIndex = 0;
+            gameState.score = 0;
+            gameState.streak = 0;
+            gameState.maxStreak = 0;
+            gameState.correctCount = 0;
+            gameState.wrongQuestions = [];
+            gameState.answeredCurrent = false;
+
+            document.getElementById('screen-start').classList.add('hidden');
+            document.getElementById('screen-summary').classList.add('hidden');
+            document.getElementById('screen-game').classList.remove('hidden');
+            document.getElementById('btn-home').classList.remove('hidden');
+
+            const badgeMode = document.getElementById('badge-mode');
+            if (gameState.mode === 'answer') {
+                badgeMode.innerHTML = '🎤 Máy hỏi – Bé đáp';
+            } else if (gameState.mode === 'ask') {
+                badgeMode.innerHTML = '🗣️ Bé hỏi – Máy đáp';
+            } else {
+                badgeMode.innerHTML = '🌟 Nghe cặp – Bé đáp';
+            }
+
+            document.getElementById('total-q-num').textContent = gameState.questions.length;
+            updateScoreUI();
+            applyTextVisibilityUI();
+            renderQuestion();
+        }
+
+        // =========================================================================
+        // 5. HIỂN THỊ CÂU HỎI & PHÁT ÂM THANH (TTS)
+        // =========================================================================
+        function renderQuestion() {
+            const q = gameState.questions[gameState.currentIndex];
+            gameState.answeredCurrent = false;
+
+            if (gameState.isRecording && recognition) {
+                recognition.stop();
+            }
+
+            const currentNum = gameState.currentIndex + 1;
+            const totalNum = gameState.questions.length;
+            document.getElementById('current-q-num').textContent = currentNum;
+            const progressPercent = (currentNum / totalNum) * 100;
+            document.getElementById('progress-bar').style.width = `${progressPercent}%`;
+
+            // Gán nội dung cặp Hỏi & Đáp
+            document.getElementById('question-en').textContent = q.q_en;
+            document.getElementById('question-vi').textContent = `(${q.q_vi})`;
+            document.getElementById('answer-en').textContent = q.a_en;
+            document.getElementById('answer-vi').textContent = `(${q.a_vi})`;
+
+            // Cập nhật lời nhắc cho bé theo từng chế độ
+            const promptEl = document.getElementById('instruction-prompt');
+            if (gameState.mode === 'answer') {
+                promptEl.textContent = "🎤 Bé hãy bấm nút Micro và đọc câu TRẢ LỜI màu xanh ở trên nhé!";
+            } else if (gameState.mode === 'ask') {
+                promptEl.textContent = "🗣️ Bé hãy bấm nút Micro và đọc CÂU HỎI màu đen ở trên nhé!";
+            } else {
+                promptEl.textContent = "🌟 Nghe cả 2 câu xong, bé bấm Micro để đọc câu TRẢ LỜI nhé!";
+            }
+
+            // Reset UI
+            document.getElementById('transcript-box').classList.add('hidden');
+            document.getElementById('feedback-box').classList.add('hidden');
+            document.getElementById('btn-next').classList.add('hidden');
+            document.getElementById('btn-skip').classList.remove('hidden');
+            document.getElementById('fallback-input').value = '';
+            document.getElementById('fallback-input').disabled = false;
+            document.getElementById('btn-submit-text').disabled = false;
+            document.getElementById('btn-record').disabled = false;
+            document.getElementById('btn-record').classList.remove('opacity-50', 'cursor-not-allowed');
+
+            // Tự động đọc khi sang câu mới
+            if (gameState.autoPlay) {
+                setTimeout(() => {
+                    if (gameState.mode === 'answer') {
+                        speakQuestionOnly();
+                    } else if (gameState.mode === 'ask') {
+                        speakQuestionOnly();
+                    } else {
+                        speakBothPair();
+                    }
+                }, 350);
+            }
+        }
+
+        function speakText(text, btnElementId = null, onEndCallback = null) {
+            if (!synth) return;
+            synth.cancel();
+
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'en-US';
+            utterance.rate = gameState.speechRate;
+            if (preferredVoice) utterance.voice = preferredVoice;
+
+            const btn = btnElementId ? document.getElementById(btnElementId) : null;
+            if (btn) btn.classList.add('ring-4', 'ring-amber-300');
+
+            utterance.onend = () => {
+                if (btn) btn.classList.remove('ring-4', 'ring-amber-300');
+                if (onEndCallback) onEndCallback();
+            };
+            utterance.onerror = () => {
+                if (btn) btn.classList.remove('ring-4', 'ring-amber-300');
+            };
+
+            synth.speak(utterance);
+        }
+
+        function speakQuestionOnly() {
+            const q = gameState.questions[gameState.currentIndex];
+            speakText(q.q_en, 'btn-play-q');
+        }
+
+        function speakAnswerOnly() {
+            const q = gameState.questions[gameState.currentIndex];
+            speakText(q.a_speech || q.a_en, 'btn-play-a');
+        }
+
+        function speakBothPair() {
+            const q = gameState.questions[gameState.currentIndex];
+            speakText(q.q_en, 'btn-play-q', () => {
+                setTimeout(() => {
+                    speakText(q.a_speech || q.a_en, 'btn-play-a');
+                }, 450);
+            });
+        }
+
+        function setSpeechRate(rate) {
+            gameState.speechRate = rate;
+            const btnSlow = document.getElementById('rate-slow');
+            const btnNormal = document.getElementById('rate-normal');
+
+            if (rate < 0.85) {
+                btnSlow.className = 'px-2.5 py-1 rounded-xl bg-sky-500 text-white shadow-xs transition';
+                btnNormal.className = 'px-2.5 py-1 rounded-xl text-slate-600 hover:bg-white transition';
+            } else {
+                btnNormal.className = 'px-2.5 py-1 rounded-xl bg-sky-500 text-white shadow-xs transition';
+                btnSlow.className = 'px-2.5 py-1 rounded-xl text-slate-600 hover:bg-white transition';
+            }
+            speakQuestionOnly();
+        }
+
+        function toggleAutoPlay() {
+            gameState.autoPlay = !gameState.autoPlay;
+            const btn = document.getElementById('btn-autoplay');
+            if (gameState.autoPlay) {
+                btn.className = 'px-2.5 py-1 rounded-xl border-2 text-xs font-extrabold transition bg-emerald-50 border-emerald-300 text-emerald-700';
+                btn.innerHTML = '🔊 Tự đọc: BẬT';
+            } else {
+                btn.className = 'px-2.5 py-1 rounded-xl border-2 text-xs font-extrabold transition bg-white border-slate-200 text-slate-500';
+                btn.innerHTML = '🔇 Tự đọc: TẮT';
+            }
+        }
+
+        function toggleQuestionText() {
+            gameState.showText = !gameState.showText;
+            applyTextVisibilityUI();
+        }
+
+        function applyTextVisibilityUI() {
+            const qText = document.getElementById('q-text-area');
+            const qHidden = document.getElementById('q-hidden-area');
+            const aText = document.getElementById('a-text-area');
+            const aHidden = document.getElementById('a-hidden-area');
+            const btnToggle = document.getElementById('btn-toggle-text');
+
+            if (gameState.showText) {
+                qText.classList.remove('hidden');
+                qHidden.classList.add('hidden');
+                aText.classList.remove('hidden');
+                aHidden.classList.add('hidden');
+                btnToggle.innerHTML = '👁️ Ẩn chữ';
+            } else {
+                // Trong chế độ Bé hỏi, vẫn hiện câu hỏi để bé đọc, chỉ ẩn câu trả lời; hoặc ẩn cả 2 nếu luyện trí nhớ
+                if (gameState.mode === 'ask') {
+                    qText.classList.add('hidden');
+                    qHidden.classList.remove('hidden');
+                    aText.classList.remove('hidden');
+                    aHidden.classList.add('hidden');
+                } else {
+                    qText.classList.remove('hidden');
+                    qHidden.classList.add('hidden');
+                    aText.classList.add('hidden');
+                    aHidden.classList.remove('hidden');
+                }
+                btnToggle.innerHTML = '👀 Hiện chữ';
+            }
+        }
+
+        // =========================================================================
+        // 6. THU ÂM GIỌNG NÓI & CHẤM ĐIỂM THÂN THIỆN CHO BÉ
+        // =========================================================================
+        function toggleRecording() {
+            if (gameState.answeredCurrent) return;
+
+            if (!recognition) {
+                showTemporaryHint("Trình duyệt chưa hỗ trợ thu âm trực tiếp. Ba mẹ gõ chữ vào ô bên dưới giúp bé nhé!");
+                document.getElementById('fallback-input').focus();
+                return;
+            }
+
+            if (synth) synth.cancel();
+
+            if (gameState.isRecording) {
+                recognition.stop();
+            } else {
+                try {
+                    recognition.start();
+                } catch (e) {
+                    recognition.stop();
+                }
+            }
+        }
+
+        function updateMicUI(recording) {
+            const btnRecord = document.getElementById('btn-record');
+            const micIcon = document.getElementById('mic-icon');
+            const micLabel = document.getElementById('mic-label');
+            const wave = document.getElementById('wave-indicator');
+
+            if (recording) {
+                btnRecord.classList.add('recording-pulse');
+                micIcon.className = 'fa-solid fa-stop text-2xl sm:text-3xl mb-1';
+                micLabel.textContent = 'Dừng';
+                wave.classList.remove('hidden');
+            } else {
+                btnRecord.classList.remove('recording-pulse');
+                micIcon.className = 'fa-solid fa-microphone text-2xl sm:text-3xl mb-1';
+                micLabel.textContent = 'Bấm Nói';
+                wave.classList.add('hidden');
+            }
+        }
+
+        function showTemporaryHint(msg) {
+            const transcriptBox = document.getElementById('transcript-box');
+            const userTranscript = document.getElementById('user-transcript');
+            transcriptBox.classList.remove('hidden');
+            userTranscript.innerHTML = `<span class="text-amber-600 text-sm">${msg}</span>`;
+        }
+
+        function submitTextFallback() {
+            if (gameState.answeredCurrent) return;
+            const input = document.getElementById('fallback-input');
+            const val = input.value.trim();
+            if (!val) {
+                input.focus();
+                return;
+            }
+            handleUserResponse(val);
+        }
+
+        // Chuẩn hóa văn bản (bao gồm cả tên tiếng Việt khi trình duyệt nhận diện giọng nói tiếng Anh)
+        function normalizeText(str) {
+            return str
+                .toLowerCase()
+                .replace(/’/g, "'")
+                .replace(/what's/g, "what is")
+                .replace(/i'm/g, "i am")
+                .replace(/don't/g, "do not")
+                .replace(/đức|duc|duke|look/g, "duc")
+                .replace(/lê anh đức|le anh duc|lay and duke/g, "le anh duc")
+                .replace(/ngụy như kon tum|nguy nhu kon tum|kon tum/g, "nguy nhu kon tum")
+                .replace(/quảng ngãi|quang ngai|wang night|guang nai/g, "quang ngai")
+                .replace(/1a1|one a one|1 a 1/g, "1a1")
+                .replace(/milo|my low/g, "milo")
+                .replace(/sodier|soldier/g, "soldier")
+                .replace(/[.,?!'"-]/g, "")
+                .replace(/\s+/g, " ")
+                .trim();
+        }
+
+        function calculateSimilarity(s1, s2) {
+            const a = normalizeText(s1);
+            const b = normalizeText(s2);
+            if (a === b) return 1.0;
+            if (!a.length || !b.length) return 0.0;
+
+            const matrix = Array.from({ length: a.length + 1 }, (_, i) => [i]);
+            for (let j = 0; j <= b.length; j++) matrix[0][j] = j;
+
+            for (let i = 1; i <= a.length; i++) {
+                for (let j = 1; j <= b.length; j++) {
+                    const cost = a[i - 1] === b[j - 1] ? 0 : 1;
+                    matrix[i][j] = Math.min(
+                        matrix[i - 1][j] + 1,
+                        matrix[i][j - 1] + 1,
+                        matrix[i - 1][j - 1] + cost
+                    );
+                }
+            }
+            const maxLen = Math.max(a.length, b.length);
+            return (maxLen - matrix[a.length][b.length]) / maxLen;
+        }
+
+        function highlightWordDiff(targetSentence, spokenSentence) {
+            const targetWords = targetSentence.split(/\s+/);
+            const spokenNormWords = normalizeText(spokenSentence).split(/\s+/);
+
+            return targetWords.map(word => {
+                const cleanWord = normalizeText(word);
+                if (spokenNormWords.includes(cleanWord)) {
+                    return `<span class="text-emerald-800 bg-emerald-100 px-2 py-0.5 rounded-lg border border-emerald-300">${word}</span>`;
+                } else {
+                    return `<span class="text-rose-700 bg-rose-100 px-2 py-0.5 rounded-lg border border-rose-300">${word}</span>`;
+                }
+            }).join(' ');
+        }
+
+        function handleUserResponse(rawInput) {
+            if (gameState.answeredCurrent) return;
+            gameState.answeredCurrent = true;
+
+            const q = gameState.questions[gameState.currentIndex];
+
+            const transcriptBox = document.getElementById('transcript-box');
+            const userTranscript = document.getElementById('user-transcript');
+            transcriptBox.classList.remove('hidden');
+            userTranscript.textContent = `"${rawInput}"`;
+
+            // Xác định câu mục tiêu cần bé nói tùy theo chế độ chơi
+            const targetSentence = (gameState.mode === 'ask') ? q.q_en : q.a_en;
+            const similarity = calculateSimilarity(targetSentence, rawInput);
+
+            // Ngưỡng chấm điểm 75% để khích lệ bé mầm non và tiểu học
+            const isCorrect = similarity >= 0.75;
+            const diffVisual = highlightWordDiff(targetSentence, rawInput);
+
+            let feedbackHtml = "";
+            if (isCorrect) {
+                if (gameState.mode === 'ask') {
+                    feedbackHtml = `
+                        <p class="text-emerald-800">Bé đặt câu hỏi chuẩn quá! Máy trả lời bé nè:</p>
+                        <p class="text-indigo-700 text-base sm:text-lg bg-white px-3 py-1.5 rounded-xl border border-emerald-200 inline-block">💬 "${q.a_en}"</p>
+                    `;
+                    // Máy tự động đọc câu trả lời đáp lại bé
+                    setTimeout(() => speakAnswerOnly(), 500);
+                } else {
+                    feedbackHtml = `
+                        <p class="text-emerald-800">Bé phát âm rất rõ ràng và tự tin! (Đạt ${Math.round(similarity * 100)}%)</p>
+                        <div class="mt-1.5 flex flex-wrap gap-1">${diffVisual}</div>
+                    `;
+                }
+            } else {
+                feedbackHtml = `
+                    <p class="text-rose-800">Bé cố lên nhé! Các từ màu đỏ bé đọc chưa rõ lắm:</p>
+                    <div class="mt-1.5 flex flex-wrap gap-1">${diffVisual}</div>
+                    <p class="text-slate-700 mt-2">👉 Câu mẫu chuẩn: <strong class="text-indigo-700">${targetSentence}</strong></p>
+                `;
+            }
+
+            // Cập nhật điểm số & Streak
+            let earnedPoints = 10;
+            if (isCorrect) {
+                gameState.streak += 1;
+                if (gameState.streak > gameState.maxStreak) {
+                    gameState.maxStreak = gameState.streak;
+                }
+                const bonus = gameState.streak >= 3 ? 5 : 0;
+                earnedPoints += bonus;
+                gameState.score += earnedPoints;
+                gameState.correctCount += 1;
+                playSoundEffect('correct');
+            } else {
+                gameState.streak = 0;
+                gameState.wrongQuestions.push({
+                    question: q,
+                    userSaid: rawInput,
+                    targetSentence: targetSentence
+                });
+                playSoundEffect('wrong');
+            }
+
+            updateScoreUI();
+            showFeedbackBox(isCorrect, feedbackHtml, earnedPoints);
+
+            // Hiện lại toàn bộ chữ để bé đối chiếu
+            document.getElementById('q-text-area').classList.remove('hidden');
+            document.getElementById('q-hidden-area').classList.add('hidden');
+            document.getElementById('a-text-area').classList.remove('hidden');
+            document.getElementById('a-hidden-area').classList.add('hidden');
+
+            // Khóa nút thu âm và mở nút Câu tiếp theo
+            document.getElementById('btn-record').disabled = true;
+            document.getElementById('btn-record').classList.add('opacity-50', 'cursor-not-allowed');
+            document.getElementById('fallback-input').disabled = true;
+            document.getElementById('btn-submit-text').disabled = true;
+
+            document.getElementById('btn-skip').classList.add('hidden');
+            const btnNext = document.getElementById('btn-next');
+            btnNext.classList.remove('hidden');
+            if (gameState.currentIndex === gameState.questions.length - 1) {
+                btnNext.innerHTML = '<span>Xem bảng vàng</span> <span>🏆</span>';
+            } else {
+                btnNext.innerHTML = '<span>Câu tiếp theo</span> <i class="fa-solid fa-arrow-right"></i>';
+            }
+        }
+
+        function showFeedbackBox(isCorrect, htmlContent, earnedPoints = 10) {
+            const box = document.getElementById('feedback-box');
+            const icon = document.getElementById('feedback-icon');
+            const title = document.getElementById('feedback-title');
+            const detail = document.getElementById('feedback-detail');
+
+            box.classList.remove('hidden', 'bg-emerald-50', 'border-emerald-300', 'bg-rose-50', 'border-rose-300');
+
+            if (isCorrect) {
+                box.classList.add('bg-emerald-50', 'border-emerald-300');
+                icon.className = 'w-12 h-12 rounded-2xl bg-emerald-400 text-white flex items-center justify-center text-2xl shrink-0 shadow-xs';
+                icon.textContent = '🌟';
+                title.className = 'text-lg sm:text-xl font-black text-emerald-800 mb-1';
+                const streakNote = gameState.streak >= 3 ? ` (🔥 Chuỗi ${gameState.streak} +5⭐!)` : '';
+                title.textContent = `Hoan hô! Bé nhận +${earnedPoints} sao${streakNote}`;
+            } else {
+                box.classList.add('bg-rose-50', 'border-rose-300');
+                icon.className = 'w-12 h-12 rounded-2xl bg-rose-400 text-white flex items-center justify-center text-2xl shrink-0 shadow-xs';
+                icon.textContent = '🧸';
+                title.className = 'text-lg sm:text-xl font-black text-rose-800 mb-1';
+                title.textContent = 'Gần đúng rồi! Bé nghe lại mẫu nhé!';
+            }
+
+            detail.innerHTML = htmlContent;
+        }
+
+        function updateScoreUI() {
+            document.getElementById('score-display').textContent = gameState.score;
+            document.getElementById('streak-display').textContent = gameState.streak;
+        }
+
+        function skipQuestion() {
+            if (gameState.answeredCurrent) return;
+            gameState.streak = 0;
+            updateScoreUI();
+            const q = gameState.questions[gameState.currentIndex];
+            const targetSentence = (gameState.mode === 'ask') ? q.q_en : q.a_en;
+            gameState.wrongQuestions.push({
+                question: q,
+                userSaid: "(Bé đã bỏ qua)",
+                targetSentence: targetSentence
+            });
+            nextQuestion();
+        }
+
+        function nextQuestion() {
+            if (synth) synth.cancel();
+            if (gameState.currentIndex < gameState.questions.length - 1) {
+                gameState.currentIndex++;
+                applyTextVisibilityUI();
+                renderQuestion();
+            } else {
+                showSummaryScreen();
+            }
+        }
+
+        // =========================================================================
+        // 7. MÀN HÌNH TỔNG KẾT & CHƠI LẠI
+        // =========================================================================
+        function showSummaryScreen() {
+            document.getElementById('screen-game').classList.add('hidden');
+            document.getElementById('screen-summary').classList.remove('hidden');
+
+            const total = gameState.questions.length;
+            const correct = gameState.correctCount;
+            const accuracy = Math.round((correct / total) * 100);
+
+            document.getElementById('final-score').textContent = `⭐ ${gameState.score}`;
+            document.getElementById('final-correct').textContent = `${correct}/${total}`;
+            document.getElementById('final-accuracy').textContent = `${accuracy}%`;
+            document.getElementById('final-streak').textContent = `🔥 ${gameState.maxStreak}`;
+
+            const trophy = document.getElementById('trophy-badge');
+            const title = document.getElementById('summary-title');
+            const subtitle = document.getElementById('summary-subtitle');
+
+            if (accuracy >= 80) {
+                trophy.textContent = '👑';
+                title.textContent = 'Siêu Sao Tiếng Anh Nhí!';
+                subtitle.textContent = 'Bé nói tiếng Anh trôi chảy và hay tuyệt vời luôn!';
+                playSoundEffect('correct');
+            } else if (accuracy >= 50) {
+                trophy.textContent = '🎖️';
+                title.textContent = 'Bé Làm Giỏi Lắm!';
+                subtitle.textContent = 'Bé đã nhớ được rất nhiều câu hỏi và trả lời rồi đấy!';
+            } else {
+                trophy.textContent = '🌻';
+                title.textContent = 'Hoan Hô Tinh Thần Học Tập!';
+                subtitle.textContent = 'Bé hãy nghe lại các câu mẫu và luyện thêm cùng ba mẹ nhé!';
+            }
+
+            const reviewSection = document.getElementById('review-section');
+            const wrongList = document.getElementById('wrong-list');
+            wrongList.innerHTML = '';
+
+            if (gameState.wrongQuestions.length > 0) {
+                reviewSection.classList.remove('hidden');
+                gameState.wrongQuestions.forEach((item, idx) => {
+                    const card = document.createElement('div');
+                    card.className = 'p-3.5 rounded-2xl bg-rose-50 border-2 border-rose-200 text-sm flex items-start justify-between gap-3';
+                    const speechToPlay = (item.question.a_speech || item.targetSentence).replace(/'/g, "\\'");
+                    card.innerHTML = `
+                        <div>
+                            <div class="font-black text-slate-800">${idx + 1}. Hỏi: ${item.question.q_en}</div>
+                            <div class="font-extrabold text-emerald-700">👉 Đáp: ${item.question.a_en}</div>
+                            <div class="text-xs text-slate-500 mt-0.5">${item.question.q_vi} — ${item.question.a_vi}</div>
+                            <div class="text-xs text-rose-600 mt-1">Bé đã nói: <span class="italic font-bold">${item.userSaid}</span></div>
+                        </div>
+                        <button onclick="speakText('${speechToPlay}')" class="w-10 h-10 rounded-2xl bg-white border-2 border-rose-200 hover:bg-amber-100 text-pink-600 flex items-center justify-center shrink-0 shadow-xs" title="Nghe lại câu mẫu">
+                            <i class="fa-solid fa-volume-high"></i>
+                        </button>
+                    `;
+                    wrongList.appendChild(card);
+                });
+            } else {
+                reviewSection.classList.add('hidden');
+            }
+        }
+
+        function restartSameSettings() {
+            startGame();
+        }
+
+        function confirmReturnHome() {
+            document.getElementById('custom-modal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('custom-modal').classList.add('hidden');
+        }
+
+        function goHome() {
+            if (synth) synth.cancel();
+            if (gameState.isRecording && recognition) recognition.stop();
+
+            document.getElementById('screen-game').classList.add('hidden');
+            document.getElementById('screen-summary').classList.add('hidden');
+            document.getElementById('btn-home').classList.add('hidden');
+            document.getElementById('screen-start').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
