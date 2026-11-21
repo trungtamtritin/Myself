@@ -1,1 +1,1164 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>🌟 Bé Tập Đọc Cùng Bạn Đan 🌟</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Baloo 2 & Nunito tròn trịa, thân thiện với trẻ em -->
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
+    <!-- Canvas Confetti cho hiệu ứng pháo hoa khen thưởng -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        body {
+            font-family: 'Nunito', 'Comic Sans MS', sans-serif;
+            background: linear-gradient(135deg, #FFFBEB 0%, #FFE4E6 48%, #ECFDF5 100%);
+            min-height: 100vh;
+            user-select: none;
+            -webkit-user-select: none;
+            -webkit-tap-highlight-color: transparent;
+            touch-action: manipulation;
+        }
 
+        h1, h2, h3, .font-display {
+            font-family: 'Baloo 2', 'Nunito', sans-serif;
+        }
+
+        /* Hiệu ứng nút bấm nổi kiểu viên kẹo */
+        .btn-candy {
+            transition: transform 0.14s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.14s ease, background-color 0.2s ease;
+            box-shadow: 0 5px 0 rgba(15, 23, 42, 0.14);
+        }
+        .btn-candy:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 7px 0 rgba(15, 23, 42, 0.16);
+        }
+        .btn-candy:active {
+            transform: translateY(3px);
+            box-shadow: 0 2px 0 rgba(15, 23, 42, 0.14);
+        }
+
+        /* Thẻ câu */
+        .sentence-card {
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+        }
+        .sentence-card:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Thẻ đang được đọc */
+        .speaking-active {
+            border-color: #F43F5E !important;
+            background: linear-gradient(135deg, #FFF1F2 0%, #FEF9C3 100%) !important;
+            box-shadow: 0 0 0 4px rgba(244, 63, 94, 0.22), 0 12px 24px -6px rgba(244, 63, 94, 0.25) !important;
+            transform: scale(1.012);
+        }
+
+        /* Từng từ trong câu để bé nhấn đúp */
+        .word-token {
+            display: inline-block;
+            padding: 2px 5px;
+            margin: 1px 1px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: background-color 0.15s ease, color 0.15s ease, transform 0.12s ease;
+        }
+        .word-token:hover {
+            background-color: #FEF08A;
+            color: #9D174D;
+            transform: translateY(-1px);
+        }
+        .word-token:active {
+            background-color: #FDE047;
+            transform: scale(0.96);
+        }
+
+        /* Sóng âm thanh khi đang đọc */
+        @keyframes soundPulse {
+            0%, 100% { transform: scaleY(0.4); }
+            50% { transform: scaleY(1.15); }
+        }
+        .sound-bar {
+            display: inline-block;
+            width: 4px;
+            height: 16px;
+            border-radius: 999px;
+            background-color: #F43F5E;
+            animation: soundPulse 0.7s infinite ease-in-out;
+        }
+        .sound-bar:nth-child(2) { animation-delay: 0.15s; background-color: #F59E0B; }
+        .sound-bar:nth-child(3) { animation-delay: 0.3s; background-color: #10B981; }
+
+        /* Hiệu ứng mở nghĩa tiếng Việt */
+        @keyframes popReveal {
+            0% { opacity: 0; transform: translateY(-6px) scale(0.98); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        .meaning-reveal {
+            animation: popReveal 0.24s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+
+        /* Hiệu ứng ngôi sao rung nhẹ */
+        @keyframes starBounce {
+            0%, 100% { transform: rotate(-6deg) scale(1); }
+            50% { transform: rotate(6deg) scale(1.12); }
+        }
+        .star-anim {
+            display: inline-block;
+            animation: starBounce 2.2s infinite ease-in-out;
+        }
+    </style>
+</head>
+<body class="pb-14 text-slate-800">
+
+    <!-- ==================== HEADER TRÊN CÙNG ==================== -->
+    <header class="max-w-4xl mx-auto pt-4 px-3 sm:px-5">
+        <div class="bg-white/95 backdrop-blur rounded-3xl shadow-lg border-4 border-pink-200 p-4 sm:p-5">
+            <!-- Hàng 1: Logo + Tiêu đề + Bộ đếm Ngôi sao -->
+            <div class="flex flex-wrap items-center justify-between gap-3">
+                <div class="flex items-center gap-3">
+                    <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-2xl bg-gradient-to-br from-pink-400 via-rose-400 to-amber-300 flex items-center justify-center text-3xl sm:text-4xl shadow-md border-2 border-white shrink-0">
+                        🩰
+                    </div>
+                    <div>
+                        <span class="inline-block bg-amber-100 text-amber-800 text-xs font-extrabold px-3 py-0.5 rounded-full mb-1 border border-amber-300">
+                            🎈 Tiếng Anh Mầm Non & Lớp 1 (5 - 7 Tuổi)
+                        </span>
+                        <h1 class="text-xl sm:text-3xl font-extrabold text-rose-600 tracking-tight leading-tight">
+                            🌟 Bé Tập Đọc Cùng Bạn Đan 🌟
+                        </h1>
+                    </div>
+                </div>
+
+                <!-- Bộ đếm Ngôi sao chăm chỉ -->
+                <div class="flex items-center gap-2 bg-gradient-to-r from-amber-100 to-yellow-100 border-2 border-amber-300 px-4 py-2 rounded-2xl shadow-sm">
+                    <span class="text-2xl sm:text-3xl star-anim">⭐</span>
+                    <div class="leading-tight">
+                        <div class="text-[11px] font-extrabold text-amber-800 uppercase tracking-wide">Sao của bé</div>
+                        <div id="starCount" class="text-lg sm:text-xl font-black text-amber-600">0</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hàng 2: Thanh tiến độ & Tùy chọn tốc độ đọc -->
+            <div class="mt-4 pt-3.5 border-t-2 border-dashed border-pink-100 flex flex-col md:flex-row items-center justify-between gap-3">
+                <!-- Thanh tiến độ -->
+                <div class="w-full md:flex-1 bg-pink-50/80 rounded-2xl p-2.5 border border-pink-200">
+                    <div class="flex items-center justify-between text-xs sm:text-sm font-extrabold text-slate-700 mb-1">
+                        <span id="progressLabel">🎯 Tiến độ chế độ này: 0 / 19 câu</span>
+                        <span id="progressPercent" class="text-pink-600 font-black">0%</span>
+                    </div>
+                    <div class="w-full h-3 bg-white rounded-full overflow-hidden border border-pink-200 p-0.5">
+                        <div id="progressBar" class="h-full bg-gradient-to-r from-pink-400 via-amber-400 to-emerald-400 rounded-full transition-all duration-500" style="width: 0%"></div>
+                    </div>
+                </div>
+
+                <!-- Nút chuyển đổi tốc độ đọc -->
+                <div class="flex items-center gap-1.5 bg-sky-50 p-1.5 rounded-2xl border-2 border-sky-200 shrink-0">
+                    <button id="speedSlow" onclick="setSpeed(0.72)"
+                        class="px-3.5 py-2 rounded-xl text-xs sm:text-sm font-extrabold transition-all bg-amber-400 text-amber-950 shadow-sm">
+                        🐢 Chậm
+                    </button>
+                    <button id="speedNormal" onclick="setSpeed(0.95)"
+                        class="px-3.5 py-2 rounded-xl text-xs sm:text-sm font-extrabold transition-all text-slate-600 hover:bg-white">
+                        🐇 Bình thường
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Banner mẹo nhỏ 1 dòng thân thiện -->
+        <div class="mt-3 bg-emerald-100/90 border-2 border-emerald-300 rounded-2xl py-2.5 px-4 text-center text-xs sm:text-sm font-extrabold text-emerald-900 shadow-xs">
+            💡 Mẹo nhỏ: Chạm 1 lần vào câu để nghe đọc & xem nghĩa • Nhấn đúp (2 lần) vào một từ để học từ vựng nhé!
+        </div>
+    </header>
+
+    <!-- ==================== KHU VỰC NỘI DUNG CHÍNH ==================== -->
+    <main class="max-w-4xl mx-auto px-3 sm:px-5 mt-4">
+
+        <!-- 2 Tab chuyển chế độ nổi bật -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
+            <button id="tabIntro" onclick="switchMode('intro')"
+                class="btn-candy py-3.5 px-5 rounded-2xl font-extrabold text-base sm:text-lg flex items-center justify-center gap-2.5 border-4 transition-all bg-gradient-to-r from-pink-500 to-rose-500 text-white border-pink-300">
+                <span class="text-2xl">📖</span>
+                <span>Bài giới thiệu của bé (19 câu)</span>
+            </button>
+
+            <button id="tabQA" onclick="switchMode('qa')"
+                class="btn-candy py-3.5 px-5 rounded-2xl font-extrabold text-base sm:text-lg flex items-center justify-center gap-2.5 border-4 transition-all bg-white text-sky-700 border-sky-200 hover:bg-sky-50">
+                <span class="text-2xl">❓</span>
+                <span>Bộ câu hỏi - trả lời (18 cặp)</span>
+            </button>
+        </div>
+
+        <!-- Thanh điều khiển âm thanh toàn bài -->
+        <div class="bg-white/95 rounded-2xl p-3 shadow-sm border-2 border-amber-200 mb-5 flex flex-wrap items-center justify-between gap-2.5">
+            <div class="flex flex-wrap items-center gap-2.5">
+                <button id="btnPlayAll" onclick="playAllSentences()"
+                    class="btn-candy bg-emerald-500 hover:bg-emerald-600 text-white font-extrabold px-5 py-2.5 rounded-2xl flex items-center gap-2 text-sm sm:text-base">
+                    <span class="text-xl">🔊</span>
+                    <span>Đọc mẫu cả bài</span>
+                </button>
+
+                <button id="btnStopAll" onclick="stopReading()"
+                    class="btn-candy bg-rose-500 hover:bg-rose-600 text-white font-extrabold px-4 py-2.5 rounded-2xl flex items-center gap-2 text-sm sm:text-base hidden">
+                    <span class="text-xl">⏹️</span>
+                    <span>Dừng đọc</span>
+                </button>
+            </div>
+
+            <div class="text-xs font-bold text-slate-500 bg-amber-50 px-3 py-1.5 rounded-xl border border-amber-200">
+                ✨ Chạm vào từng thẻ câu bên dưới để luyện tập nhé!
+            </div>
+        </div>
+
+        <!-- Thông báo trạng thái trình duyệt nếu thiết bị chưa có giọng đọc -->
+        <div id="voiceNotice" class="hidden mb-4 bg-amber-50 border-2 border-amber-300 text-amber-900 rounded-2xl p-3 text-xs sm:text-sm font-bold">
+            ⚠️ Thiết bị của bé có thể chưa bật giọng đọc tiếng Anh. Bé vẫn xem được nghĩa tiếng Việt và thẻ từ vựng bình thường nhé!
+        </div>
+
+        <!-- Danh sách thẻ câu hoặc cặp Hỏi - Đáp -->
+        <div id="contentContainer" class="space-y-3.5"></div>
+
+        <!-- Khung chúc mừng hoàn thành bài -->
+        <div id="completionBanner" class="hidden mt-6 bg-gradient-to-r from-amber-100 via-pink-100 to-emerald-100 border-4 border-amber-300 rounded-3xl p-6 text-center shadow-lg">
+            <div class="text-5xl mb-2">🏆🎉🌟</div>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-rose-600">Giỏi quá! Bé đã đọc xong phần này rồi!</h2>
+            <p class="text-slate-700 font-bold mt-1 text-sm sm:text-base">
+                Bạn Đan gửi tặng bé thật nhiều ngôi sao chăm chỉ. Bé có thể đọc lại hoặc chuyển sang phần khác nhé!
+            </p>
+            <button onclick="replayCurrentSection()"
+                class="btn-candy mt-4 bg-gradient-to-r from-amber-400 to-orange-400 text-amber-950 font-extrabold px-6 py-2.5 rounded-2xl text-sm sm:text-base">
+                🔄 Luyện đọc lại từ đầu
+            </button>
+        </div>
+    </main>
+
+    <!-- ==================== MODAL THẺ TỪ VỰNG (NHẤN ĐÚP VÀO TỪ) ==================== -->
+    <div id="vocabModal" onclick="handleModalBackdropClick(event)"
+        class="fixed inset-0 z-50 bg-slate-900/50 backdrop-blur-xs hidden items-center justify-center p-4">
+        <div class="bg-white rounded-3xl max-w-md w-full border-4 border-amber-300 shadow-2xl overflow-hidden meaning-reveal">
+            <!-- Phần đầu thẻ từ vựng -->
+            <div class="bg-gradient-to-r from-pink-500 via-rose-500 to-amber-400 p-4 text-white flex items-center justify-between">
+                <div class="flex items-center gap-2 font-extrabold text-base sm:text-lg">
+                    <span class="text-2xl">📖</span>
+                    <span>Thẻ Từ Vựng Của Bé</span>
+                </div>
+                <button onclick="closeVocabModal()"
+                    class="w-9 h-9 rounded-full bg-white/25 hover:bg-white/40 flex items-center justify-center font-black text-lg transition">
+                    ✕
+                </button>
+            </div>
+
+            <!-- Nội dung từ vựng -->
+            <div class="p-5 sm:p-6 text-center space-y-4">
+                <div id="modalEmoji" class="text-5xl">🌟</div>
+
+                <div>
+                    <div id="modalWord" class="text-3xl sm:text-4xl font-black text-rose-600 tracking-wide">word</div>
+                    <div id="modalIPA" class="text-sm sm:text-base font-bold text-slate-500 mt-1">/wɜːd/</div>
+                </div>
+
+                <!-- Cách đọc phiên âm tiếng Việt dễ hiểu cho bé -->
+                <div class="bg-amber-50 border-2 border-amber-200 rounded-2xl p-3">
+                    <div class="text-xs font-extrabold uppercase tracking-wider text-amber-700">
+                        🗣️ Cách đọc gần đúng cho bé
+                    </div>
+                    <div id="modalViRead" class="text-xl sm:text-2xl font-black text-amber-900 mt-0.5">
+                        oớt-đ
+                    </div>
+                </div>
+
+                <!-- Nghĩa tiếng Việt -->
+                <div class="bg-emerald-50 border-2 border-emerald-200 rounded-2xl p-3.5">
+                    <div class="text-xs font-extrabold uppercase tracking-wider text-emerald-700">
+                        🇻🇳 Nghĩa tiếng Việt
+                    </div>
+                    <div id="modalMeaning" class="text-lg sm:text-xl font-extrabold text-emerald-950 mt-0.5">
+                        từ ngữ
+                    </div>
+                </div>
+
+                <!-- Nút nghe lại từ & Đóng -->
+                <div class="flex items-center justify-center gap-3 pt-1">
+                    <button id="btnReplayWord" onclick="replayModalWord()"
+                        class="btn-candy bg-sky-500 hover:bg-sky-600 text-white font-extrabold px-5 py-3 rounded-2xl flex items-center gap-2 text-sm sm:text-base">
+                        <span class="text-xl">🔊</span>
+                        <span>Nghe lại từ này</span>
+                    </button>
+                    <button onclick="closeVocabModal()"
+                        class="btn-candy bg-slate-200 hover:bg-slate-300 text-slate-800 font-extrabold px-5 py-3 rounded-2xl text-sm sm:text-base">
+                        Đóng
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // =========================================================================
+        // 1. DỮ LIỆU 19 CÂU GIỚI THIỆU & 18 CẶP HỎI - ĐÁP CỦA BẠN NGUYỄN NHÃ ĐAN
+        // =========================================================================
+        const introSentences = [
+            { id: 'i1', en: "Hello everyone!", vi: "Xin chào tất cả mọi người!" },
+            { id: 'i2', en: "I’m going to introduce myself.", vi: "Mình sẽ giới thiệu về bản thân mình." },
+            { id: 'i3', en: "My name is Đan.", vi: "Tên của mình là Đan." },
+            { id: 'i4', en: "My full name is Nguyễn Nhã Đan.", vi: "Tên đầy đủ của mình là Nguyễn Nhã Đan." },
+            { id: 'i5', en: "I’m five years old.", vi: "Mình năm tuổi." },
+            { id: 'i6', en: "My birthday is on the fifth of June.", vi: "Sinh nhật của mình vào ngày mùng 5 tháng 6." },
+            { id: 'i7', en: "I’m in Thực Hành Sư Phạm Kindergarten.", vi: "Mình học ở trường Mầm non Thực Hành Sư Phạm." },
+            { id: 'i8', en: "I’m from Vietnam.", vi: "Mình đến từ Việt Nam." },
+            { id: 'i9', en: "I live in Quảng Ngãi.", vi: "Mình sống ở Quảng Ngãi." },
+            { id: 'i10', en: "I’m tall and fit.", vi: "Mình cao và cân đối, khỏe mạnh." },
+            { id: 'i11', en: "I have big eyes and long hair.", vi: "Mình có đôi mắt to và mái tóc dài." },
+            { id: 'i12', en: "I like pink.", vi: "Mình thích màu hồng." },
+            { id: 'i13', en: "My hobby is dancing.", vi: "Sở thích của mình là nhảy múa." },
+            { id: 'i14', en: "My favorite foods are sausage, and sweet and sour pork ribs.", vi: "Món ăn yêu thích của mình là xúc xích và sườn heo chua ngọt." },
+            { id: 'i15', en: "I like to eat apples.", vi: "Mình thích ăn táo." },
+            { id: 'i16', en: "I like to drink orange juice.", vi: "Mình thích uống nước cam." },
+            { id: 'i17', en: "I can sweep the floor, and watch the house.", vi: "Mình có thể quét nhà và trông nhà." },
+            { id: 'i18', en: "In the future, I want to be a dancer.", vi: "Trong tương lai, mình muốn trở thành một vũ công (diễn viên múa)." },
+            { id: 'i19', en: "Thank you for listening!", vi: "Cảm ơn các bạn đã lắng nghe!" }
+        ];
+
+        const qaPairs = [
+            {
+                num: 1,
+                q: { id: 'q1', en: "What is your name?", vi: "Tên của bạn là gì?" },
+                a: { id: 'a1', en: "My name is Đan.", vi: "Tên của mình là Đan." }
+            },
+            {
+                num: 2,
+                q: { id: 'q2', en: "What is your full name?", vi: "Tên đầy đủ của bạn là gì?" },
+                a: { id: 'a2', en: "My full name is Nguyễn Nhã Đan.", vi: "Tên đầy đủ của mình là Nguyễn Nhã Đan." }
+            },
+            {
+                num: 3,
+                q: { id: 'q3', en: "How old are you?", vi: "Bạn bao nhiêu tuổi?" },
+                a: { id: 'a3', en: "I’m five years old.", vi: "Mình năm tuổi." }
+            },
+            {
+                num: 4,
+                q: { id: 'q4', en: "When is your birthday?", vi: "Sinh nhật của bạn khi nào?" },
+                a: { id: 'a4', en: "My birthday is on the fifth of June.", vi: "Sinh nhật của mình vào ngày mùng 5 tháng 6." }
+            },
+            {
+                num: 5,
+                q: { id: 'q5', en: "Which school are you in?", vi: "Bạn học ở trường nào?" },
+                a: { id: 'a5', en: "I’m in Thực Hành Sư Phạm Kindergarten.", vi: "Mình học ở trường Mầm non Thực Hành Sư Phạm." }
+            },
+            {
+                num: 6,
+                q: { id: 'q6', en: "Where are you from?", vi: "Bạn đến từ đâu?" },
+                a: { id: 'a6', en: "I’m from Vietnam.", vi: "Mình đến từ Việt Nam." }
+            },
+            {
+                num: 7,
+                q: { id: 'q7', en: "Where do you live?", vi: "Bạn sống ở đâu?" },
+                a: { id: 'a7', en: "I live in Quảng Ngãi.", vi: "Mình sống ở Quảng Ngãi." }
+            },
+            {
+                num: 8,
+                q: { id: 'q8', en: "What do you look like?", vi: "Ngoại hình của bạn trông như thế nào?" },
+                a: { id: 'a8', en: "I’m tall and fit. I have big eyes and long hair.", vi: "Mình cao và cân đối, khỏe mạnh. Mình có đôi mắt to và mái tóc dài." }
+            },
+            {
+                num: 9,
+                q: { id: 'q9', en: "What color do you like?", vi: "Bạn thích màu gì?" },
+                a: { id: 'a9', en: "I like pink.", vi: "Mình thích màu hồng." }
+            },
+            {
+                num: 10,
+                q: { id: 'q10', en: "What is your hobby?", vi: "Sở thích của bạn là gì?" },
+                a: { id: 'a10', en: "My hobby is dancing.", vi: "Sở thích của mình là nhảy múa." }
+            },
+            {
+                num: 11,
+                q: { id: 'q11', en: "What are your favorite foods?", vi: "Món ăn yêu thích của bạn là gì?" },
+                a: { id: 'a11', en: "My favorite foods are sausage, and sweet and sour pork ribs.", vi: "Món ăn yêu thích của mình là xúc xích và sườn heo chua ngọt." }
+            },
+            {
+                num: 12,
+                q: { id: 'q12', en: "Do you like fish?", vi: "Bạn có thích cá không?" },
+                a: { id: 'a12', en: "No, I don’t.", vi: "Không, mình không thích." }
+            },
+            {
+                num: 13,
+                q: { id: 'q13', en: "Do you like fruits?", vi: "Bạn có thích trái cây không?" },
+                a: { id: 'a13', en: "Yes, I do.", vi: "Có, mình có thích." }
+            },
+            {
+                num: 14,
+                q: { id: 'q14', en: "What fruit do you like to eat?", vi: "Bạn thích ăn loại trái cây nào?" },
+                a: { id: 'a14', en: "I like to eat apples.", vi: "Mình thích ăn táo." }
+            },
+            {
+                num: 15,
+                q: { id: 'q15', en: "What drink do you like?", vi: "Bạn thích đồ uống gì?" },
+                a: { id: 'a15', en: "I like orange juice.", vi: "Mình thích nước cam." }
+            },
+            {
+                num: 16,
+                q: { id: 'q16', en: "What can you do?", vi: "Bạn có thể làm gì?" },
+                a: { id: 'a16', en: "I can sweep the floor, and watch the house.", vi: "Mình có thể quét nhà và trông nhà." }
+            },
+            {
+                num: 17,
+                q: { id: 'q17', en: "Do you want to be a teacher in the future?", vi: "Bạn có muốn làm giáo viên trong tương lai không?" },
+                a: { id: 'a17', en: "No, I don’t.", vi: "Không, mình không muốn." }
+            },
+            {
+                num: 18,
+                q: { id: 'q18', en: "What do you want to be in the future?", vi: "Bạn muốn làm nghề gì trong tương lai?" },
+                a: { id: 'a18', en: "I want to be a dancer.", vi: "Mình muốn trở thành một vũ công (diễn viên múa)." }
+            }
+        ];
+
+        // =========================================================================
+        // 2. TỪ ĐIỂN TỪ VỰNG ĐẦY ĐỦ (IPA, CÁCH ĐỌC TIẾNG VIỆT, NGHĨA, EMOJI)
+        // =========================================================================
+        const dictionary = {
+            "hello": { emoji: "👋", ipa: "/həˈləʊ/", viRead: "hơ-lâu", meaning: "xin chào" },
+            "everyone": { emoji: "👨‍👩‍👧‍👦", ipa: "/ˈev.ri.wʌn/", viRead: "e-vơ-ri-oăn", meaning: "tất cả mọi người" },
+            "i'm": { emoji: "👧", ipa: "/aɪm/", viRead: "ai-m (viết tắt của I am)", meaning: "tôi là / mình là" },
+            "i’m": { emoji: "👧", ipa: "/aɪm/", viRead: "ai-m (viết tắt của I am)", meaning: "tôi là / mình là" },
+            "i": { emoji: "🙋‍♀️", ipa: "/aɪ/", viRead: "ai", meaning: "tôi / mình" },
+            "going": { emoji: "🚶‍♀️", ipa: "/ˈɡəʊ.ɪŋ/", viRead: "gâu-ing", meaning: "sẽ / đang đi (going to: sắp, sẽ)" },
+            "to": { emoji: "➡️", ipa: "/tuː/", viRead: "tu", meaning: "để / tới" },
+            "introduce": { emoji: "🎤", ipa: "/ˌɪn.trəˈdjuːs/", viRead: "in-trơ-điu-x", meaning: "giới thiệu" },
+            "myself": { emoji: "🪞", ipa: "/maɪˈself/", viRead: "mai-xeo-f", meaning: "bản thân mình" },
+            "my": { emoji: "💝", ipa: "/maɪ/", viRead: "mai", meaning: "của mình / của tôi" },
+            "name": { emoji: "📛", ipa: "/neɪm/", viRead: "nêm", meaning: "tên" },
+            "is": { emoji: "✨", ipa: "/ɪz/", viRead: "i-z", meaning: "là / thì" },
+            "đan": { emoji: "🌸", ipa: "/ɗaːn/", viRead: "Đan (Tên riêng tiếng Việt)", meaning: "Tên riêng: Đan" },
+            "full": { emoji: "🪪", ipa: "/fʊl/", viRead: "phun", meaning: "đầy đủ (full name: họ và tên đầy đủ)" },
+            "nguyễn": { emoji: "📛", ipa: "/ŋwiən˧ˀ˥/", viRead: "Nguyễn (Họ tiếng Việt)", meaning: "Họ: Nguyễn" },
+            "nhã": { emoji: "🌷", ipa: "/ɲaːˀ/", viRead: "Nhã (Tên đệm tiếng Việt)", meaning: "Tên đệm: Nhã" },
+            "five": { emoji: "5️⃣", ipa: "/faɪv/", viRead: "phai-v", meaning: "số 5 (năm)" },
+            "years": { emoji: "🎂", ipa: "/jɪəz/", viRead: "dia-z", meaning: "năm / tuổi (số nhiều)" },
+            "year": { emoji: "🎂", ipa: "/jɪər/", viRead: "dia", meaning: "năm / tuổi" },
+            "old": { emoji: "🎈", ipa: "/əʊld/", viRead: "âu-đ", meaning: "tuổi (years old: ... tuổi)" },
+            "birthday": { emoji: "🎂", ipa: "/ˈbɜːθ.deɪ/", viRead: "bớt-đây", meaning: "ngày sinh nhật" },
+            "on": { emoji: "📅", ipa: "/ɒn/", viRead: "on", meaning: "vào (dùng trước ngày)" },
+            "the": { emoji: "📌", ipa: "/ðə/ hoặc /ðiː/", viRead: "đơ / đi", meaning: "mạo từ xác định (chỉ ngày/vật cụ thể)" },
+            "fifth": { emoji: "5️⃣", ipa: "/fɪfθ/", viRead: "phíp-th", meaning: "ngày mùng 5 / thứ năm (5)" },
+            "of": { emoji: "🔗", ipa: "/ɒv/", viRead: "ọp / ơ-v", meaning: "của" },
+            "june": { emoji: "☀️", ipa: "/dʒuːn/", viRead: "điu-n", meaning: "tháng Sáu (tháng 6)" },
+            "in": { emoji: "📍", ipa: "/ɪn/", viRead: "in", meaning: "ở / trong / tại" },
+            "thực": { emoji: "🏫", ipa: "/tʰɨk˧ˀ˨/", viRead: "Thực (Tên trường tiếng Việt)", meaning: "Tên trường: Thực (Thực Hành Sư Phạm)" },
+            "hành": { emoji: "🏫", ipa: "/haɪŋ˨˩/", viRead: "Hành (Tên trường tiếng Việt)", meaning: "Tên trường: Hành (Thực Hành Sư Phạm)" },
+            "sư": { emoji: "🏫", ipa: "/sɨ˧˧/", viRead: "Sư (Tên trường tiếng Việt)", meaning: "Tên trường: Sư (Thực Hành Sư Phạm)" },
+            "phạm": { emoji: "🏫", ipa: "/faːm˧ˀ˨/", viRead: "Phạm (Tên trường tiếng Việt)", meaning: "Tên trường: Phạm (Thực Hành Sư Phạm)" },
+            "kindergarten": { emoji: "🏫", ipa: "/ˈkɪn.də.ɡɑː.tən/", viRead: "kin-đơ-ga-từn", meaning: "trường mầm non / mẫu giáo" },
+            "from": { emoji: "🧭", ipa: "/frɒm/", viRead: "phrom", meaning: "từ / đến từ" },
+            "vietnam": { emoji: "🇻🇳", ipa: "/ˌvjetˈnæm/", viRead: "việt-nam", meaning: "đất nước Việt Nam" },
+            "live": { emoji: "🏡", ipa: "/lɪv/", viRead: "li-v", meaning: "sống / sinh sống" },
+            "quảng": { emoji: "🗺️", ipa: "/kwaːŋ/", viRead: "Quảng (Tên địa danh)", meaning: "Tỉnh: Quảng (Quảng Ngãi)" },
+            "ngãi": { emoji: "🏞️", ipa: "/ŋaːj/", viRead: "Ngãi (Tên địa danh)", meaning: "Tỉnh: Ngãi (Quảng Ngãi)" },
+            "tall": { emoji: "🦒", ipa: "/tɔːl/", viRead: "ton", meaning: "cao" },
+            "and": { emoji: "➕", ipa: "/ænd/", viRead: "en-đ", meaning: "và" },
+            "fit": { emoji: "💪", ipa: "/fɪt/", viRead: "phít-t", meaning: "cân đối / khỏe mạnh / vừa vặn" },
+            "have": { emoji: "🤲", ipa: "/hæv/", viRead: "ha-v", meaning: "có" },
+            "big": { emoji: "🌟", ipa: "/bɪɡ/", viRead: "bích-g", meaning: "to / lớn" },
+            "eyes": { emoji: "👀", ipa: "/aɪz/", viRead: "ai-z", meaning: "đôi mắt (số nhiều của eye)" },
+            "eye": { emoji: "👁️", ipa: "/aɪ/", viRead: "ai", meaning: "mắt" },
+            "long": { emoji: "📏", ipa: "/lɒŋ/", viRead: "long", meaning: "dài" },
+            "hair": { emoji: "💇‍♀️", ipa: "/heər/", viRead: "he", meaning: "mái tóc / tóc" },
+            "like": { emoji: "❤️", ipa: "/laɪk/", viRead: "lai-k", meaning: "thích / giống như" },
+            "pink": { emoji: "🩷", ipa: "/pɪŋk/", viRead: "ping-k", meaning: "màu hồng" },
+            "hobby": { emoji: "🩰", ipa: "/ˈhɒb.i/", viRead: "hóp-bi", meaning: "sở thích" },
+            "hobbies": { emoji: "🎨", ipa: "/ˈhɒb.iz/", viRead: "hóp-bi-z", meaning: "những sở thích (số nhiều của hobby)" },
+            "are": { emoji: "✨", ipa: "/ɑːr/", viRead: "a", meaning: "là / thì" },
+            "dancing": { emoji: "💃", ipa: "/ˈdɑːn.sɪŋ/", viRead: "đan-xing", meaning: "việc nhảy múa" },
+            "favorite": { emoji: "🥰", ipa: "/ˈfeɪ.vər.ɪt/", viRead: "phây-vơ-rịt", meaning: "yêu thích nhất" },
+            "foods": { emoji: "🍽️", ipa: "/fuːdz/", viRead: "phút-z", meaning: "các món ăn / đồ ăn" },
+            "food": { emoji: "🍽️", ipa: "/fuːd/", viRead: "phút", meaning: "món ăn / đồ ăn" },
+            "sausage": { emoji: "🌭", ipa: "/ˈsɒs.ɪdʒ/", viRead: "xo-xịt-ch", meaning: "xúc xích / lạp xưởng" },
+            "sausages": { emoji: "🌭", ipa: "/ˈsɒs.ɪ.dʒɪz/", viRead: "xo-xịt-chi-z", meaning: "những cây xúc xích" },
+            "sweet": { emoji: "🍬", ipa: "/swiːt/", viRead: "xuýt-t", meaning: "ngọt" },
+            "sour": { emoji: "🍋", ipa: "/saʊər/", viRead: "xao-ơ", meaning: "chua (sweet and sour: chua ngọt)" },
+            "pork": { emoji: "🥩", ipa: "/pɔːk/", viRead: "poóc-k", meaning: "thịt heo / thịt lợn" },
+            "ribs": { emoji: "🍖", ipa: "/rɪbz/", viRead: "ríp-z", meaning: "sườn (pork ribs: sườn heo)" },
+            "rib": { emoji: "🍖", ipa: "/rɪb/", viRead: "ríp-b", meaning: "xương sườn" },
+            "eat": { emoji: "😋", ipa: "/iːt/", viRead: "ít", meaning: "ăn" },
+            "apples": { emoji: "🍎", ipa: "/ˈæp.əlz/", viRead: "áp-pồ-z", meaning: "những quả táo (số nhiều của apple)" },
+            "apple": { emoji: "🍏", ipa: "/ˈæp.əl/", viRead: "áp-pồ", meaning: "quả táo" },
+            "drink": { emoji: "🥤", ipa: "/drɪŋk/", viRead: "đờ-ring-k", meaning: "uống / đồ uống" },
+            "orange": { emoji: "🍊", ipa: "/ˈɒr.ɪndʒ/", viRead: "o-rin-ch", meaning: "quả cam / màu cam" },
+            "juice": { emoji: "🧃", ipa: "/dʒuːs/", viRead: "điu-x", meaning: "nước ép / nước trái cây (orange juice: nước cam)" },
+            "can": { emoji: "💪", ipa: "/kæn/", viRead: "khen", meaning: "có thể" },
+            "sweep": { emoji: "🧹", ipa: "/swiːp/", viRead: "xuíp-p", meaning: "quét (sweep the floor: quét nhà)" },
+            "floor": { emoji: "🪵", ipa: "/flɔːr/", viRead: "flo", meaning: "sàn nhà / nền nhà" },
+            "watch": { emoji: "👀", ipa: "/wɒtʃ/", viRead: "oắt-ch", meaning: "trông coi / xem (watch the house: trông nhà)" },
+            "house": { emoji: "🏠", ipa: "/haʊs/", viRead: "hao-x", meaning: "ngôi nhà / nhà" },
+            "future": { emoji: "🚀", ipa: "/ˈfjuː.tʃər/", viRead: "phiu-chơ", meaning: "tương lai (in the future: trong tương lai)" },
+            "want": { emoji: "🌠", ipa: "/wɒnt/", viRead: "oăn-t", meaning: "muốn (want to be: muốn trở thành)" },
+            "be": { emoji: "⭐", ipa: "/biː/", viRead: "bi", meaning: "trở thành / là" },
+            "a": { emoji: "1️⃣", ipa: "/ə/", viRead: "ơ", meaning: "một" },
+            "dancer": { emoji: "🩰", ipa: "/ˈdɑːn.sər/", viRead: "đan-xơ", meaning: "vũ công / diễn viên múa" },
+            "dancers": { emoji: "🩰", ipa: "/ˈdɑːn.sərz/", viRead: "đan-xơ-z", meaning: "các vũ công / diễn viên múa" },
+            "protect": { emoji: "🛡️", ipa: "/prəˈtekt/", viRead: "prơ-téc-t", meaning: "bảo vệ" },
+            "people": { emoji: "👨‍👩‍👧‍👦", ipa: "/ˈpiː.pəl/", viRead: "pi-pồ", meaning: "mọi người / con người" },
+            "thank": { emoji: "🙏", ipa: "/θæŋk/", viRead: "then-k", meaning: "cảm ơn (thank you: cảm ơn bạn)" },
+            "you": { emoji: "😊", ipa: "/juː/", viRead: "diu", meaning: "bạn / các bạn" },
+            "for": { emoji: "🎁", ipa: "/fɔːr/", viRead: "pho", meaning: "cho / vì" },
+            "listening": { emoji: "👂", ipa: "/ˈlɪs.ən.ɪŋ/", viRead: "lít-xừn-ning", meaning: "việc lắng nghe" },
+            "what": { emoji: "❓", ipa: "/wɒt/", viRead: "oắt", meaning: "cái gì / gì" },
+            "your": { emoji: "👉", ipa: "/jɔːr/", viRead: "do / gio", meaning: "của bạn" },
+            "how": { emoji: "🤔", ipa: "/haʊ/", viRead: "hao", meaning: "như thế nào (how old: bao nhiêu tuổi)" },
+            "when": { emoji: "⏰", ipa: "/wen/", viRead: "oen", meaning: "khi nào / bao giờ" },
+            "which": { emoji: "🔎", ipa: "/wɪtʃ/", viRead: "uých", meaning: "nào / cái nào" },
+            "school": { emoji: "🏫", ipa: "/skuːl/", viRead: "xkun", meaning: "trường học" },
+            "where": { emoji: "🗺️", ipa: "/weər/", viRead: "oe", meaning: "ở đâu" },
+            "do": { emoji: "🙋", ipa: "/duː/", viRead: "đu", meaning: "làm / trợ động từ hỏi" },
+            "look": { emoji: "👀", ipa: "/lʊk/", viRead: "lúc", meaning: "trông / nhìn (look like: trông giống như)" },
+            "color": { emoji: "🌈", ipa: "/ˈkʌl.ər/", viRead: "kha-lơ", meaning: "màu sắc" },
+            "fish": { emoji: "🐟", ipa: "/fɪʃ/", viRead: "phít-s", meaning: "con cá / món cá" },
+            "no": { emoji: "🙅‍♀️", ipa: "/nəʊ/", viRead: "nâu", meaning: "không" },
+            "don't": { emoji: "🚫", ipa: "/dəʊnt/", viRead: "đôn-t", meaning: "không (viết tắt của do not)" },
+            "don’t": { emoji: "🚫", ipa: "/dəʊnt/", viRead: "đôn-t", meaning: "không (viết tắt của do not)" },
+            "fruits": { emoji: "🍓", ipa: "/fruːts/", viRead: "phrút-x", meaning: "trái cây / hoa quả (số nhiều)" },
+            "fruit": { emoji: "🍎", ipa: "/fruːt/", viRead: "phrút", meaning: "trái cây / hoa quả" },
+            "yes": { emoji: "🙆‍♀️", ipa: "/jes/", viRead: "dét-x", meaning: "vâng / có" },
+            "teacher": { emoji: "👩‍🏫", ipa: "/ˈtiː.tʃər/", viRead: "ti-chơ", meaning: "giáo viên / cô giáo / thầy giáo" }
+        };
+
+        // Tra cứu từ vựng kèm phân tích dạng số nhiều / -ing thông minh
+        function lookupDictionaryWord(rawWord) {
+            const clean = rawWord.toLowerCase().replace(/’/g, "'").trim();
+            if (!clean) return null;
+            if (dictionary[clean]) return dictionary[clean];
+
+            if (clean.endsWith('ies') && clean.length > 4) {
+                const singularY = clean.slice(0, -3) + 'y';
+                if (dictionary[singularY]) return dictionary[singularY];
+            }
+            if (clean.endsWith('es') && clean.length > 3) {
+                const baseEs = clean.slice(0, -2);
+                if (dictionary[baseEs]) return dictionary[baseEs];
+            }
+            if (clean.endsWith('s') && clean.length > 2) {
+                const baseS = clean.slice(0, -1);
+                if (dictionary[baseS]) return dictionary[baseS];
+            }
+            if (clean.endsWith('ing') && clean.length > 4) {
+                const stemIng = clean.slice(0, -3);
+                if (dictionary[stemIng]) return dictionary[stemIng];
+                if (dictionary[stemIng + 'e']) return dictionary[stemIng + 'e'];
+            }
+            return null;
+        }
+
+        // =========================================================================
+        // 3. TRẠNG THÁI ỨNG DỤNG
+        // =========================================================================
+        let currentMode = 'intro'; // 'intro' | 'qa'
+        let speechRate = 0.72; // 0.72 = Chậm, 0.95 = Bình thường
+        let starCount = 0;
+        let readSentencesSet = new Set();
+        let openedMeaningSet = new Set();
+        let isPlayingAll = false;
+        let playAllCancelled = false;
+        let activeSentenceId = null;
+        let currentModalWordText = '';
+        let audioCtx = null;
+
+        // =========================================================================
+        // 4. ÂM THANH "TING" VUI NHỘN (WEB AUDIO API)
+        // =========================================================================
+        function playTingSound(isStar = false) {
+            try {
+                if (!audioCtx) {
+                    const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+                    audioCtx = new AudioContextClass();
+                }
+                if (audioCtx.state === 'suspended') {
+                    audioCtx.resume();
+                }
+                const now = audioCtx.currentTime;
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+
+                osc.type = 'sine';
+                if (isStar) {
+                    osc.frequency.setValueAtTime(659.25, now); // E5
+                    osc.frequency.setValueAtTime(880, now + 0.08); // A5
+                    gain.gain.setValueAtTime(0.18, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.28);
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+                    osc.start(now);
+                    osc.stop(now + 0.28);
+                } else {
+                    osc.frequency.setValueAtTime(784, now); // G5
+                    osc.frequency.exponentialRampToValueAtTime(1046.5, now + 0.11); // C6
+                    gain.gain.setValueAtTime(0.14, now);
+                    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.18);
+                    osc.connect(gain);
+                    gain.connect(audioCtx.destination);
+                    osc.start(now);
+                    osc.stop(now + 0.18);
+                }
+            } catch (err) {
+                // Bỏ qua nếu thiết bị chặn âm thanh nền
+            }
+        }
+
+        // =========================================================================
+        // 5. PHÁT ÂM TIẾNG ANH (WEB SPEECH API)
+        // =========================================================================
+        function pickEnglishVoice() {
+            if (!('speechSynthesis' in window)) return null;
+            const voices = window.speechSynthesis.getVoices();
+            if (!voices || voices.length === 0) return null;
+            return (
+                voices.find(v => v.lang === 'en-US' && /natural|google|samantha|aria|jenny/i.test(v.name)) ||
+                voices.find(v => v.lang === 'en-GB' && /natural|google|kate|daniel/i.test(v.name)) ||
+                voices.find(v => v.lang && v.lang.toLowerCase().startsWith('en')) ||
+                null
+            );
+        }
+
+        function cleanTextForSpeech(text) {
+            return text
+                .replace(/’/g, "'")
+                .replace(/Nguyễn Nhã Đan/g, "Nguyen Nha Dan")
+                .replace(/Đan/g, "Dan")
+                .replace(/Thực Hành Sư Phạm/g, "Thuc Hanh Su Pham")
+                .replace(/Quảng Ngãi/g, "Quang Ngai");
+        }
+
+        function speakText(text, options = {}) {
+            const { rate = speechRate, pitch = 1.08, onStart = null, onEnd = null } = options;
+
+            if (!('speechSynthesis' in window)) {
+                document.getElementById('voiceNotice').classList.remove('hidden');
+                if (onStart) onStart();
+                setTimeout(() => { if (onEnd) onEnd(); }, 900);
+                return;
+            }
+
+            try {
+                window.speechSynthesis.cancel();
+            } catch (e) {}
+
+            const utterance = new SpeechSynthesisUtterance(cleanTextForSpeech(text));
+            const chosenVoice = pickEnglishVoice();
+            if (chosenVoice) {
+                utterance.voice = chosenVoice;
+                utterance.lang = chosenVoice.lang;
+            } else {
+                utterance.lang = 'en-US';
+            }
+            utterance.rate = rate;
+            utterance.pitch = pitch;
+
+            let finished = false;
+            const finishOnce = () => {
+                if (finished) return;
+                finished = true;
+                if (onEnd) onEnd();
+            };
+
+            utterance.onstart = () => {
+                if (onStart) onStart();
+            };
+            utterance.onend = finishOnce;
+            utterance.onerror = () => {
+                finishOnce();
+            };
+
+            // Dự phòng an toàn nếu trình duyệt không kích hoạt onend
+            const fallbackDuration = Math.max(1200, text.length * (75 / rate));
+            const safetyTimer = setTimeout(finishOnce, fallbackDuration + 1200);
+
+            const origEnd = utterance.onend;
+            utterance.onend = () => {
+                clearTimeout(safetyTimer);
+                origEnd();
+            };
+
+            try {
+                window.speechSynthesis.speak(utterance);
+            } catch (err) {
+                clearTimeout(safetyTimer);
+                finishOnce();
+            }
+        }
+
+        // =========================================================================
+        // 6. HIỂN THỊ GIAO DIỆN & TƯƠNG TÁC CHẠM 1 LẦN / NHẤN ĐÚP
+        // =========================================================================
+        function setSpeed(rate) {
+            speechRate = rate;
+            const slowBtn = document.getElementById('speedSlow');
+            const normalBtn = document.getElementById('speedNormal');
+
+            if (rate < 0.85) {
+                slowBtn.className = "px-3.5 py-2 rounded-xl text-xs sm:text-sm font-extrabold transition-all bg-amber-400 text-amber-950 shadow-sm";
+                normalBtn.className = "px-3.5 py-2 rounded-xl text-xs sm:text-sm font-extrabold transition-all text-slate-600 hover:bg-white";
+            } else {
+                normalBtn.className = "px-3.5 py-2 rounded-xl text-xs sm:text-sm font-extrabold transition-all bg-sky-400 text-sky-950 shadow-sm";
+                slowBtn.className = "px-3.5 py-2 rounded-xl text-xs sm:text-sm font-extrabold transition-all text-slate-600 hover:bg-white";
+            }
+            playTingSound(false);
+        }
+
+        function switchMode(mode) {
+            stopReading();
+            currentMode = mode;
+
+            const tabIntro = document.getElementById('tabIntro');
+            const tabQA = document.getElementById('tabQA');
+
+            if (mode === 'intro') {
+                tabIntro.className = "btn-candy py-3.5 px-5 rounded-2xl font-extrabold text-base sm:text-lg flex items-center justify-center gap-2.5 border-4 transition-all bg-gradient-to-r from-pink-500 to-rose-500 text-white border-pink-300";
+                tabQA.className = "btn-candy py-3.5 px-5 rounded-2xl font-extrabold text-base sm:text-lg flex items-center justify-center gap-2.5 border-4 transition-all bg-white text-sky-700 border-sky-200 hover:bg-sky-50";
+            } else {
+                tabQA.className = "btn-candy py-3.5 px-5 rounded-2xl font-extrabold text-base sm:text-lg flex items-center justify-center gap-2.5 border-4 transition-all bg-gradient-to-r from-sky-500 to-indigo-500 text-white border-sky-300";
+                tabIntro.className = "btn-candy py-3.5 px-5 rounded-2xl font-extrabold text-base sm:text-lg flex items-center justify-center gap-2.5 border-4 transition-all bg-white text-pink-700 border-pink-200 hover:bg-pink-50";
+            }
+
+            playTingSound(false);
+            renderContent();
+            updateProgressUI();
+        }
+
+        // Tách câu thành các từ để bé có thể nhấn đúp vào từng từ
+        function buildInteractiveWordsHTML(sentenceText) {
+            const tokens = sentenceText.split(/(\s+)/);
+            return tokens.map(token => {
+                if (/^\s+$/.test(token)) {
+                    return token;
+                }
+                const match = token.match(/^([^\p{L}\p{N}’']*)([\p{L}\p{N}’']+)([^\p{L}\p{N}’']*)$/u);
+                if (!match) {
+                    return `<span>${escapeHTML(token)}</span>`;
+                }
+                const [, prefix, coreWord, suffix] = match;
+                const safeWordAttr = escapeHTML(coreWord);
+                return `<span>${escapeHTML(prefix)}<span class="word-token" data-word="${safeWordAttr}">${escapeHTML(coreWord)}</span>${escapeHTML(suffix)}</span>`;
+            }).join('');
+        }
+
+        function escapeHTML(str) {
+            return String(str)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;');
+        }
+
+        function createSentenceCardHTML(item, indexLabel, badgeColorClass) {
+            const isRevealed = openedMeaningSet.has(item.id);
+            const isRead = readSentencesSet.has(item.id);
+            const isSpeaking = activeSentenceId === item.id;
+
+            return `
+                <div id="card-${item.id}" data-sentence-id="${item.id}" data-en="${escapeHTML(item.en)}"
+                    class="sentence-card cursor-pointer bg-white rounded-3xl p-4 sm:p-5 border-3 ${isSpeaking ? 'speaking-active' : (isRead ? 'border-emerald-300' : 'border-pink-100 hover:border-pink-300')} shadow-sm">
+                    <div class="flex items-start justify-between gap-3">
+                        <div class="flex items-start gap-3 flex-1">
+                            <span class="mt-0.5 w-8 h-8 sm:w-9 sm:h-9 rounded-2xl ${badgeColorClass} font-extrabold text-xs sm:text-sm flex items-center justify-center shrink-0 shadow-2xs">
+                                ${indexLabel}
+                            </span>
+                            <div class="text-lg sm:text-2xl font-extrabold text-slate-800 leading-relaxed flex-1">
+                                ${buildInteractiveWordsHTML(item.en)}
+                            </div>
+                        </div>
+
+                        <!-- Chỉ báo đang đọc hoặc đã nghe -->
+                        <div class="flex items-center gap-1.5 shrink-0 pt-1">
+                            <span id="wave-${item.id}" class="${isSpeaking ? 'flex' : 'hidden'} items-center gap-1 px-2 py-1 rounded-xl bg-rose-50 border border-rose-200">
+                                <span class="sound-bar"></span>
+                                <span class="sound-bar"></span>
+                                <span class="sound-bar"></span>
+                            </span>
+                            <span id="check-${item.id}" title="Đã luyện đọc"
+                                class="text-lg ${isRead ? 'opacity-100' : 'opacity-20'} transition-opacity">
+                                🌟
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Khung nghĩa tiếng Việt hiện ra khi bé chọn câu -->
+                    <div id="meaning-${item.id}" class="${isRevealed ? 'block meaning-reveal' : 'hidden'} mt-3.5 ml-0 sm:ml-12 bg-gradient-to-r from-amber-50 to-emerald-50 border-2 border-emerald-200 rounded-2xl px-4 py-3">
+                        <div class="flex items-center gap-2 text-sm sm:text-base font-extrabold text-emerald-900">
+                            <span class="text-lg">🇻🇳</span>
+                            <span>${escapeHTML(item.vi)}</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function renderContent() {
+            const container = document.getElementById('contentContainer');
+            if (currentMode === 'intro') {
+                container.innerHTML = introSentences.map((s, idx) =>
+                    createSentenceCardHTML(s, idx + 1, 'bg-pink-100 text-pink-700')
+                ).join('');
+            } else {
+                container.innerHTML = qaPairs.map(pair => `
+                    <div class="bg-sky-50/70 border-3 border-sky-200 rounded-3xl p-3.5 sm:p-4 shadow-xs space-y-2.5">
+                        <div class="flex items-center gap-2 px-1">
+                            <span class="bg-sky-500 text-white text-xs sm:text-sm font-black px-3 py-1 rounded-full shadow-2xs">
+                                Cặp hỏi - đáp số ${pair.num}
+                            </span>
+                        </div>
+                        ${createSentenceCardHTML(pair.q, "Q", "bg-amber-100 text-amber-800")}
+                        ${createSentenceCardHTML(pair.a, "A", "bg-emerald-100 text-emerald-800")}
+                    </div>
+                `).join('');
+            }
+
+            attachCardEvents();
+        }
+
+        // Gắn sự kiện chạm 1 lần vào câu & nhấn đúp / chạm 2 lần nhanh vào từ
+        function attachCardEvents() {
+            const cards = document.querySelectorAll('.sentence-card');
+            cards.forEach(card => {
+                let singleTapTimer = null;
+                let lastTapTime = 0;
+                let lastTappedWordEl = null;
+
+                card.addEventListener('dblclick', (e) => {
+                    if (singleTapTimer) {
+                        clearTimeout(singleTapTimer);
+                        singleTapTimer = null;
+                    }
+                    const wordEl = e.target.closest('.word-token');
+                    if (wordEl && wordEl.dataset.word) {
+                        e.stopPropagation();
+                        openVocabModal(wordEl.dataset.word);
+                    }
+                });
+
+                card.addEventListener('click', (e) => {
+                    const wordEl = e.target.closest('.word-token');
+                    const now = Date.now();
+
+                    // Hỗ trợ chạm 2 lần nhanh trên màn hình cảm ứng (mobile/tablet)
+                    if (wordEl && wordEl.dataset.word && lastTappedWordEl === wordEl && (now - lastTapTime) < 360) {
+                        if (singleTapTimer) {
+                            clearTimeout(singleTapTimer);
+                            singleTapTimer = null;
+                        }
+                        lastTapTime = 0;
+                        lastTappedWordEl = null;
+                        e.stopPropagation();
+                        openVocabModal(wordEl.dataset.word);
+                        return;
+                    }
+
+                    if (wordEl && wordEl.dataset.word) {
+                        lastTapTime = now;
+                        lastTappedWordEl = wordEl;
+                    } else {
+                        lastTapTime = 0;
+                        lastTappedWordEl = null;
+                    }
+
+                    if (singleTapTimer) {
+                        clearTimeout(singleTapTimer);
+                    }
+
+                    singleTapTimer = setTimeout(() => {
+                        singleTapTimer = null;
+                        const sentenceId = card.dataset.sentenceId;
+                        const sentenceText = card.dataset.en;
+                        handleSentenceSingleSelect(sentenceId, sentenceText);
+                    }, 220);
+                });
+            });
+        }
+
+        function handleSentenceSingleSelect(sentenceId, sentenceText) {
+            if (isPlayingAll) {
+                stopReading();
+            }
+
+            const isFirstTimeRead = !readSentencesSet.has(sentenceId);
+            openedMeaningSet.add(sentenceId);
+            readSentencesSet.add(sentenceId);
+
+            // Hiện nghĩa tiếng Việt ngay lập tức
+            const meaningEl = document.getElementById(`meaning-${sentenceId}`);
+            if (meaningEl && meaningEl.classList.contains('hidden')) {
+                meaningEl.classList.remove('hidden');
+                meaningEl.classList.add('meaning-reveal');
+            }
+
+            // Đánh dấu ngôi sao trên thẻ câu
+            const checkEl = document.getElementById(`check-${sentenceId}`);
+            if (checkEl) {
+                checkEl.classList.remove('opacity-20');
+                checkEl.classList.add('opacity-100');
+            }
+
+            // Cộng sao thưởng khi bé nghe câu mới lần đầu
+            if (isFirstTimeRead) {
+                starCount += 1;
+                document.getElementById('starCount').textContent = starCount;
+                playTingSound(true);
+            } else {
+                playTingSound(false);
+            }
+
+            updateProgressUI();
+            checkSectionCompletion();
+
+            // Đọc câu tiếng Anh
+            setActiveSentenceHighlight(sentenceId);
+            speakText(sentenceText, {
+                onEnd: () => {
+                    if (activeSentenceId === sentenceId) {
+                        setActiveSentenceHighlight(null);
+                    }
+                }
+            });
+        }
+
+        function setActiveSentenceHighlight(sentenceId) {
+            if (activeSentenceId) {
+                const prevCard = document.getElementById(`card-${activeSentenceId}`);
+                const prevWave = document.getElementById(`wave-${activeSentenceId}`);
+                if (prevCard) prevCard.classList.remove('speaking-active');
+                if (prevWave) prevWave.classList.add('hidden');
+            }
+
+            activeSentenceId = sentenceId;
+
+            if (sentenceId) {
+                const currCard = document.getElementById(`card-${sentenceId}`);
+                const currWave = document.getElementById(`wave-${sentenceId}`);
+                if (currCard) currCard.classList.add('speaking-active');
+                if (currWave) currWave.classList.remove('hidden');
+            }
+        }
+
+        // =========================================================================
+        // 7. ĐỌC MẪU TOÀN BÀI & DỪNG ĐỌC
+        // =========================================================================
+        function getCurrentModeSentenceList() {
+            if (currentMode === 'intro') {
+                return introSentences;
+            }
+            const list = [];
+            qaPairs.forEach(pair => {
+                list.push(pair.q);
+                list.push(pair.a);
+            });
+            return list;
+        }
+
+        async function playAllSentences() {
+            stopReading();
+            isPlayingAll = true;
+            playAllCancelled = false;
+
+            document.getElementById('btnPlayAll').classList.add('hidden');
+            document.getElementById('btnStopAll').classList.remove('hidden');
+            playTingSound(false);
+
+            const list = getCurrentModeSentenceList();
+
+            for (let i = 0; i < list.length; i++) {
+                if (playAllCancelled) break;
+
+                const item = list[i];
+                const isFirstTime = !readSentencesSet.has(item.id);
+                openedMeaningSet.add(item.id);
+                readSentencesSet.add(item.id);
+
+                const meaningEl = document.getElementById(`meaning-${item.id}`);
+                if (meaningEl && meaningEl.classList.contains('hidden')) {
+                    meaningEl.classList.remove('hidden');
+                    meaningEl.classList.add('meaning-reveal');
+                }
+
+                const checkEl = document.getElementById(`check-${item.id}`);
+                if (checkEl) {
+                    checkEl.classList.remove('opacity-20');
+                    checkEl.classList.add('opacity-100');
+                }
+
+                if (isFirstTime) {
+                    starCount += 1;
+                    document.getElementById('starCount').textContent = starCount;
+                }
+
+                updateProgressUI();
+                setActiveSentenceHighlight(item.id);
+
+                const cardEl = document.getElementById(`card-${item.id}`);
+                if (cardEl) {
+                    cardEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+
+                await new Promise(resolve => {
+                    speakText(item.en, {
+                        onEnd: resolve
+                    });
+                });
+
+                if (playAllCancelled) break;
+
+                await new Promise(resolve => setTimeout(resolve, 350));
+            }
+
+            const finishedWholeSection = !playAllCancelled;
+            stopReading();
+
+            if (finishedWholeSection) {
+                checkSectionCompletion(true);
+            }
+        }
+
+        function stopReading() {
+            playAllCancelled = true;
+            isPlayingAll = false;
+            try {
+                if ('speechSynthesis' in window) {
+                    window.speechSynthesis.cancel();
+                }
+            } catch (e) {}
+            setActiveSentenceHighlight(null);
+            document.getElementById('btnPlayAll').classList.remove('hidden');
+            document.getElementById('btnStopAll').classList.add('hidden');
+        }
+
+        // =========================================================================
+        // 8. TIẾN ĐỘ & PHÁO HOA KHEN THƯỞNG
+        // =========================================================================
+        function updateProgressUI() {
+            const list = getCurrentModeSentenceList();
+            const total = list.length;
+            const done = list.filter(item => readSentencesSet.has(item.id)).length;
+            const percent = total > 0 ? Math.round((done / total) * 100) : 0;
+
+            const unitLabel = currentMode === 'intro' ? `${done} / ${total} câu` : `${done} / ${total} lượt hỏi-đáp`;
+            document.getElementById('progressLabel').textContent = `🎯 Tiến độ chế độ này: ${unitLabel}`;
+            document.getElementById('progressPercent').textContent = `${percent}%`;
+            document.getElementById('progressBar').style.width = `${percent}%`;
+        }
+
+        function checkSectionCompletion(forceCelebrate = false) {
+            const list = getCurrentModeSentenceList();
+            const allDone = list.length > 0 && list.every(item => readSentencesSet.has(item.id));
+            const banner = document.getElementById('completionBanner');
+
+            if (allDone) {
+                banner.classList.remove('hidden');
+                if (forceCelebrate) {
+                    triggerConfetti();
+                }
+            }
+        }
+
+        function replayCurrentSection() {
+            stopReading();
+            const list = getCurrentModeSentenceList();
+            list.forEach(item => {
+                readSentencesSet.delete(item.id);
+                openedMeaningSet.delete(item.id);
+            });
+            document.getElementById('completionBanner').classList.add('hidden');
+            playTingSound(false);
+            renderContent();
+            updateProgressUI();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function triggerConfetti() {
+            playTingSound(true);
+            if (typeof confetti === 'function') {
+                confetti({
+                    particleCount: 90,
+                    spread: 75,
+                    origin: { y: 0.6 }
+                });
+                setTimeout(() => {
+                    confetti({
+                        particleCount: 60,
+                        angle: 60,
+                        spread: 55,
+                        origin: { x: 0.1 }
+                    });
+                    confetti({
+                        particleCount: 60,
+                        angle: 120,
+                        spread: 55,
+                        origin: { x: 0.9 }
+                    });
+                }, 260);
+            }
+        }
+
+        // =========================================================================
+        // 9. POPUP HỌC TỪ VỰNG KHI NHẤN ĐÚP VÀO TỪ
+        // =========================================================================
+        function openVocabModal(rawWord) {
+            const entry = lookupDictionaryWord(rawWord);
+
+            currentModalWordText = rawWord;
+            document.getElementById('modalWord').textContent = rawWord;
+
+            if (entry) {
+                document.getElementById('modalEmoji').textContent = entry.emoji || "🌟";
+                document.getElementById('modalIPA').textContent = entry.ipa;
+                document.getElementById('modalViRead').textContent = entry.viRead;
+                document.getElementById('modalMeaning').textContent = entry.meaning;
+            } else {
+                const syllables = rawWord.toLowerCase().match(/[aeiouy]+[^aeiouy]*|[^aeiouy]+/gi);
+                const fallbackRead = syllables ? syllables.join('-') : rawWord.toLowerCase();
+                document.getElementById('modalEmoji').textContent = "📖";
+                document.getElementById('modalIPA').textContent = `/${rawWord.toLowerCase()}/`;
+                document.getElementById('modalViRead').textContent = fallbackRead;
+                document.getElementById('modalMeaning').textContent = `Từ "${rawWord}" trong bài học của bạn Đan`;
+            }
+
+            const modal = document.getElementById('vocabModal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+
+            playTingSound(false);
+            speakText(rawWord, { rate: Math.min(speechRate, 0.78), pitch: 1.12 });
+        }
+
+        function replayModalWord() {
+            if (!currentModalWordText) return;
+            playTingSound(false);
+            speakText(currentModalWordText, { rate: Math.min(speechRate, 0.75), pitch: 1.12 });
+        }
+
+        function closeVocabModal() {
+            const modal = document.getElementById('vocabModal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function handleModalBackdropClick(event) {
+            if (event.target.id === 'vocabModal') {
+                closeVocabModal();
+            }
+        }
+
+        // =========================================================================
+        // 10. KHỞI TẠO TRÒ CHƠI
+        // =========================================================================
+        window.addEventListener('DOMContentLoaded', () => {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.getVoices();
+                window.speechSynthesis.onvoiceschanged = () => {
+                    window.speechSynthesis.getVoices();
+                };
+            }
+            renderContent();
+            updateProgressUI();
+        });
+    </script>
+</body>
+</html>
